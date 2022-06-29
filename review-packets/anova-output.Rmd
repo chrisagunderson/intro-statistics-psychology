@@ -1,0 +1,101 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "review-packet-02-final-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+library(kableExtra)
+library(tidyverse)
+```
+
+**Problem 7**. Compute the F statistic for a one-way analysis of variance investigating whether differences exist between the three levels of the factor below and calculate the effect size associated with this test.
+
+```{r p7, echo=FALSE}
+
+
+p7 <- data.frame(Group1 = c(8,7,6,9,8,7,8,3),
+                 Group2 = c(7,6,5,6,4,5,6,4),
+                 Group3 = c(2,5,4,4,6,5,3,2))
+
+p7 %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+p7_long <- p7 %>% 
+  pivot_longer(Group1:Group3, names_to = "group", values_to = "dv")
+
+summary(aov(dv ~ group, data = p7_long))
+
+```
+
+\newpage
+
+**Problem 8**. Compute the F statistic for a one-way analysis of variance investigating whether differences exist between the three levels of the factor below and calculate the effect size associated with this test.
+
+```{r p8, echo=FALSE}
+p8 <- data.frame(group1 = c(55,64,34,53,67,86,67,67,65,48,91),
+                 group2 = c(45,34,43,53,65,76,34,36,34,88,87),
+                 group3 = c(92,34,45,54,65,76,35,98,76,45,51))
+
+p8 %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+p8_long <- p8 %>% 
+  pivot_longer(group1:group3, names_to = "group", values_to = "dv")
+
+summary(aov(dv ~ group, data = p8_long))
+
+```
+
+\newpage
+
+**Problem 9**. Compute the F statistic for a one-way analysis of variance investigating whether differences exist between the four levels of the factor below and calculate the effect size associated with this test
+
+```{r p9, echo=FALSE}
+p9 <- data.frame(Group1 = c(2,3,4,3,2,1),
+                 Group2 = c(2,0,-1,2,-3,-4),
+                 Group3 = c(3,4,1,-1,-2,-3),
+                 Group4 = c(1,0,0,3,2,6))
+
+p9 %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+p9_long <- p9 %>% 
+  pivot_longer(Group1:Group4, names_to = "group", values_to = "dv")
+
+summary(aov(dv ~ group, data = p9_long))
+
+```
+
+\newpage
+
+**Problem 10**. Compute the F statistic for a one-way analysis of variance investigating whether differences exist between the three levels of the factor below and calculate the effect size associated with this test.
+
+
+```{r p10, echo=FALSE}
+
+p10 <- data.frame(Group1 = c(6,7,6,5,6,6,6, NA, NA, NA, NA),
+                  Group2 = c(5,4,3,7,8,5,6,4,3,7,6),
+                  Group3 = c(9,4,5,2,3,4, NA, NA, NA, NA, NA))
+
+p10 %>%
+  kbl() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+p10_long <- p10 %>% 
+  pivot_longer(Group1:Group3, names_to = "group", values_to = "dv")
+
+summary(aov(dv ~ group, data = p10_long))
+
+```

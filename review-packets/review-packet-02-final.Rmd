@@ -1,0 +1,356 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "review-packet-02-final-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+library(kableExtra)
+library(tidyverse)
+```
+
+# Final Exam Review Practice Packet
+
+This practice packet covers all the main computations needed to master for the final exam. I suggest printing this packet and practicing the calculations by-hand with a calculator and the _Final Exam Forumla Sheet_, as you would during the Final Exam. Solutions are presented on the last two pages.
+
+\noindent\rule{\textwidth}{0.4pt}
+
+**Problem 1**. A researcher wants to know whether the group of people below has a mean narcissism score significantly different from 10. Assume the standard deviation of narcissism scores in the population is 3.17. Using the appropriate statistical analysis for this situation, compute the test statistic to determine whether the mean is significantly different from 10 and calculate the effect size associated with this test.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(kableExtra)
+
+narc <- data.frame(narcissism = c(12, 13, 14, 12, 11, 9, 13, 14, 15, 21))
+
+narc %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 2**. A scientist wants to investigate whether a new medication lowers people’s average anxiety. To test whether this is the case, the scientist collects a sample of 10 participants and, after giving them the new medication for 30 days, measures their anxiety. Conduct the appropriate statistical test to investigate whether the average of these anxiety scores is significantly different from the population average anxiety score of 50 and calculate the effect size associated with this test.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+anxiety <- data.frame(anxiety = c(35,34,54,56,57,43,32,15,70,45))
+
+anxiety %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 3**. Dr. Peabody wants to investigate whether children and teenagers differ in how many hours a week they watch TV. Conduct the appropriate statistical test to investigate whether the two groups below---children vs. teenagers---differ significantly in their TV-watching habits and calculate the effect size associated with this test.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+tv <- data.frame(Children = c(35,34,9,1,87,54,56,76),
+                 Teenagers = c(28,29,39,71,34,55,64,51))
+
+tv %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 4**. Samantha is an undergraduate research assistant who wants to know whether people who use laptop computers are busier than people who use desktop computers. Samantha collects a sample of 11 laptop users and 11 desktop users and asks them how many hours of free time they have in a typical week. Conduct the appropriate statistical test to investigate whether the two groups below—laptop users vs. desktop users—differ significantly in their average level of busyness and calculate the effect size associated with this test.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+computer <- data.frame(Laptop_Users = c(15,13,14,17,16,11,9,2,60,31,29),
+                       Desktop_Users = c(34,35,23,11,17,23,72,47,45,41,37))
+
+computer %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 5**. The scientist from Problem 2 decides to design another study to investigate whether her new medication actually does lower people’s anxiety. Specifically, she decides that it would be better to measure baseline anxiety and then, after taking the medicine for 30 days, see whether participants’ anxiety scores changed. Find the scientist’s data below. Conduct the appropriate statistical test to investigate whether participants’ anxiety scores changed after receiving treatment and calculate the effect size associated with this test.
+
+```{r p5, echo =FALSE}
+
+anx <- data.frame(Baseline_Anxiety = c(76,58,43,76,72,54,56),
+                  Post_Treatment_Anxiety = c(71,52,37,81,61,32,49))
+
+anx %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 6**. A schoolteacher wants to know whether entrance into Middle School makes an impact on children’s social anxiety. To test this, she measures the social anxiety of 6 children before they start 6th grade and then again 2 months after starting 6th grade. Find the children’s social anxiety scores below. Conduct the appropriate statistical test to investigate whether children’s social anxiety changes when transitioning into Middle School and calculate the effect size associated with this test.
+
+```{r p6, echo=FALSE}
+
+school <- data.frame(Before_6th_Grade = c(6,8,11,13,2,6),
+                  During_6th_Grade = c(8,9,10,16,6,6))
+
+school %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 7**. Compute the F statistic for a one-way analysis of variance investigating whether differences exist between the three levels of the factor below and calculate the effect size associated with this test.
+
+```{r p7, echo=FALSE}
+
+
+p7 <- data.frame(Group1 = c(8,7,6,9,8,7,8,3),
+                 Group2 = c(7,6,5,6,4,5,6,4),
+                 Group3 = c(2,5,4,4,6,5,3,2))
+
+p7 %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 8**. Compute the F statistic for a one-way analysis of variance investigating whether differences exist between the three levels of the factor below and calculate the effect size associated with this test.
+
+```{r p8, echo=FALSE}
+p8 <- data.frame(group1 = c(55,64,34,53,67,86,67,67,65,48,91),
+                 group2 = c(45,34,43,53,65,76,34,36,34,88,87),
+                 group3 = c(92,34,45,54,65,76,35,98,76,45,51))
+
+p8 %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 9**. Compute the F statistic for a one-way analysis of variance investigating whether differences exist between the four levels of the factor below and calculate the effect size associated with this test
+
+```{r p9, echo=FALSE}
+p9 <- data.frame(Group1 = c(2,3,4,3,2,1),
+                 Group2 = c(2,0,-1,2,-3,-4),
+                 Group3 = c(3,4,1,-1,-2,-3),
+                 Group4 = c(1,0,0,3,2,6))
+
+p9 %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 10**. Compute the F statistic for a one-way analysis of variance investigating whether differences exist between the three levels of the factor below and calculate the effect size associated with this test.
+
+
+```{r p10, echo=FALSE}
+
+p10 <- data.frame(Group1 = c(6,7,6,5,6,6,6, '', '', '', ''),
+                  Group2 = c(5,4,3,7,8,5,6,4,3,7,6),
+                  Group3 = c(9,4,5,2,3,4, '', '', '', '', ''))
+
+p10 %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 11**. For this problem, calculate the following:
+
+- The correlation between these two variables
+
+- The corresponding coefficient of determination
+
+- The t-test statistic to determine whether this correlation is significantly different from 0
+
+- The regression line of best fit between the two variables
+
+```{r p11, echo=FALSE}
+p11 <- data.frame(x = c(8, 9, 11, 3, 4, 5, 4, 7),
+                  y = c(6, 6, 7, 4, 5, 1, 8, 6))
+
+p11 %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 12**. For this problem, calculate the following:
+
+- The correlation between these two variables
+
+- The corresponding coefficient of determination
+
+- The t-test statistic to determine whether this correlation is significantly different from 0 
+
+- The regression line of best fit between the two variables
+
+```{r p12, echo=FALSE}
+p12 <- data.frame(x = c(16,15,11,18,11,9,15,13,14,16,17,15),
+                  y = c(11,9,8,5,6,8,17,9,4,5,7,11))
+
+p12 %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+**Problem 13**. For this problem, calculate the following:
+
+- The correlation between these two variables
+
+- The corresponding coefficient of determination
+
+- The t-test statistic to determine whether this correlation is significantly different from 0 
+
+- The regression line of best fit between the two variables
+
+```{r p13, echo=FALSE}
+
+p13 <- data.frame(x = c(-5,-6,6,7,-4,-3,0,3,-9,-7,9),
+                  y = c(6,2,5,-8,-6,-1,-3,9,-6,7,-3))
+
+p13 %>% 
+  kbl() %>% 
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "left")
+
+```
+
+\newpage
+
+# Solutions
+
+Note: For independent- and dependent-samples _t_-tests, I will accept either sign, positive (+) or negative (-) as correct. This is because the sign of your _t_-test statistic will simply be determined by the order in which you subtract, which doesn’t really matter (i.e., you’ll get the same _p_-value at the end of the day).
+
+**Problem 1**
+
+- Appropriate test: One-sample z-test
+
+- z-test statistic: 3.39
+
+- Effect size: 1.07
+
+**Problem 2**
+
+- Appropriate test: One-sample t-test
+
+- t-test statistic: -1.18
+
+- Effect size: -0.37
+
+**Problem 3**
+
+- Appropriate test: Independent-samples t-test
+
+- t-test statistic: -0.20 or 0.20
+
+- Effect size: -0.10 or 0.10
+
+**Problem 4**
+
+- Appropriate test: Independent-samples t-test
+
+- t-test statistic: -2.20 or 2.20
+
+- Effect size: -0.94 or 0.94
+
+**Problem 5**
+
+- Appropriate test: Dependent-samples t-test
+
+- t-test statistic: -2.44 or 2.44
+
+- Effect size: -0.92 or -0.92
+
+**Problem 6**
+
+- Appropriate test: Dependent-samples t-test
+
+- t-test statistic: 1.96 or -1.96
+
+- Effect size: 0.80 or -0.80
+
+\newpage
+
+**Problem 7**
+
+- F-test statistic: 8.78 
+
+- Effect size: 0.46
+
+
+**Problem 8**
+
+- F-test statistic: 0.64
+
+- Effect size: 0.04
+
+**Problem 9**
+
+- F-test statistic: 2.53
+
+- Effect size: 0.28
+
+**Problem 10**
+
+- F-test statistic: 1.28
+
+- Effect size: 0.11
+
+**Problem 11**
+
+- Correlation: 0.38
+
+- Coefficient of determination: 0.14
+
+- t-test statistic: 0.99
+
+- Regression line: $\hat{y} = 3.56 + 0.28X$
+
+**Problem 12**
+
+- Correlation: -0.26
+
+- Coefficient of determination: 0.07
+
+- t-test statistic: -0.86
+
+- Regression line: $\hat{y} = 13.25 - 0.35X$
+
+**Problem 13**
+
+- Correlation: -0.09
+
+- Coefficient of determination: 0.01 
+
+- t-test statistic: -0.28
+
+- Regression line: $\hat{y} = 0.11 - 0.09X$
+
+
+
+
+
