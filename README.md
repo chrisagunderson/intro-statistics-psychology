@@ -1,12 +1,22 @@
 # Introduction to Statistics
 
-Course I taught as adjunct faculty in the Department of Psychology while I was a PhD candidate. 
+Course I taught as adjunct faculty in the Department of Psychology while I was a PhD candidate. Special thanks to Professor Daniel Storage for sharing his materials with me to produce the course contents below.
 
 The course was created in RStudio, using `RMarkdown`, `xaringan`, and `xaringanthemer`. For mathematical formulas, LaTeX was used (e.g., see [Review Packets](https://github.com/chrisagunderson/intro-statistics-psychology/tree/master/review-packets)).
 
 For an overview of the course content, please see the [syllabus](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/syllabus/psyc-2300-intro-stats-syllabus.pdf).
 
-# Lectures
+**Resources**
+
+[RStudio](https://www.rstudio.com) | [Rmarkdown](https://rmarkdown.rstudio.com) | [xaringan](https://github.com/yihui/xaringan) | [xaringanthemer](https://pkg.garrickadenbuie.com/xaringanthemer/) | [LaTeX](https://www.latex-project.org) | [Steve's Templates](https://github.com/svmiller/stevetemplates)
+
+## Syllabus
+
+Syllabus [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/syllabus/psyc-2300-intro-stats-syllabus.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/syllabus/psyc-2300-intro-stats-syllabus.pdf)
+
+Note: Syllabus was created using [Steve's Templates](https://github.com/svmiller/stevetemplates).
+
+## Lectures
 
 01: Introduction to Statistics [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-01-introduction.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-01-introduction.pdf)
 
@@ -40,7 +50,7 @@ For an overview of the course content, please see the [syllabus](https://github.
 
 16: Final Exam Review [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-16-final-exam-review.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-16-final-exam-review.pdf)
 
-# Guides
+## Guides
 
 _Guides_ assisted students with hand calculations of the material taught during lecture. Each _Guide_ is meant to provide step-by-step instruction to understand why the test statisic is used, how to calculate it, and how to interpret it.
 
@@ -78,7 +88,7 @@ _Guides_ assisted students with hand calculations of the material taught during 
 
 17: Calculating a simple Linear Regression [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-17-calculating-a-simple-linear-regression.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-17-calculating-a-simple-linear-regression.pdf)
 
-# Review Packets
+## Review Packets
 
 _Review Packets_ are intended to provide additional hand-calculation prepartion for the Midterm and Final Exams.
 
@@ -86,7 +96,7 @@ _Review Packets_ are intended to provide additional hand-calculation prepartion 
 
 02 Final Exam Review Packet [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/review-packets/review-packet-02-final.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/review-packets/review-packet-02-final.pdf)
 
-# Definitions
+## Definitions
 
 _Definitions_ are key conceptual terms needed to perform well on the Midterm and Final Exam.
 
@@ -94,7 +104,7 @@ _Definitions_ are key conceptual terms needed to perform well on the Midterm and
 
 02 Final Exam Definitions [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/definitions/final-exam-definitions.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/definitions/final-exam-definitions.pdf)
 
-# Formula Sheets
+## Formula Sheets
 
 _Formula sheets_ that are available for reference during the Midterm and Final Exam.
 
