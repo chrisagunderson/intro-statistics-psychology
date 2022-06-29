@@ -78,7 +78,25 @@ _Guides_ assisted students with hand calculations of the material taught during 
 
 17: Calculating a simple Linear Regression [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-17-calculating-a-simple-linear-regression.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-17-calculating-a-simple-linear-regression.pdf)
 
+# Review Packets
+
+_Review Packets_ are intended to provide additional hand-calculation prepartion for the Midterm and Final Exams.
+
+01 Midterm Review Packet [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/review-packets/review-packet-01-midterm.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/review-packets/review-packet-01-midterm.pdf)
+
+02 Final Exam Review Packet [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/review-packets/review-packet-02-final.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/review-packets/review-packet-02-final.pdf)
+
+# Definitions
+
+_Definitions_ are key conceptual terms needed to perform well on the Midterm and Final Exam.
+
+01 Midterm Definitions [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/definitions/midterm-definitions.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/definitions/midterm-definitions.pdf)
+
+02 Final Exam Definitions [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/definitions/final-exam-definitions.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/definitions/final-exam-definitions.pdf)
+
 # Formula Sheets
+
+_Formula sheets_ that are available for reference during the Midterm and Final Exam.
 
 Midterm Formula Sheet [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/formula-sheets/midterm-formula-sheet.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/formula-sheets/midterm-exam-formula-sheet.pdf)
 
