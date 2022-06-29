@@ -1,0 +1,1024 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 04: Correlations, Reliability, & Validity
+
+]
+
+---
+
+# Outline for today
+
+```{r echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+
+.pull-left[
+
+- **Defining relationships in the world**
+
+  - Correlation coefficient
+
+- **Reliability**
+
+  - Test-retest reliablity
+  - Parallel forms reliability
+  - Internal consistency
+  - Interrater reliability
+
+- **Validity**
+  
+  - Content validity
+  - Criterion validity
+  - Construct validity
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+
+---
+
+class: center, middle, inverse
+
+# Defining Relationships in the World
+
+---
+
+# Correlations
+
+.content-box-gray[
+In psychological science, **correlational designs** examine the extent to which two variables are associated
+]
+
+--
+
+_Examples_
+
+- Do people who are more creative do better in school?
+
+- Is there a relationship between hours studied and exam scores? Class attendance and final grades?
+
+- Are people who have higher marital satisfaction better parents?
+
+
+---
+
+# Correlations
+
+Correlations are either _positive_, _negative_, or _zero_
+
+
+<img src="img/positive-negative-zero-correlation.png" />
+
+---
+
+# Correlations
+
+```{r xaringan-editable-1, echo=FALSE}
+xaringanExtra::use_editable(expires = 1)
+```
+
+.pull-left[
+**Positive correlation**: as one variable changes, the other variable changes in the .primary[_same direction_]
+
+_Examples_
+
+- Relationship between hours studied and exam grade
+
+  - More hours studied, better exam grade
+  
+  - Fewer hours studied, worse exam grade
+
+]
+
+--
+
+.pull-right[
+
+.center[
+<img src="img/positive-correlations.png" />
+]
+
+.content-box-purple[
+_Examples of positive correlations?_
+
+.can-edit[
+- 
+
+]
+]
+]
+
+
+---
+
+# Correlations
+
+```{r xaringan-editable-2, echo=FALSE}
+xaringanExtra::use_editable(expires = 1)
+```
+
+.pull-left[
+**Negative correlation**: as one variable changes, the other variable changes in the .primary[_opposite direction_]
+
+_Examples_
+
+- Relationship between running speed and time to finish a race
+
+  - Faster running = Less time to finish
+  
+  - Slower running = More time to finish
+
+]
+
+--
+
+.pull-right[
+<img src="img/negative-correlations.png" />
+
+.content-box-purple[
+_Examples of negative correlations?_
+
+.can-edit[
+- 
+
+]
+]
+]
+
+---
+
+# Correlations
+
+.pull-left[
+- **Zero correlation**: there is .primary[_no_] relationship between the two variables
+
+_Examples_
+
+- Relationship between math ability and dancing ability
+
+  - Being better at one tells us nothing about how good you'll be at the other
+]
+
+.pull-right[
+<img src="img/zero-correlation.png" />
+
+]
+
+---
+
+# Correlations
+
+.pull-left[
+ Correlations are _always_ between -1.0 and +1.0
+
+  - This tells you the **magnitude** of relationship
+  
+    - Correlations closer to absolute value of 1 are _stronger_
+  
+    - Correlations closer to a value of 0 are _weaker_
+]
+
+--
+
+.pull-right[
+<img src="img/various-correlation-magnitudes.png"/>
+
+]
+
+---
+
+# Correlation ≠ Causation
+
+.center[
+<img src="img/shark-ice-cream-1.jpeg" width="80%"/>
+]
+
+???
+Correlations do not imply causation, and leave three possibilities for how causation might occur. If we find that there is a positive correlation between ice cream sales and shark attacks, it could be that ice cream causes shark attacks
+
+---
+
+# Correlation ≠ Causation
+
+.center[
+<img src="img/shark-ice-cream-2.jpeg" width="80%"/>
+]
+
+???
+shark attacks cause people to eat more ice cream
+
+---
+
+# Correlation ≠ Causation
+
+.center[
+<img src="img/shark-ice-cream-3.jpeg" width="80%"/>
+]
+
+--
+
+.footnote[
+A _third variable_ could be  
+the cause of the two events
+]
+
+---
+
+# Correlation: Calculation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$  
+]
+]
+]
+
+--
+
+.pull-left[
+
+We just need six values:
+
+]
+
+.pull-right[
+.pull-left[
+
+$\sum X$  
+$\sum Y$  
+$\sum XY$ 
+]
+
+.pull-right[
+$\sum X^2$  
+$\sum Y^2$  
+$n$  
+]
+]
+
+---
+
+# Correlation: Calculation
+
+Set up our table with the $x$ and $y$ values
+
+```{r correlation-table-1, echo=FALSE}
+library(tidyverse)
+corr_data_lecture <- data.frame(x = c(5, 9, 10, 3, 5, 7),
+                        y = c(6, 11, 6, 4, 6, 9))
+
+corr_data_lecture <- corr_data_lecture %>% 
+  as_tibble() %>% 
+  rename("$x$" = x,
+         "$y$" = y) %>%
+   add_column("$$x^2$$" = NA,
+             "$$y^2$$" = NA,
+             "$$xy$$" = NA)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture, "pipe", escape = TRUE)
+
+```
+
+---
+
+# Correlation: Calculation
+
+Square our $x$ values
+
+```{r correlation-table-2, echo=FALSE}
+corr_data_lecture2 <- corr_data_lecture %>% 
+  mutate(`$$x^2$$` = `$x$`^2)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture2, "pipe", escape = TRUE)
+```
+
+---
+
+# Correlation: Calculation
+
+Square our $y$ values
+
+```{r correlation-table-3, echo=FALSE}
+corr_data_lecture3 <- corr_data_lecture2 %>% 
+  mutate(`$$y^2$$` = `$y$`^2)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture3, "pipe", escape = TRUE)
+```
+
+---
+
+# Correlation: Calculation
+
+Multiply $x$ and $y$ together row-wise
+
+```{r correlation-table-4, echo=FALSE}
+corr_data_lecture4 <- corr_data_lecture3 %>% 
+  mutate(`$$xy$$` = `$x$` * `$y$`)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+---
+
+# Correlation: Calculation
+
+.pull-left[
+
+```{r correlation-table-5, echo=FALSE}
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+```{r correlation-table-6, echo=FALSE}
+corr_data_sum_lecture<- corr_data_lecture4 %>% 
+  summarise(across(where(is.numeric), sum)) %>% 
+  rename("$\\sum x$" = `$x$`,
+         "$\\sum y$" = `$y$`,
+         "$\\sum  x^2$" = `$$x^2$$`,
+         "$\\sum y^2$" = `$$y^2$$`,
+         "$\\sum xy$" = `$$xy$$`)
+
+knitr::kable(corr_data_sum_lecture, "pipe")
+```
+
+]
+
+---
+
+# Correlation: Calculation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.small[
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$  
+
+]
+]
+]
+
+--
+
+.center[
+
+```{r corr-sum-table, echo=FALSE}
+knitr::kable(corr_data_sum_lecture, "pipe")
+
+```
+
+]
+
+--
+
+$$r_{xy} = \frac{(6)(294) - (39)(42)}{\sqrt{[(6)(289) - (39)^2][(6)(326) - (42)^2]}}$$
+
+---
+
+# Correlation: Calculation
+
+
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$
+
+--
+
+$$r_{xy} = \frac{(6)(294) - (39)(42)}{\sqrt{[(6)(289) - (39)^2][(6)(326) - (42)^2]}}$$
+--
+
+$$r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62$$
+--
+
+.footnote[
+*In psychology, round to  
+two decimals except _p_-values
+]
+
+---
+
+class: center, middle, inverse
+
+# Reliability and Validity
+
+## A few preliminaries
+
+---
+
+# Terminology
+
+.content-box-gray[
+**Independent variable**: The variable that is hypothesized to have an effect on some outcome of interest
+
+]
+
+--
+
+.content-box-gray[
+**Dependent variable**: The outcome of interest that the independent variable might have an effect on
+]
+
+--
+
+| | Hypothesized to influence | Hypothesized to be influenced |
+|--- | :---: | :---: |
+|Experiment | Independent variable | Dependent variable |
+| Correlational study | Predictor variable | Outcome variable |
+
+---
+
+# Terminology
+
+.content-box-gray[
+**Reliability**: Does it work accurately every time?
+]
+
+.content-box-gray[
+**Validity**: Is it actually measuring what it was designed to measure?
+]
+
+--
+
+Why does this matter?
+
+Since we're heading toward .primary[_inferential statistics_], it's very important that our data are what we think they are
+
+You'll learn more about this topic in Research Methods
+
+---
+
+# Validity & Reliability: Example
+
+.pull-left[
+- Are manipulations and measures reliable and valid?
+
+- **Valid**: measuring/manipulating what you intend to
+measure?
+
+- **Reliable**: consistency of measurement/manipulation?
+
+]
+
+--
+
+.pull-right[
+<img src="img/sadness-validity.jpeg" />
+]
+
+---
+
+# Classical Test Theory
+
+.content-box-gray[
+**True score**: The true value that we are trying to measure
+]
+
+--
+
+You understand 95% of the concepts and computations
+
+In an ideal world, you would receive a 95% on the midterm
+
+--
+
+.content-box-gray[
+**Observed Score**: The value that we actually measure
+]
+
+--
+
+You receive a 78% on the midterm
+
+---
+
+# Classical Test Theory
+
+.center[
+
+<img src="img/observed-score.png" width="50%"/>
+]
+
+---
+
+# Classical Test Theory
+
+.pull-left[
+
+<img src="img/true-score.png" />
+]
+
+--
+
+.pull-right[
+<img src="img/true-score-def.png"/>
+
+]
+
+--
+
+.right[
+Estimating and evaluating reliability helps us to  
+reduce the error score and more closely align  
+the true score with the observed score
+]
+
+---
+
+class: center, middle, inverse
+
+# Reliability
+
+---
+
+# Reliability
+
+- **Test-Retest Reliability**: Used to determine whether a test (or scale) is reliable over time 
+
+--
+
+- **Parallel Forms Reliability**: Used to examine the equivalence or similarity between two forms of the same test (or scale)
+
+--
+
+- **Internal consistency**: Used to determine whether the items on a test (or scale) are consistent with each other
+
+---
+
+# Test-Retest Reliability
+
+.content-box-gray[
+**Test-Retest Reliability**: Measured as the correlation $r_{xy}$ between scores on a measure at Time 1 and the same measure at Time 2
+]
+
+--
+
+- Example: Developing a new personality measure
+
+.center[
+<img src="img/test-retest-clipboard.png" width="30%"/>
+]
+
+---
+
+# Parallel Forms Reliability
+
+.content-box-gray[
+**Parallel Forms Reliability**: Measured as the correlation $r_{xy}$ between scores for the same individuals on Form A and Form B
+]
+
+--
+
+- Example: Measuring your ability to calculate standard deviations on two different days
+
+  - We would use .secondary[two different forms] because giving you identical problems would be trivial
+
+
+.center[
+<img src="img/form.png" width="10%"/><img src="img/form.png" width="10%"/>
+
+]
+
+---
+
+# Internal Consistency
+
+.content-box-gray[
+**Internal consistency**: Used to determine whether the items on a test (or scale) are consistent with each other, typically measured with Cronbach's $\alpha$
+]
+
+--
+
+**.black[Anxiety Scale]**
+
+.small[Rate your agreement to the following statements]
+
+1. I often have worrying thoughts
+2. I have trouble getting out of bed in the morning
+3. I often feel nervous
+4. I no longer take pleasure in things I used to enjoy
+5. My heart often beats fast as fears enter in
+6. I often feel sluggish and tired
+
+---
+
+# Internal Consistency
+
+.pull-left[
+**.black[Anxiety Scale]**
+
+1. .secondary[I often have worrying thoughts]
+
+2. .red[I have trouble getting out of bed in the morning]
+
+3. .secondary[I often feel nervous]
+
+4. .red[I no longer take pleasure in things I used to enjoy]
+
+5. .secondary[My heart often beats fast as fears enter in]
+
+6. .red[I often feel sluggish and tired]
+
+]
+
+--
+
+.pull-right[
+**.black[Issues with this scale]**
+
+- This scale has .secondary[anxiety] and .red[depression] items 
+
+- This would result in _poor_ internal consistency
+
+]
+
+---
+
+# Internal Consistency
+
+.content-box-gray[
+**Internal consistency**: Used to determine whether the items on a test (or scale) are consistent with each other, typically measured with Cronbach's $\alpha$
+]
+
+- The more consistently individual items vary with the total score on the test, the higher the value of Cronbach's $\alpha$
+
+- Higher values means more internal consistency
+
+---
+
+# Cronbach's Alpha
+
+.content-box-blue[
+
+.center[
+**Cronbach's Alpha**
+]
+
+.Large[
+$$\alpha = (\frac{k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})$$
+]
+
+]
+
+--
+
+$k$ the number of items
+
+$s_{y}^2$ the variance associated with the observed score
+
+$\sum  s_{i}^2$ the sum of all the variances for each individual item
+
+---
+
+# Cronbach's Alpha
+
+```{r cronbach-lec-table-1, echo=FALSE}
+cronbach_data_lec <- data.frame("Item_1" = c(6, 5, 9, 3, 2, 1, 5),
+                        "Item_2" = c(6, 5, 8, 2, 3, 1, 4),
+                        "Item_3" = c(8, 6, 6, 4, 2, 2, 6)) %>% 
+  as_tibble()
+
+options(knitr.kable.NA = '')
+knitr::kable(cronbach_data_lec, "pipe")
+
+```
+
+--
+
+1. I often have worrying thoughts
+2. I often feel nervous
+3. My heart often beats fast as fears enter in
+
+
+---
+
+# Cronbach's Alpha
+
+```{r cronbach-lec-table-2, echo=FALSE}
+cronbach_data_lec2 <- cronbach_data_lec %>% 
+  rowwise() %>% 
+  mutate(Total = sum(Item_1, Item_2, Item_3)) %>% 
+  ungroup()
+
+knitr::kable(cronbach_data_lec2, "pipe")
+
+```
+
+Sum the values of Item 1, Item 2, and Item 3 row-wise to create a "Total" column
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+```{r echo=FALSE}
+knitr::kable(cronbach_data_lec2, "pipe")
+
+```
+
+]
+
+.pull-right[
+
+Calculate the **sample variance** for each item and 'total'
+
+```{r echo=FALSE}
+cronbach_data_lec3 <- cronbach_data_lec2 %>% 
+  summarise(across(where(is.double), var))
+
+knitr::kable(cronbach_data_lec3, "pipe", digits=2)
+```
+
+$\sum s_{i}^2 = s_{1}^2 + s_{2}^2 + s_{3}^2$
+
+]
+
+--
+
+.pull-right[
+$\sum s_{i}^2 = 7.29 + 5.81 + 5.14 = 18.24$
+
+]
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+```{r echo=FALSE}
+knitr::kable(cronbach_data_lec2, "pipe")
+
+```
+
+]
+
+.pull-right[
+
+Calculate the **sample variance** for each item and 'total'
+
+```{r echo=FALSE}
+cronbach_data_lec3 <- cronbach_data_lec2 %>% 
+  summarise(across(where(is.double), var))
+
+knitr::kable(cronbach_data_lec3, "pipe", digits=2)
+```
+
+$k = 3$ items in our scale
+
+$s_{y}^2 = 48.95$ is the 'total' column variance
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+.content-box-blue[
+
+.center[
+**Cronbach's Alpha**
+.Large[
+
+$\alpha = (\frac{k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})$
+]
+]
+]
+
+.pull-left[
+$k = 3$  
+
+$\sum s_{i}^2 = 18.24$
+
+$s_{y}^2 = 48.95$
+]
+]
+
+--
+
+.pull-right[
+
+.Large[
+$$\alpha = (\frac{3}{3 - 1})(\frac{48.95 - 18.24}{48.95})$$
+$$\alpha = .941$$
+]
+]
+
+.pull-right[
+
+
+]
+
+---
+
+# Interrater Reliability
+
+.content-box-gray[
+**Interrater Reliability**: the degree of agreement among independent observers who rate, code, or agree on their judgments of an outcome of interest
+]
+
+--
+
+.content-box-blue[
+.center[
+
+$Interrater \: Reliability = \frac{Number \: of \: agreements}{Number \: of \: possible \: agreements}$
+]
+]
+
+.center[<img src="img/agreement.png" width="20%"/>]
+
+---
+
+class: center, middle, inverse
+
+# Validity
+
+---
+
+# Content Validity
+
+.content-box-gray[
+**Content validity**: the extent to which the items on a test are fairly representative of the entire domain the test seeks to measure
+]
+
+--
+
+.center[“I want to design a test to measure my students’ ability in statistics.”]
+
+--
+
+.pull-left[
+.center[`r fa(name = "thumbs-down", fill = "#B04213")`]
+1. Calculate the mean of sample A. 
+2. Calculate the mean of sample B. 
+3. Calculate the mean of sample C. 
+4. Calculate the mean of sample D. 
+5. Calculate the mean of sample E. 
+6. Calculate the mean of sample F.
+]
+
+--
+
+.pull-right[
+.center[`r fa(name = "thumbs-up", fill = "#18A3DE")`]
+1. Calculate the mean.
+2. Calculate the standard deviation. 
+3. Calculate the correlation. 
+4. Calculate a _t_-test.
+5. Calculate an ANOVA.
+6. Calculate a regression.
+]
+
+---
+
+# Criterion Validity
+
+.content-box-gray[
+**Criterion validity**: measures how well one measure predicts an outcome for another measure
+
+]
+
+--
+
+.pull-left[
+
+.center[_Here and now_]
+
+**Concurrent Criterion Validity**: Does this test accurately assess my students’ current level of ability?
+
+]
+
+--
+
+.pull-right[
+
+.center[_In the future_]
+
+**Predictive Validity**: Does this test accurately assess how my students will do on the final exam?
+]
+
+--
+
+To find out, correlate scores on your test with some .secondary[well-established] measure of ability
+
+---
+
+# Construct Validity
+
+.content-box-gray[
+**Construct Validity**: the degree to which a test, scale, or assessment measures the construct it claims to measure
+]
+
+--
+
+A .secondary[_construct_] is a group of interrelated variables that you care about
+
+_Example_: When I measure extraversion as a self-report measure, does this correlate with behavioral extraversion?
+
+---
+
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Using hypotheses to test questions
+
+**Reading**
+
+- Chapter Five
+
+- Chapter Six
+
+**Quiz 1**
+
+- Due Wednesday 01/19/2022 at 11:59pm MT
+
+  - Lecture 1-4, Ch.1-5
+
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

@@ -1,0 +1,1005 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 16: Testing Relationships Using Correlations
+
+]
+
+---
+
+# Outline for today
+
+```{r echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+
+.pull-left[
+
+- Review last parts of class
+
+- Correlations Revisited
+
+- Correlations in JASP
+
+  - Download `Stats class 16 Dataset (Correlation T-Test).jasp`
+
+- Continue one-way ANOVA practice activity
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+
+---
+
+class: center, middle, inverse
+
+# Review
+
+## One-way ANOVA
+
+---
+
+# Goal
+
+To be able to compare whether differences exist between multiple factors, as well as in interactions between the levels of different factors
+
+--
+
+**Research question**: What is the fastest way for me to get to campus?
+
+.center[
+<img src="img/lightrail-vs-car.png" width="65%"/>
+]
+
+---
+
+# ANOVA: factors and levels
+
+.center[
+
+<img src="img/anova-factors-and-levels.png" width="85%"/>
+
+]
+
+
+---
+
+# Factorial Designs
+
+.content-box-gray[
+**Factorial designs**: Designs in which two or more factors are completely crossed (i.e., measurements are taken for every combination of factor levels)
+]
+
+--
+
+.center[
+<img src="img/anova-table.png" width="40%"/>
+]
+
+
+---
+
+# Factorial designs: Plot
+
+```{r factorial-plot-1, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(tidyverse)
+library(ggpubr)
+
+
+one_way_ANOVA_data <- 
+  data.frame(time_of_day = as_factor(c("6:30am", "8:00am", "6:30am", "8:00am")),
+             commute_type = as_factor(c("lightrail", "lightrail", "car", "car")),
+             time = c(32.9, 31.6, 13.9, 36.7)) %>% 
+  as_tibble()
+
+# marginal means: time of day
+
+mean_time <- one_way_ANOVA_data %>% 
+  group_by(time_of_day) %>% 
+  summarize(mean_time = mean(time),
+            sd_time = sd(time))
+
+# marginal means: commute type
+
+margina_commute <- one_way_ANOVA_data %>% 
+  group_by(commute_type) %>% 
+  summarize(mean_time = mean(time),
+            sd_time = sd(time))
+
+interaction_plot <- ggplot(one_way_ANOVA_data, aes(x = time_of_day, 
+                               y = time, 
+                               group = commute_type,
+                               color = commute_type)) +
+  geom_line() +
+  geom_point(size=3) +
+  labs(x = "Time of Day",
+       y = "Commute Time (min)",
+       color = "Commute Type") +
+  scale_color_manual(values = c("#B04213", "#1381B0")) +
+  theme_pubr() +
+  theme(text = element_text(size = 15))
+
+interaction_plot
+
+```
+
+---
+
+# Main effect of Commute Type
+
+.right[
+
+<img src="img/anova-table-commute-type.png" width="85%"/>
+
+]
+
+---
+
+# Commute Type: Plot
+
+```{r commute-type-plot, echo = FALSE}
+
+# main effect of commute type
+
+base_plot <- ggplot() +
+  geom_line(data = one_way_ANOVA_data, aes(x = time_of_day, 
+                                           y = time, 
+                                           group = commute_type,
+                                           color = commute_type),
+            alpha = 1/4) +
+  geom_point(data = one_way_ANOVA_data, aes(x = time_of_day, 
+                                            y = time, 
+                                            group = commute_type,
+                                            color = commute_type),
+             alpha = 1/4) +
+  labs(x = "Time of Day",
+       y = "Commute Time (min)",
+       color = "Commute Type") +
+  scale_color_manual(values = c("#B04213", "#1381B0")) +
+  theme_pubr()
+
+
+marginal <- base_plot  +
+  geom_point() +
+  annotate("point", x= 1.5, y = 32.2, colour = "#B04213", shape = 7) +
+  annotate("point", x= 1.5, y = 25.3, colour = "#1381B0", shape = 7)
+
+  
+
+
+marginal
+
+```
+
+
+.footnote[
+Taking the lightrail and walking takes longer than driving
+]
+
+---
+
+# Main effect of Time of Day
+
+.right[
+<img src="img/anova-table-time-of-day.png" width="85%"/>
+
+
+]
+
+---
+
+# Time of Day: Plot
+
+```{r commute-time-plot, echo =FALSE}
+ggplot() +
+  geom_line(data = one_way_ANOVA_data, aes(x = time_of_day, 
+                                           y = time, 
+                                           group = commute_type,
+                                           color = commute_type),
+            alpha = 1/4) +
+  geom_point(data = one_way_ANOVA_data, aes(x = time_of_day, 
+                                            y = time, 
+                                            group = commute_type,
+                                            color = commute_type),
+             alpha = 1/4) +
+  geom_point(data = mean_time, aes(x = time_of_day,
+                                   y = mean_time),
+             shape = 8) +
+  geom_line(data = mean_time, aes(x = time_of_day,
+                                  y = mean_time,
+                                  group = 1),
+            linetype = "dashed") +
+  labs(x = "Time of Day",
+       y = "Commute Time (min)",
+       color = "Commute Type") +
+  scale_color_manual(values = c("#B04213", "#1381B0")) +
+  theme_pubr() +
+  theme(text = element_text(size = 15))
+
+```
+
+
+.footnote[
+It takes longer to get to campus when leaving at 8:00am than at 6:30am
+]
+
+---
+
+# Interaction between Commute Type and Time
+
+.center[
+
+<img src="img/anova-table-interaction.png" width="85%"/>
+
+]
+
+---
+
+# Interaction
+
+.content-box-gray[
+**Interaction**: describes the degree to which the effect of _one factor_ depends on the _level_ of the other factor
+]
+
+.center[
+
+<img src="img/interaction_plot.png" width="55%"/>
+
+]
+
+---
+
+# Interaction
+
+.center[
+
+
+<img src="img/interaction-600am.png" width="76%"/>
+
+]
+
+---
+
+# Interaction
+
+.center[
+
+
+<img src="img/interaction-800am.png" width="76%"/>
+
+]
+
+
+---
+
+class: center, middle, inverse
+
+# Correlations Revisited
+
+---
+
+# Correlations
+
+.content-box-gray[
+**Correlational designs**: examine the extent to which two variables are associated
+]
+
+--
+
+_Examples_
+
+- Do people who are more creative do better in school?
+
+- Is there a relationship between hours studied and exam scores? Class attendance and final grades?
+
+- Are people who have higher marital satisfaction better parents?
+
+
+---
+
+# Correlations
+
+Correlations are either _positive_, _negative_, or _zero_
+
+
+<img src="img/positive-negative-zero-correlation.png" />
+
+---
+
+# Correlations
+
+.pull-left[
+.content-box-gray[
+**Positive correlation**: as one variable changes, the other variable changes in the .primary[_same direction_]]
+
+.center[
+_Example_  
+
+Relationship between  
+hours studied and exam grade  
+
+(more hours studied, higher exam grade)
+]
+]
+
+--
+
+.pull-right[
+
+.content-box-gray[
+**Negative correlation**: as one variable changes, the other variable changes in the .primary[_opposite direction_]
+]
+
+.center[
+_Example_
+
+Relationship between  
+running speed and time to finish a race  
+
+(faster running, lower time to finish race)
+]
+
+]
+
+--
+
+.center[
+.content-box-gray[
+**Zero correlation**: there is .primary[_no_] relationship between the two variables
+]
+
+]
+
+
+---
+
+# Correlations
+
+.pull-left[
+ Correlations are _always_ between -1.0 and +1.0
+
+  - This tells you the **magnitude** of relationship
+  
+    - Correlations closer to absolute value of 1 are _stronger_
+  
+    - Correlations closer to a value of 0 are _weaker_
+]
+
+--
+
+.pull-right[
+<img src="img/various-correlation-magnitudes.png"/>
+
+]
+
+---
+
+# Correlations: Practice
+
+Which of the following correlation coefficients depicts the .secondary[_strongest_] relationship?
+
+.pull-left[
+1. 0.43
+
+2. -0.02
+
+3. 0.67
+
+4. -0.73
+
+]
+
+--
+
+.pull-right[
+
+Answer: **-0.73**
+]
+
+---
+
+# Correlations: Practice
+
+Which of the following correlation coefficients depicts the .secondary[_weakest_] relationship?
+
+.pull-left[
+
+1. -0.13
+
+2. 0.33
+
+3. -0.03
+
+4. 0.05
+
+]
+
+--
+
+.pull-right[
+
+Answer: **-0.03**
+
+]
+
+---
+
+# Correlations: Practice
+
+Interpret the following statement in your own words:
+
+> "We found a significant correlation of 0.37 between social media use and anxiety."
+
+.right[
+<img src="https://images.unsplash.com/photo-1622929610538-fc41bdce80c6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" width="50%"/>
+
+]
+
+---
+
+# Correlations: Practice
+
+Interpret the following statement in your own words:
+
+> "We found a significant correlation of -0.26 between depressive symptoms and exercise."
+
+.right[
+<img src="https://images.unsplash.com/photo-1583248839364-bd7430a3cd83?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2942&q=80" width="50%"/>
+]
+
+---
+
+# Calculating Correlations
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$  
+]
+]
+]
+
+--
+
+.pull-left[
+
+We just need six values:
+
+]
+
+.pull-right[
+.pull-left[
+
+$\sum X$  
+$\sum Y$  
+$\sum XY$ 
+]
+
+.pull-right[
+$\sum X^2$  
+$\sum Y^2$  
+$n$  
+]
+]
+
+
+---
+
+# Calculating Correlations
+
+Set up our table with the $x$ and $y$ values
+
+```{r correlation-table-1, echo=FALSE}
+library(tidyverse)
+corr_data_lecture <- data.frame(i = c(1, 2, 3, 4, 5, 6),
+                                x = c(5, 9, 10, 3, 5, 7),
+                                y = c(6, 11, 6, 4, 6, 9))
+
+corr_data_lecture16 <- corr_data_lecture %>% 
+  as_tibble() %>% 
+  rename("$i$" = i,
+         "$x$" = x,
+         "$y$" = y) %>%
+   add_column("$$x^2$$" = NA,
+             "$$y^2$$" = NA,
+             "$$xy$$" = NA)
+
+i_table <- corr_data_lecture16
+
+
+options(knitr.kable.NA = '')
+knitr::kable(i_table, "pipe", escape = TRUE)
+
+```
+
+---
+
+# Calculating Correlations
+
+Square our $x$ values
+
+
+```{r correlation-table-2, echo=FALSE}
+corr_data_lecture2 <- corr_data_lecture16 %>% 
+  mutate(`$$x^2$$` = `$x$`^2)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture2, "pipe", escape = TRUE)
+```
+
+---
+
+# Calculating Correlations
+
+Square our $y$ values
+
+```{r correlation-table-3, echo=FALSE}
+corr_data_lecture3 <- corr_data_lecture2 %>% 
+  mutate(`$$y^2$$` = `$y$`^2)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture3, "pipe", escape = TRUE)
+```
+
+---
+
+# Correlation: Calculation
+
+Multiply $x$ and $y$ together row-wise
+
+```{r correlation-table-4, echo=FALSE}
+corr_data_lecture4 <- corr_data_lecture3 %>% 
+  mutate(`$$xy$$` = `$x$` * `$y$`)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+---
+
+# Correlation: Calculation
+
+.pull-left[
+
+```{r correlation-table-5, echo=FALSE}
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+```{r correlation-table-6, echo=FALSE}
+corr_data_sum_lecture<- corr_data_lecture4 %>% 
+  summarise(across(where(is.numeric), sum)) %>% 
+  rename("$\\sum x$" = `$x$`,
+         "$\\sum y$" = `$y$`,
+         "$\\sum  x^2$" = `$$x^2$$`,
+         "$\\sum y^2$" = `$$y^2$$`,
+         "$\\sum xy$" = `$$xy$$`) %>% 
+  select(-"$i$")
+
+knitr::kable(corr_data_sum_lecture, "pipe")
+```
+
+
+$$
+r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62
+$$
+
+]
+
+---
+
+# The Problem
+
+So far, we've only used correlations as .secondary[descriptive statistics]
+
+--
+
+What if we want to make inferences about relationships in the population?
+
+.pull-left[
+.center[
+<img src="https://learninglink.oup.com/static/5e29bfc369c98b0010b09170/resources/sampling.png" />
+]
+]
+
+.pull-right[
+.center[
+
+<img src="img/noun-regression-analysis-239043.png" width="60%"/>
+
+]
+]
+
+---
+
+# Goal
+
+To be able to determine whether an observed correlation coefficient is significantly different from $0$ or not
+
+--
+
+.pull-left[
+
+.center[
+
+**Null Hypothesis $H_{0}$**
+
+There is no relationship
+
+$H_{0}$: $\rho = 0$
+]
+
+]
+
+--
+
+.pull-right[
+
+.center[
+**Alternative Hypothesis $H_{a}$**
+
+There is a relationship
+
+$H_{a}$: $\rho \neq 0$
+
+]
+
+]
+
+.footnote[
+Note: $\rho$ is "rho", the population parameter version of the sample statistic, $r$
+]
+
+---
+
+# _t_-test for correlation coefficient
+
+
+.content-box-blue[
+.center[
+
+**_t_-test for correlation coefficient**
+
+.Large[
+
+$$t_{r_{xy}} = \frac{r_{xy}\sqrt{n - 2}}{\sqrt{1 - r^2_{xy}}}$$
+
+]
+]
+]
+
+--
+
+$r_{xy} =$ the correlation between the two variables  
+
+$r^2_{xy}=$ the coefficient of determination  
+
+$n=$ the sample size (number of paired observations)
+
+---
+
+# Coefficient of Determination
+
+.content-box-gray[
+**Coefficient of Determination**: Percentage of variance in one variable that is accounted for by the variance in the other variable
+]
+
+--
+
+.center[
+
+<img src="https://doctorlib.info/medical/biostatistics/biostatistics.files/image265.png" />
+
+]
+
+---
+
+# Calculating Correlations
+
+.pull-left[
+
+```{r correlation-table-7, echo=FALSE}
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+```{r correlation-table-8, echo=FALSE}
+
+knitr::kable(corr_data_sum_lecture, "pipe")
+```
+
+
+$$
+r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62
+$$
+
+]
+
+---
+
+# Calculating coefficient of determination
+
+.Large[
+$$
+r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62
+$$
+]
+
+--
+
+.Large[
+$$
+r^2_{xy} = 0.62^2 = 0.38
+$$
+
+]
+
+--
+
+**Interpretation**
+
+- 38% of the variance in $x$ is accounted for by the variance in $y$
+
+- 62% of the variance is not accounted for
+
+---
+
+class: middle, inverse, center
+
+# Correlations in JASP
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-1.png" width="53%"/>
+
+1
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-2.png" width="53%"/>
+
+2
+
+]
+
+---
+
+# Correlations in JASP
+
+.center[
+
+<img src="img/jasp-correlation-test-3.png" width="53%"/>
+
+3
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-4.png" width="53%"/>
+
+4
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-5.png" width="53%"/>
+
+5
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-6.png" width="53%"/>
+
+6
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-7.png" width="53%"/>
+
+7
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-8.png" width="53%"/>
+
+8
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-9.png" width="53%"/>
+
+9
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-10.png" width="53%"/>
+
+10
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+<img src="img/jasp-correlation-test-11.png" width="53%"/>
+
+11
+
+]
+
+---
+
+class: middle, center, inverse
+
+# Continue one-way ANOVA 
+## Practice Activity
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Making predictions using regression
+
+**Reading**
+
+- Chapter 15
+
+**Quiz 5**
+
+- Due tonight 02/23/2022 at 11:59pm MT
+
+  - Ch.13-14
+
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

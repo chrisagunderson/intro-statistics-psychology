@@ -1,0 +1,1221 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 12: Differences Between Many Groups
+
+]
+
+---
+
+# Outline for today
+
+```{r load-packages, echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+
+.pull-left[
+
+- Review parts of last class
+
+- The One-Way ANOVA
+
+- Effect size for the One-Way ANOVA
+
+- One-Way ANOVAs in JASP
+
+  - Download `Stats Class 14 Dataset (One-way ANOVA).jasp`
+
+]
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+---
+
+class: center, middle, inverse
+
+# Review
+
+---
+
+.center[
+<img src="img/one-sample-figure.png" />
+]
+
+---
+
+# _t_-tests: one sample
+
+
+We have one sample, but we don't know the population standard deviation or population variance
+
+.pull-left[
+.content-box-blue[
+.center[
+
+**One-sample _t_-test statistic**  
+
+$t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**Estimated standard error**  
+
+$s_{\overline{x}} = \frac{s}{\sqrt{n}}$
+
+]
+]
+]
+
+---
+
+.center[
+
+<img src="img/between-subjects-design.png"/>
+
+]
+
+---
+
+# _t_-tests: independent samples
+
+.left-column[
+
+We have two independent samples
+
+]
+
+.right-column[
+
+.content-box-blue[
+.center[
+
+**Independent samples _t_-test**
+
+$t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{\overline{x}_{1} - \overline{x}_{2}}{s_{(\overline{x}_{1} - \overline{x}_{2})}}$
+
+]
+]
+
+
+.content-box-blue[
+.center[
+**Estimated standard error of the mean difference**
+
+$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2} \Bigg] \Bigg[ \frac{n_1 + n_2}{n_1 n_2} \Bigg]}$
+]
+]
+]
+
+---
+
+
+.center[
+
+<img src="img/within-subjects-generic.png" />
+
+]
+
+---
+
+# _t_-tests
+
+We want to investigate whether some treatment made an effect compared to a baseline within the same individual(s)
+
+.pull-left[
+.content-box-blue[
+.center[
+**Dependent samples _t_-test**
+
+$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Estimated standard error of the difference scores**
+
+$$s_{\bar{x}_{d}} = \sqrt{\frac{s^2_{d}}{n}}$$
+
+]
+]
+]
+
+
+
+---
+
+# Within-subjects designs
+
+.center[
+
+<img src="img/within-subjects-design-5.png" width="85%"/>
+
+]
+
+
+---
+
+class: center, middle, inverse
+
+# One-way ANOVA
+
+---
+
+# One-way ANOVA
+
+**The problem**: All our tests so far involve only one or two groups
+
+--
+
+**Goal**: To be able to measures differences along some dimension among participants in more than two groups
+
+--
+
+- The test we use to compare many groups is called the ANOVA, or the  
+**AN**alysis **O**f **VA**riance
+
+--
+
+- Instead of _z_ or _t_, ANOVAs use _F_ distributions
+
+---
+
+# ANOVA: Terminology
+
+
+.content-box-gray[
+**Factor**: Independent variable(s) in the study
+]
+
+--
+
+.content-box-gray[
+**Level(s)**: Groups within each independent variable
+]
+
+--
+
+.content-box-gray[
+**Response**: The dependent variable in the study
+]
+
+--
+
+Today, we’ll learn about _one-way ANOVAs_, which have only one factor
+
+---
+
+# Example: One factor, several levels
+
+.center[
+
+<img src="img/factor-levels-example.png" width="75%"/>
+
+]
+
+---
+
+# ANOVA: What does it do?
+
+- The ANOVA asks, “are there any significant differences among the different groups we’re testing?”
+
+--
+
+- Essentially, it investigates whether **any** of the population means of our groups differ
+
+--
+
+- The ANOVA is an **omnibus test**, meaning it tests whether there are _any_ differences among groups
+
+--
+
+- It doesn’t tell which group(s) is(are) different; you need .secondary[post-hoc tests] for this (we’ll come back to this later)
+
+.footnote[
+
+You can also think of _onmibus test_ as an 'overall' test
+
+]
+
+---
+
+# Statistical Hypotheses
+
+.pull-left[
+
+**Null Hypothesis $H_{0}$**
+
+There is no difference
+
+The means are equal
+
+$\mu_{1} = \mu_{2} = \mu_{3} = ... = \mu_{k}$
+
+]
+
+--
+
+.pull-right[
+
+**Alternative Hypothesis $H_{a}$**
+
+There is a difference
+
+The means are not all equal
+
+]
+
+.footnote[
+
+$k =$ the number of groups
+
+]
+
+---
+
+# Why not just use many _t_-tests?
+
+--
+
+.content-box-gray[
+**Experiment-wise alpha level**: the total probability of a Type I error that is accumulated from all of the individual tests in the experiment. Typically, the experiment-wise alpha level is substantially greater than the value of alpha used for any one of the individual tests
+]
+
+--
+
+- _Type I Error rate_ increases drastically as you run additional analyses
+
+- This is called **alpha escalation**
+  - Each test has a risk of a Type I error, and the more tests you do, the more risk there is
+
+---
+
+# Review: Decisions
+
+.center[
+
+<img src="img/decision-table-4.png" width="80%"/>
+]
+
+---
+
+# Building the _F_-statistic
+
+.content-box-blue[
+
+.center[
+
+.Large[
+
+$F = \frac{Variance \: due \: to \: group \: differences}{Variance \: due \: to \: random \: chance}$
+
+]
+]
+]
+
+--
+
+.center[
+**Numerator**  
+.pull-left[
+Variance between groups will be small if there are no differences between groups, leading to a small _F_ statistic
+]
+
+.pull-right[
+Variance between groups will be large if there are differences between groups, leading to a large _F_ statistic
+]
+]
+
+.center[
+**Denominator**  
+
+Error/random chance differences among individuals within single groups
+
+]
+
+
+---
+
+# Building the _F_-statistic
+
+- That is why is called the ANOVA: We analyze and compare **variance** in the dependent variable separately _between groups_ and _within groups_
+
+--
+
+- There is, however, a lot of calculations needed
+
+.center[
+
+<img src="https://static.thenounproject.com/png/2671768-200.png" />
+
+]
+
+---
+
+# _F_-statistic: One-way ANOVA
+
+.content-box-blue[
+.center[
+.Large[
+
+$F = \frac{MS_{between}}{MS_{within}}$
+
+]
+]
+]
+
+--
+
+$MS_{between}$: mean sum of squares between groups (variance between groups)
+
+$MS_{within}$: mean sum of squares within groups (variance within groups)
+
+---
+
+# _F_-statistic: One-way ANOVA
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+**Mean sum of squares**   
+**between groups**
+
+$MS_{between} = \frac{SS_{between}}{df_{between}}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**Mean sum of squares**  
+**within groups**
+
+$MS_{within} = \frac{SS_{within}}{df_{within}}$
+
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$df_{between} = k - 1$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$df_{within} = nT - k$
+
+]
+]
+]
+
+$k=$ number of groups  
+$nT=$ total number of participants across all groups  
+$df=$ degrees of freedom, an estimate of sample size
+
+---
+
+# _F_-statistic: One-way ANOVA
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+**Mean sum of squares**   
+**between groups**
+
+$MS_{between} = \frac{SS_{between}}{df_{between}}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**Mean sum of squares**  
+**within groups**
+
+$MS_{within} = \frac{SS_{within}}{df_{within}}$
+
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}$
+
+]
+]
+]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}$
+
+]
+]
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+.center[
+<img src="img/anova-ss-steps.png" width="85%"/>
+]
+
+---
+
+# Sum of Squares: One-way ANOVA
+
+Once you have these values, plug them into the _SS_ formulas
+
+.content-box-blue[
+.center[
+.Large[
+
+$SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}$
+
+]
+]
+]
+
+.content-box-blue[
+.center[
+
+.Large[
+
+$SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}$
+
+]
+]
+]
+
+---
+
+# Example Experiment
+
+**Research Question**: Does teaching students about _growth mindsets_ affect students' anxiety more than giving them _general encouragement_ or _no encouragement_?
+
+--
+
+.center[
+
+<img src="img/anova-example-experiment-depiction.png" width="70%"/>
+
+]
+
+---
+
+## Group Calculations
+
+.center[
+<img src="img/anova-ss-steps.png" width="85%"/>
+]
+
+
+---
+
+# Group Calculations: Group 1
+
+.center[
+**Growth Mindset**
+]
+
+.pull-left[
+
+| Growth | Growth<sup>2</sup> |
+| --- | --- |
+| 6 | 36 |
+| 6 | 36 |
+| 5 | 25 |
+| 8 | 64 |
+| 7 | 49 |
+| 6 | 36 |
+| 3 | 9 |
+| 4 | 16 |
+]
+
+--
+
+.pull-right[
+$$n_{1} = 8$$
+
+$$\bar{x}_{1} =5.625$$
+
+$$\sum{x}_{1} = 45$$
+
+$$\frac{(\sum{x}_{1})^2}{n_{1}} = \frac{45^2}{8} = 253.125$$
+
+$$\sum(x^2_{1}) = 271$$
+]
+
+---
+
+# Group Calculations: Group 2
+
+.center[
+**General Encouragement**
+]
+
+.pull-left[
+
+| General | General<sup>2</sup> |
+| --- | --- |
+| 8 | 64 |
+| 7 | 49|
+| 6 | 36 |
+| 5 | 25 |
+| 6 | 36 |
+| 7 | 49 |
+| 8 | 64 |
+| 6 | 36 |
+]
+
+--
+
+.pull-right[
+$$n_{2} = 8$$
+
+$$\bar{x}_{2} = 6.625$$
+
+$$\sum{x}_{2} = 53$$
+
+$$\frac{(\sum{x}_{2})^2}{n_{2}} = \frac{53^2}{8} = 351.125$$
+
+$$\sum(x^2_{2}) = 359$$
+]
+
+---
+
+# Group Calculations: Group 3
+
+.center[
+**No Encouragement**
+]
+
+.pull-left[
+
+| None | None<sup>2</sup> |
+| --- | --- |
+| 9 | 81 |
+| 8 | 64 |
+| 9 | 81 |
+| 9 | 81 |
+| 7 | 49 |
+| 8 | 64 |
+| 6 | 36 |
+| 9 | 81 |
+]
+
+--
+
+.pull-right[
+$$n_{3} = 8$$
+
+$$\bar{x}_{3} = 8.125$$
+
+$$\sum{x}_{3} = 65$$
+
+$$\frac{(\sum{x}_{3})^2}{n_{3}} = \frac{65^2}{8} = 528.125$$
+
+$$\sum(x^2_{3}) = 537$$
+]
+
+---
+
+# Example Experiment
+
+
+We now have all the group statistics we need to compute the across group statistics
+
+.pull-left[
+
+.pull-left[
+
+**Growth**  
+
+$n_{1} = 8$
+
+$\bar{x}_{1} =5.625$
+
+$\sum{x}_{1} = 45$
+
+$\frac{(\sum{x}_{1})^2}{n_{1}} =  253.125$
+
+$\sum(x^2_{1}) = 271$
+]
+
+.pull-right[
+**General**  
+
+$n_{2} = 8$
+
+$\bar{x}_{2} = 6.625$
+
+$\sum{x}_{2} = 53$
+
+$\frac{(\sum{x}_{2})^2}{n_{2}} = 351.125$
+
+$\sum(x^2_{2}) = 359$
+]
+]
+
+.pull-right[
+**None**  
+
+$n_{3} = 8$
+
+$\bar{x}_{3} = 8.125$
+
+$\sum{x}_{3} = 65$
+
+$\frac{(\sum{x}_{3})^2}{n_{3}} = 528.125$
+
+$\sum(x^2_{3}) = 537$
+]
+
+---
+
+## Calculate Terms Across Groups
+
+.center[
+<img src="img/anova-ss-steps.png" width="85%"/>
+]
+
+
+---
+
+# Calculate Terms Across Groups
+
+Calculate all the terms needed for $SS_{between}$ and $SS_{within}$
+
+--
+
+$nT = n_{1} + n_{2} + n_{3} = 8 + 8 + 8 = 24$ 
+
+--
+
+$\sum\sum{x} = \sum{x}_{1} + \sum{x}_{2} + \sum{x}_{3} = 45 + 53 + 65 = 163$ 
+
+--
+
+$\frac{(\sum\sum{x})^2}{nT} = \frac{163^2}{24} = 1107.04$ 
+
+--
+
+$\sum\frac{(\sum{x})^2}{n} = \frac{(\sum{x}_{1})^2}{n_{1}} + \frac{(\sum{x}_{2})^2}{n_{2}} + \frac{(\sum{x}_{3})^2}{n_{3}} = 253.125 + 351.125 + 528.125 = 1132.38$
+
+--
+
+$\sum\sum(x^2) = \sum(x^2_{1}) + \sum(x^2_{2}) + \sum(x^2_{3}) = 271 + 359 + 537 = 1167$
+
+---
+
+# Calculating _SS<sub>between</sub>_ and _SS<sub>within</sub>_
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}$
+
+]
+]
+]
+.pull-right[
+.content-box-blue[
+.center[
+
+$SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}$
+
+]
+]
+]
+
+--
+
+$\frac{(\sum\sum{x})^2}{nT} = 1107.04 \qquad \qquad \sum\frac{(\sum{x})^2}{n} = 1132.38 \qquad \qquad \sum\sum(x^2) = 1167$
+
+--
+
+$$SS_{between} = 1132.38 - 1107.04 = 25.34$$
+
+--
+
+$$SS_{within} = 1167 - 1132.38 = 34.62$$
+
+---
+
+# Calculating _df<sub>between</sub>_ and _df<sub>within</sub>_
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$df_{between} = k - 1$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$df_{within} = nT - k$
+
+]
+]
+]
+
+
+$k=$ number of groups  
+$nT=$ total sample size  
+$df=$ degrees of freedom
+
+
+--
+
+
+$$df_{between} = k - 1 = 3 - 1 = 2$$
+
+
+--
+
+
+$$df_{within} = nT - k = 24 - 3 = 21$$
+
+---
+
+# Calculating _MS<sub>between</sub>_ and _MS<sub>within</sub>_
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+$MS_{between} = \frac{SS_{between}}{df_{between}}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$MS_{within} = \frac{SS_{within}}{df_{within}}$
+
+]
+]
+]
+
+--
+
+$$SS_{between} = 1132.38 - 1107.04 = 25.34 \qquad \quad SS_{within} = 1167 - 1132.38 = 34.62$$
+
+--
+
+$$df_{between} = k - 1 = 3 - 1 = 2 \qquad \qquad \qquad df_{within} = nT - k = 24 - 3 = 21$$
+
+--
+
+$$MS_{between} = \frac{25.34}{2} = 12.67 \qquad \qquad \qquad MS_{within} = \frac{34.62}{21} = 1.64$$
+
+---
+
+# Calculating the _F_ statistic
+
+.content-box-blue[
+.center[
+$$F = \frac{MS_{between}}{MS_{within}}$$
+]
+]
+
+--
+
+$$MS_{between} = \frac{25.34}{2} = 12.67 \qquad \qquad \qquad \qquad MS_{within} = \frac{34.62}{21} = 1.64$$
+
+--
+
+$$F = \frac{12.67}{1.64} = 7.70$$
+
+---
+
+.content-box-blue[
+.center[
+
+$F = \frac{MS_{between}}{MS_{within}}$
+
+]
+]
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+$MS_{between} = \frac{SS_{between}}{df_{between}}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+
+.center[
+$MS_{within} = \frac{SS_{within}}{df_{within}}$
+]
+]
+]
+
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}$
+
+]
+]
+]
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$df_{between} = k - 1$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$df_{within} = nT - k$
+
+]
+]
+]
+
+---
+
+class: center, middle, inverse
+
+# Effect size for the One-way ANOVA
+
+---
+
+# Effect size: One-way ANOVA
+
+The effect size for a one-way ANOVA is represented by _Eta squared_, $\eta^2$, not Cohen’s _d_
+
+--
+
+.content-box-blue[
+.center[
+**Effect size for One-way ANOVA** 
+]
+$$\eta^2 = \frac{SS_{between}}{SS_{Total}}$$
+]
+
+--
+
+.content-box-blue[
+.center[
+
+$$SS_{total} = SS_{between} + SS_{within} = \sum\sum(x^2) - \frac{(\sum\sum{x})^2}{nT}$$
+
+]
+]
+
+---
+
+# Effect size: One-way ANOVA
+
+**Getting the total sum of squares**
+
+$$SS_{total} = SS_{between} + SS_{within}$$
+
+--
+
+$$\require{cancel} SS_{between} = \xcancel{\sum\frac{(\sum{x})^2}{n}} - \frac{(\sum\sum{x})^2}{nT}$$
+
+--
+
+$$\require{cancel} SS_{within} = \sum\sum(x^2) - \xcancel{\sum\frac{(\sum{x})^2}{n}}$$
+
+--
+
+$$SS_{total} = \sum\sum(x^2) - \frac{(\sum\sum{x})^2}{nT}$$
+
+---
+
+# Example Experiment
+
+.center[
+
+<img src="img/anova-example-experiment-depiction.png" width="85%"/>
+
+]
+
+---
+
+# Calculating _SS<sub>between</sub>_, _SS<sub>within</sub>_, and _SS<sub>total</sub>_
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}$
+
+]
+]
+]
+.pull-right[
+.content-box-blue[
+.center[
+
+$SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}$
+
+]
+]
+]
+
+$\frac{(\sum\sum{x})^2}{nT} = 1107.04 \qquad \qquad \sum\frac{(\sum{x})^2}{n} = 1132.38 \qquad \qquad \sum\sum(x^2) = 1167$
+
+$$SS_{between} = 1132.38 - 1107.04 = 25.34$$
+
+$$SS_{within} = 1167 - 1132.38 = 34.62$$
+
+--
+
+$$SS_{total} = SS_{between} + SS_{within}$$
+
+--
+
+$$SS_{total} = 25.34 + 34.62 = 59.96$$
+
+---
+
+# Effect size: One-way ANOVA
+
+.content-box-blue[
+.center[
+**Effect size for One-way ANOVA** 
+]
+$$\eta^2 = \frac{SS_{between}}{SS_{Total}}$$
+]
+
+$$SS_{between} = 1132.38 - 1107.04 = 25.34$$
+
+$$SS_{total} = 25.34 - 34.62 = 59.96$$
+
+$$\eta^2 = \frac{25.34}{59.96} = 0.42$$
+
+---
+
+# Effect Size Interpretation for Eta-Squared
+
+.content-box-gray[
+**Eta squared**: the proportion of the total variability in the dependent variable that is accounted for by variation in the independent variable. It is the ratio of the between groups sum of squares to the total sum of squares
+]
+
+- A “small” effect size is about .01 
+
+- A “medium” effect size is about .06 
+
+- A “large” effect size is about .14
+
+---
+
+class: center, middle, inverse
+
+
+# One-way ANOVA in JASP
+
+---
+
+# JASP: One-way ANOVA
+
+.center[
+
+<img src="img/jasp-one-way-anova-1.png" width="50%"/>
+
+1
+
+]
+
+---
+
+# JASP: One-way ANOVA
+
+.center[
+
+<img src="img/jasp-one-way-anova-2.png" width="50%"/>
+
+2
+
+]
+
+---
+
+# JASP: One-way ANOVA
+
+.center[
+
+<img src="img/jasp-one-way-anova-3.png" width="50%"/>
+
+3
+
+]
+
+---
+
+# JASP: One-way ANOVA
+
+.center[
+
+<img src="img/jasp-one-way-anova-4.png" width="50%"/>
+
+4
+
+]
+
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Differences between many factors
+
+**Reading**
+
+- Chapter 13
+
+**Quiz 4**
+
+- Due tonight 2/16/2022 11:59pm MT
+
+  - Covers Ch.11-12
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

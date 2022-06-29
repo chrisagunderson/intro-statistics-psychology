@@ -1,0 +1,1057 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+```{r load-packages, echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 06: Probability and the Normal Curve
+
+]
+
+---
+
+# Outline for today
+
+.pull-left[
+
+- Understanding the normal curve
+
+- Standardization via _z_-scores
+
+- _z_-score practice problem
+
+  - Have `r fa("pencil-alt")` and `r fa("file")` ready
+
+- Computing _z_-scores in JASP
+
+  - Download `Stats Class 7 Dataset (Z-Scores).jasp`
+
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+---
+
+class: center, middle, inverse
+
+# Normal Distribution
+
+---
+
+# Normal Distribution
+
+.pull-left[
+.center[
+
+
+<img src="img/normal-dist-sat-scores.png" width="60%"/>
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+<img src="img/normal-dist-carrots-cucumbers.png" width="40%"/>
+]
+]
+
+--
+
+.pull-left[
+.center[
+<img src="img/normal-dist-shoe-size.png" width="50%"/>
+]
+]
+
+--
+
+.pull-right[
+.center[
+<img src="img/normal-dist-newborn-weights.png" width="50%" />
+]
+]
+
+.foonote[
+.small[
+The normal distribution comes up everywhere
+]
+]
+
+---
+
+# Normal Distribution
+
+.center[
+<img src="img/normal-curve.png" width="60%"/>
+]
+
+--
+
+.left[
+.small[
+Also called the _Gaussian_ distribution or _bell-curve_ distribution
+]
+]
+
+---
+
+# Normal Distribution
+
+.pull-left[
+**Three Central Characteristics**
+
+- Mean = Median = Mode
+
+- Symmetrical around the mean
+
+- Asymptotic tails: they approach but never touch the _x_-axis
+]
+
+.pull-right[
+<img src="img/normal-curve.png" />
+
+]
+
+---
+
+
+# Normal Distribution
+
+We know a great deal about the normal distribution, particularly the probabilities associated with possible outcomes in a normal distribution
+
+.center[
+
+<img src="img/normal-dist-with-sd.png" width="80%"/>
+
+]
+
+---
+
+# Probability
+
+Probability is a huge topic that extends far beyond the limits of introductory statistics, and we do not attempt to examine it all here
+
+--
+
+.center[
+.content-box-gray[
+**Probability**: For a situation in which several different outcomes are possible, the probability for any specific outcome is defined as a _fraction_ or a _proportion_ of all the possible outcomes. If the possible outcomes are identified as A, B, C, D, and so on, then
+
+$$ probability \: of \: A = \frac{number \: of \: outcomes \: classified \: as \:  A}{total \: number \: of \: possible \: outcomes}
+$$
+
+]
+]
+
+---
+
+# Normal Distribution
+
+Approximate probabilities under the curve
+
+.center[
+<img src="img/normal-dist-probabilities.png" width="80%"/>
+]
+
+---
+
+# Normal Distribution
+
+.pull-left[
+
+- 68.26% is within $\pm$ **one** standard deviation of the mean
+
+- 95.44% is within $\pm$ **two** standard deviations of the mean
+
+- 99.74% is within $\pm$ **three** standard deviations of the mean
+
+]
+
+.pull-right[
+.center[
+<img src="img/normal-dist-area-under-curve.png"/>
+]
+]
+
+.footnote[
+.small[
+Also known as the "_68-95-99.7_ rule"
+]
+]
+
+---
+
+# Normal Distribution
+
+SAT scores is normal with a mean of $\mu = 500$ and a standard deviation of $\sigma = 100$
+
+--
+
+What is the probability of randomly selecting an individual from this population who has an SAT score greater than $x_{i} = 700$? In other words, $p(x{_i} > 700) =$ ?
+
+--
+
+.pull-left[
+95.44% is within $\pm$ **two** standard deviations of the mean
+]
+
+--
+
+.pull-left[
+$100 - 95.44 = 4.56$
+
+$\frac{4.56}{2} = 2.28$
+
+]
+
+--
+
+.center[
+
+<img src="img/sat-dist-example.png" width="30%"/>
+]
+
+---
+
+# Normal Distribution
+
+.pull-left[
+
+<img src="img/normal-curve.png" />
+
+]
+
+.pull-right[
+
+.content-box-blue[
+
+.center[
+
+**Normal Gaussian**
+
+.Large[
+
+$$
+\frac{1}{\sqrt{2\pi\sigma^2}} e^{- \frac{(x-\mu)^2}{2\sigma^2}}
+$$
+
+]
+]
+]
+]
+
+--
+
+.right[
+The exact shape of the normal distribution  
+is specified by the above equation relating   
+to each _x_ value (score)  
+with each _y_ value (frequency)
+
+]
+
+--
+
+.footnote[
+.small[Also referred to as the   
+_probability density function_  
+of the normal distribution]
+]
+
+---
+
+# Normal Distribution
+
+Example _normal probability density function_  
+
+.pull-left[
+
+<img src="img/normal-dist-with-sd.png" />
+
+$$\mu = 100$$
+$$\sigma = 10$$
+]
+
+--
+
+.pull-right[
+
+.center[
+
+**Normal Gaussian**
+
+.Large[
+
+$$
+\frac{1}{\sqrt{2\pi\sigma^2}} e^{- \frac{(x-\mu)^2}{2\sigma^2}}
+$$
+
+]
+
+.Large[
+
+$$
+\frac{1}{\sqrt{2\pi10^2}} e^{- \frac{(x-100)^2}{2*10^2}}
+$$
+]
+]
+]
+
+---
+
+# Normal Distribution
+
+```{r dist-visualization, echo=FALSE}
+knitr::include_url("https://seeing-theory.brown.edu/probability-distributions/index.html")
+```
+
+.foonote[
+[Link to visualizing the probability distribution function of the normal distribution](https://seeing-theory.brown.edu/probability-distributions/index.html)
+]
+
+---
+
+class: center, middle, inverse
+
+# _z_-scores
+
+---
+
+# Standardizing Scores
+
+.center[
+<img src="img/raw-scores-to-z-scores.png" />
+]
+
+--
+
+.footnote[
+Standardized scores are comparable because they are standardized in units of standard deviations
+]
+
+---
+
+# Standardizing Scores
+
+.center[
+<img src="img/standard-scores-same-distance.png" width="60%"/>
+]
+
+---
+
+
+# Developing z-scores
+
+Two hypothetical students in my class:
+
+| Name | Quiz 1 _raw_ scores | Quiz 2 _raw_ scores |
+| --- | :---: | :---: |
+| Jessie | 76 | 88 |
+| Sam | 81 | 85 |
+
+--
+
+.center[
+Who's doing better in the course?
+]
+
+--
+
+.center[
+We don't know from the raw scores alone
+]
+
+---
+
+# Developing z-scores
+
+.center[
+.content-box-gray[
+**_z_-score**: describes the position of a raw score in terms of its distance from the mean, when measured in _standard deviation units_. The _z_-score is positive if the value lies above the mean, and negative if it lies below the mean
+]
+]
+
+.center[
+<img src="img/standard-scores-same-distance.png" width="35%"/>
+]
+
+---
+
+# Developing z-scores
+
+**Step 1**: Calculate the mean for Quiz 1, $\mu_{1}$, and Quiz 2, $\mu_{2}$
+
+.pull-left[
+
+| Name | Quiz 1 _raw_ scores | Quiz 2 _raw_ scores |
+| --- | :---: | :---: |
+| Jessie | 76 | 88 |
+| Sam | 81 | 85 |
+
+]
+
+.pull-right[
+
+| | Quiz 1 | Quiz 2 |
+| --- | :---: | :---: |
+| $$\mu$$ | 81.40 | 87.90 |
+
+]
+
+---
+
+# Developing z-scores
+
+**Step 2**: subtract raw scores from the mean (_deviation scores_)
+.pull-left[
+
+| Name | Quiz 1 _raw_ scores | Quiz 2 _raw_ scores |
+| --- | :---: | :---: |
+| Jessie | 76 - $\mu_{1}$ | 88 - $\mu_{2}$ |
+| Sam | 81 - $\mu_{1}$  | 85 - $\mu_{2}$  |
+
+]
+
+
+.pull-right[
+
+| | Quiz 1 | Quiz 2 |
+| --- | :---: | :---: |
+| $$\mu$$ | 81.40 | 87.90 |
+
+]
+
+--
+
+.pull-left[
+
+- Subtract raw scores from Quiz 1, $x_{1}$, from the mean of Quiz 1, $\mu_{1}$
+
+- Subtract raw scores from Quiz 2, $x_{2}$, from the mean of Quiz 2, $\mu_{2}$
+
+]
+
+
+---
+
+# Developing z-scores
+
+.pull-left[
+
+| Name | Quiz 1 _deviation_ scores | Quiz 2 _deviation_ scores |
+| --- | :---: | :---: |
+| Jessie | -5.40 | 0.10 |
+| Sam | -0.40  | -2.90 |
+
+]
+
+.pull-right[
+
+| | Quiz 1 | Quiz 2 |
+| --- | :---: | :---: |
+| $$\mu$$ | 81.40 | 87.90 |
+
+]
+
+
+.pull-left[
+We now know how far away each score is from the mean, but we still have one more thing about distributions to consider
+]
+
+---
+
+# Developing z-scores
+
+.pull-left[
+```{r quiz-1-dist, echo=FALSE}
+quiz1 <- data.frame(id = c(seq(1:40)),
+                    score = rnorm(n = 40, mean = 81.4, sd = 8.40))
+
+ggplot(quiz1, aes(x = score)) +
+  geom_histogram(color = "black", fill = "#18A3DE", alpha = 1/4, bins=40) +
+  xlim(c(50, 100)) +
+  labs(title = "Quiz 1") +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+```
+$$\mu = 81.40$$
+$$\sigma = 8.40$$
+]
+
+.pull-right[
+
+```{r quiz-2-dist, echo=FALSE}
+quiz2 <- data.frame(id = c(seq(1:40)),
+                    score = rnorm(n = 40, mean = 87.9, sd = 1.10))
+
+ggplot(quiz2, aes(x = score)) +
+  geom_histogram(color = "black", fill = "#18A3DE", alpha = 1/4, bins = 40) +
+  xlim(c(50, 100)) +
+  labs(title = "Quiz 2") +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+```
+
+$$\mu = 87.90$$
+$$\sigma = 1.10$$
+]
+
+.center[
+The variability for each Quiz is different
+]
+
+---
+
+# Developing z-scores
+
+.pull-left[
+
+| Name | Quiz 1 _deviation_ scores | Quiz 2 _deviation_ scores |
+| --- | :---: | :---: |
+| Jessie | -5.40 | 0.10 |
+| Sam | -0.40  | -2.90 |
+
+]
+
+
+.pull-right[
+
+| | Quiz 1 | Quiz 2 |
+| --- | :---: | :---: |
+| $$\mu$$ | 81.40 | 87.90 |
+| $$\sigma$$ | 8.40 | 1.10 |
+
+]
+
+.pull-left[
+
+- We need to consider the standard deviation, $\sigma$, of each of the Quizzes
+
+]
+
+---
+
+# Developing z-scores
+
+**Step 3**: divide each deviation score, $deviation_{i}$, by their respective standard deviations
+.pull-left[
+
+| Name | Quiz 1 _deviation_ scores | Quiz 2 _deviation_ scores |
+| --- | :---: | :---: |
+| Jessie | $\frac {-5.40}{\sigma_{1}}$ | $\frac{0.10}{\sigma_{2}}$ |
+| Sam | $\frac{-0.40}{\sigma_{1}}$  | $\frac{-2.90}{\sigma_{2}}$ |
+
+]
+
+.pull-right[
+
+| | Quiz 1 | Quiz 2 |
+| --- | :---: | :---: |
+| $$\mu$$ | 81.40 | 87.90 |
+| $$\sigma$$ | 8.40 | 1.10 |
+
+]
+
+---
+
+# Developing z-scores
+
+.pull-left[
+
+| Name | Quiz 1 _z_-scores | Quiz 2 _z_-scores |
+| --- | :---: | :---: |
+| Jessie | -0.64 | 0.09 |
+| Sam | -0.05  | -2.64 |
+
+]
+
+
+.pull-right[
+
+| | Quiz 1 | Quiz 2 |
+| --- | :---: | :---: |
+| $$\mu$$ | 81.40 | 87.90 |
+| $$\sigma$$ | 8.40 | 1.10 |
+
+]
+
+--
+
+On **Quiz 1**, Jessie and Sam scored similarly.
+
+--
+
+On **Quiz 2**, Jessie did well whereas Sam did not.
+
+---
+
+# Developing z-scores
+
+.pull-left[
+```{r quiz-1-results, echo=FALSE}
+library(bayestestR)  # Load it
+# Generate a perfect sample
+x <- rnorm_perfect(n = 100, mean = 0, sd = 1)
+
+# Visualise it
+library(tidyverse)
+
+quiz1_z_results <- 
+x %>% 
+  density() %>%  # Compute density function
+  as.data.frame() %>% 
+  ggplot(aes(x=x, y=y)) +
+  geom_line() +
+  geom_vline(xintercept = 0, linetype="dashed") +
+  geom_vline(xintercept = -.064, color = "red") +
+  geom_vline(xintercept = -.05, color = "blue") +
+  labs(title = "Quiz 1",
+       x = "z-score",
+       y = '') +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+quiz1_z_results
+```
+
+]
+
+.pull-right[
+```{r quiz-2-results, echo=FALSE}
+quiz2_z_results <- 
+x %>% 
+  density() %>%  # Compute density function
+  as.data.frame() %>% 
+  ggplot(aes(x=x, y=y)) +
+  geom_line() +
+  geom_vline(xintercept = 0, linetype="dashed") +
+  geom_vline(xintercept = 0.09, color = "red") +
+  geom_vline(xintercept = -2.64, color = "blue") +
+  labs(title = "Quiz 2",
+       x = "z-score",
+       y = '') +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+quiz2_z_results
+```
+
+]
+
+| Name | Quiz 1 _z_-scores | Quiz 2 _z_-scores |
+| --- | :---: | :---: |
+| Jessie | -0.64 | 0.09 |
+| Sam | -0.05  | -2.64 |
+
+.footnote[
+.red[Jessie] in red  
+.blue[Sam] in blue
+]
+
+---
+
+# Developing z-scores
+
+.pull-left[
+The result of the steps we just did is called calculating _z_-scores
+.center[
+.content-box-blue[
+**Z-score**
+
+.Large[
+$$z_{i} = \frac{x_{i} - \mu}{\sigma}$$
+]
+]
+]
+]
+
+--
+
+.right[
+
+.Large[
+$$z_{i} = \frac{deviation_{i}}{\sigma}$$
+
+]
+]
+
+--
+
+.pull-right[
+The number of standard deviations a particular score deviates from its corresponding mean
+
+_z_-scoring is useful because a _z_-score of 1 .secondary[_means the same thing in any distribution_]
+]
+
+---
+
+# Developing z-scores
+
+.pull-left[
+.center[
+.content-box-blue[
+**Z-score**
+
+.Large[
+
+$$z_{i} = \frac{x_{i} - \mu}{\sigma}$$
+]
+]
+]
+]
+
+
+.pull-right[
+.center[
+.content-box-blue[
+**_x_ score from z-score**
+
+.Large[
+
+$$x_{i} = \mu + z_{i}\sigma$$
+]
+]
+]
+]
+
+--
+
+.pull-right[
+Example: Your IQ _z_-score is $1.4$ and the distribution of IQ is $\mu = 100$ and $\sigma = 15$
+]
+
+--
+
+.pull-right[
+$x_{i} = 100 + (1.4)(15) = 121$  
+
+]
+
+---
+
+# Uses of z-scores
+
+- **(1)** Describing scores in distributions with a single number
+
+--
+
+- **(2)** Equating and rescaling entire distributions
+
+  - Z-scoring an entire distribution (or dataset) gets you a new distribution with a mean of 0, and a standard deviation of 1
+  
+  - But, the distribution **maintains** its shape
+
+--
+
+- **(3)** Comparing scores from non-equivalent datasets
+
+---
+
+# Uses of z-scores
+
+.center[
+<img src="img/z-normal-distribution.png" />
+]
+
+---
+
+# Uses of z-scores
+
+Z-scoring a distribution that is already normal yields the **unit normal distribution**
+
+.pull-left[
+.center[
+.Large[
+$\mu = 0$  
+
+$\sigma = 1$  
+
+$\frac{1}{\sqrt{2\pi1^2}} e^{- \frac{(x-0)^2}{2*1^2}}$
+]
+]
+]
+
+.pull-right[
+.center[
+<img src="img/z-normal-distribution.png" />
+]
+]
+
+---
+
+# Uses of z-scores
+
+Equating and rescaling entire distributions
+
+.center[
+<img src="img/normal-dist-two-standardizations.png" />
+]
+
+---
+
+class: center, middle, inverse
+
+# z-score Practice
+
+---
+
+# z-score Practice
+
+Suppose, for example, Alex received a score of $x_{1} = 60$ on a psychology exam and a score of $x_{2} = 56$ on a biology test.
+
+--
+
+Suppose the psychology scores had $\mu_{1} = 50$ and $\sigma_{1} = 10$, and the biology scores had $\mu_{2} = 48$ and $\sigma_{2} = 4$. 
+
+--
+
+Compute the _z_-score for each class and from the _z_-score, determine which class Alex did better in.
+
+--
+
+.center[
+.content-box-blue[
+
+**Z-score**
+
+
+
+$$z_{i} = \frac{x_{i} - \mu}{\sigma}$$
+
+
+]
+]
+
+
+---
+
+# z-score Practice
+
+.pull-left[
+
+.center[
+
+**Psychology**  
+
+
+
+$$x_{1} = 60$$
+$$\mu_{1} = 50$$
+$$\sigma_{1} = 10$$
+
+$z_{1} = \frac{60 - 50}{10} = 1.00$
+
+]
+]
+
+--
+
+.pull-right[
+.center[
+**Biology**
+
+$$x_{2} = 56$$
+$$\mu_{2} = 48$$
+$$\sigma_{2} = 4$$
+$$z_{2} = \frac{56 - 48}{4} = 2.00$$
+]
+]
+
+--
+
+.center[
+Alex did better in biology compared to psychology
+]
+
+---
+
+class: center, middle, inverse
+
+# Computing _z_-scores in JASP
+
+---
+
+# JASP: z-scores
+
+.center[
+
+<img src="img/jasp-z-score-1.png" width="75%"/>
+
+1
+]
+
+
+---
+
+# JASP: z-scores
+
+.center[
+
+<img src="img/jasp-z-score-2.png" width="75%"/>
+
+2
+]
+
+
+---
+
+# JASP: z-scores
+
+.center[
+
+<img src="img/jasp-z-score-3.png" width="75%"/>
+
+3
+]
+
+---
+
+# JASP: z-scores
+
+.center[
+
+<img src="img/jasp-z-score-4.png" width="75%"/>
+
+4
+]
+
+---
+
+# JASP: z-scores
+
+.center[
+
+<img src="img/jasp-z-score-5.png" width="75%"/>
+
+5
+]
+
+---
+
+# JASP: z-scores
+
+.center[
+
+<img src="img/jasp-z-score-6.png" width="75%"/>
+
+6
+]
+
+---
+
+# JASP: z-scores
+
+.center[
+
+<img src="img/jasp-z-score-7.png" width="75%"/>
+
+7
+]
+
+---
+
+# JASP: z-scores
+
+.center[
+
+<img src="img/jasp-z-score-8.png" width="80%"/>
+
+8
+]
+
+
+---
+
+# JASP: z-scores
+
+.center[
+
+<img src="img/jasp-z-score-9.png" width="80%"/>
+
+9
+]
+
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Introduction to Statistical Significance
+
+**Reading**
+
+- Chapter Eight
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

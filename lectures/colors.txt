@@ -1,0 +1,9 @@
+colors
+
+#1381B0 primary blue color
+
+#18A3DE secondary light blue color
+
+#B04213 reddish brown
+
+#b06c13 brown color

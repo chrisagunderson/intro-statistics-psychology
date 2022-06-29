@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>lecture-08-midterm-review.knit</title>
+    <meta charset="utf-8" />
+    <script src="lecture-08-midterm-review_files/header-attrs/header-attrs.js"></script>
+    <link href="lecture-08-midterm-review_files/remark-css/hygge.css" rel="stylesheet" />
+    <link href="lecture-08-midterm-review_files/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="lecture-08-midterm-review_files/tile-view/tile-view.js"></script>
+    <link href="lecture-08-midterm-review_files/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="lecture-08-midterm-review_files/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+&lt;img src="img/intro-stats-title-logo.png" width="50%"/&gt;
+]
+
+.center[
+### Lecture 08: Midterm Review
+
+]
+
+---
+
+# Outline for today
+
+
+
+
+.pull-left[
+
+- **Mini-Report Assignment**
+
+- **Midterm Review**
+
+  - Review of key computations
+  
+  - Review of key concepts
+
+- **Q &amp; A**
+  - Any questions about the midterm
+  
+]
+
+
+.pull-right[
+&lt;img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80" /&gt;
+]
+
+---
+
+# Mini-Report Assignment
+
+.pull-left[
+.center[
+**Reading**
+]
+
+The psychology-related article must be from a non-scientific source and must present statistics (descriptive or inferential)
+
+- Psychology Today
+
+- Time
+
+- People
+
+]
+
+--
+
+.pull-right[
+
+.center[
+**Writing**
+]
+- 2-pages, double-spaced, 12-point font, 1" margins
+
+- _Summarize_ the article and the statistics it reports
+
+- _Describe_ how well the author reports these statistics and the methods used to generate them
+
+- _Evaluate_ whether a reader who is not scientifically trained would be able to walk away with a clear understanding of the information being presented
+
+]
+
+---
+
+# Key Computations for the Midterm
+
+- Standard deviation (for samples and population)
+
+- Variance (for samples, populations)
+
+- Cronbach's Alpha
+
+- Correlation
+
+- Z-test statistic
+
+- z-scores
+
+---
+
+class: center, middle, inverse
+
+# Measures of Variability
+
+---
+
+# Measures of Variability
+
+.content-box-gray[
+
+**Measures of variability**: describe how scores in a given dataset differ from one another (e.g., the spread or clustering of points)
+
+]
+
+.center[
+
+&lt;img src="img/range-sd-var-boxes.png" width="80%"/&gt;
+]
+
+---
+
+# Measures of Variability
+
+
+.content-box-gray[
+
+**Range**: The difference between the lowest and highest values in a dataset
+]
+
+--
+
+.content-box-gray[
+**Standard Deviation**: The standard (or typical) amount that scores deviate from the mean Variance: The averaged squared deviation from the mean
+]
+
+--
+
+.content-box-gray[
+**Variance**: The averaged squared deviation from the mean
+]
+
+---
+
+# Sum of Squares
+
+.pull-left[
+
+| `$$x_{i}$$`| `\(x_{i} - \mu\)`|
+|---------:|-------------:|
+|         1|          -1.6|
+|         2|          -0.6|
+|         1|          -1.6|
+|         4|           1.4|
+|         3|           0.4|
+|         3|           0.4|
+|         6|           3.4|
+|         1|          -1.6|
+|         2|          -0.6|
+|         3|           0.4|
+]
+
+.pull-right[
+**Step 1**: calculate the mean. `\(\mu = 2.6\)`
+
+**Step 2**: subtract each `\(x_{i}\)` from the mean
+]
+
+---
+
+# Sum of Squares
+
+.pull-left[
+
+
+| `$$x$$`| `\(x_{i} - \mu\)`| `$$(x_{i} - \mu)^2$$`|
+|-----:|-------------:|-------------------:|
+|     1|          -1.6|                2.56|
+|     2|          -0.6|                0.36|
+|     1|          -1.6|                2.56|
+|     4|           1.4|                1.96|
+|     3|           0.4|                0.16|
+|     3|           0.4|                0.16|
+|     6|           3.4|               11.56|
+|     1|          -1.6|                2.56|
+|     2|          -0.6|                0.36|
+|     3|           0.4|                0.16|
+
+]
+
+.pull-right[
+**Step 1**: calculate the mean. `\(\mu = 2.6\)`
+
+**Step 2**: subtract each `\(x_{i}\)` from the mean
+
+**Step 3**: Square the deviations
+
+**Step 4**: Sum the squared deviations, `\(\sum (x_{i} - \mu)^2 = 22.4\)`
+]
+
+---
+
+# Standard Deviation and Variance
+
+
+.pull-left[
+
+.center[
+
+Population Parameter
+
+.content-box-blue[
+**Standard Deviation**  
+`\(\sigma = \sqrt\frac{\sum (X_{i} - \mu)^2}{N}\)`
+]
+
+.content-box-blue[
+**Variance**  
+`\(\sigma^2 = \frac{\sum(X_{i} - \mu)^2}{N}\)`
+]
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+
+Sample Statistic
+
+.content-box-blue[
+**Standard Deviation**  
+`\(s = \sqrt\frac{\sum (x_{i} - \overline{x})^2}{(n - 1)}\)`
+]
+
+.content-box-blue[
+**Variance**  
+`\(s^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}\)`
+]
+]
+]
+
+---
+
+class: center, middle, inverse
+
+# Cronbach's Alpha
+
+---
+
+# Cronbach's Alpha
+
+.content-box-blue[
+
+.center[
+**Cronbach's Alpha**
+]
+
+.Large[
+`$$\alpha = (\frac{k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})$$`
+]
+
+]
+
+--
+
+`\(k\)` the number of items
+
+`\(s_{y}^2\)` the variance associated with the observed score "total column"
+
+`\(\sum  s_{i}^2\)` the sum of all the variances for each individual item
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+
+| Item_1| Item_2| Item_3|
+|------:|------:|------:|
+|      6|      6|      8|
+|      5|      5|      6|
+|      9|      8|      6|
+|      3|      2|      4|
+|      2|      3|      2|
+|      1|      1|      2|
+|      5|      4|      6|
+
+1. I often have worrying thoughts
+2. I often feel nervous
+3. My heart often beats fast as fears enter in
+
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+
+| Item_1| Item_2| Item_3| Total|
+|------:|------:|------:|-----:|
+|      6|      6|      8|    20|
+|      5|      5|      6|    16|
+|      9|      8|      6|    23|
+|      3|      2|      4|     9|
+|      2|      3|      2|     7|
+|      1|      1|      2|     4|
+|      5|      4|      6|    15|
+
+]
+
+.pull-right[
+
+**Step 1**: Sum the values of Item 1, Item 2, and Item 3 _row-wise_ to create a "Total" column
+]
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+
+
+| Item_1| Item_2| Item_3| Total|
+|------:|------:|------:|-----:|
+|      6|      6|      8|    20|
+|      5|      5|      6|    16|
+|      9|      8|      6|    23|
+|      3|      2|      4|     9|
+|      2|      3|      2|     7|
+|      1|      1|      2|     4|
+|      5|      4|      6|    15|
+
+]
+
+.pull-right[
+
+**Step 1**: Sum the values of Item 1, Item 2, and Item 3 _row-wise_ to create a "Total" column
+
+**Step 2**: Calculate the _sample variance_ for each item and 'total'
+
+`$$s_{i}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$`
+
+`$$s_{y}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$`
+
+
+]
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+Create a table for item 1
+
+| Item_1| deviation| squared_deviation|
+|------:|---------:|-----------------:|
+|      6|      1.57|              2.47|
+|      5|      0.57|              0.33|
+|      9|      4.57|             20.90|
+|      3|     -1.43|              2.04|
+|      2|     -2.43|              5.90|
+|      1|     -3.43|             11.76|
+|      5|      0.57|              0.33|
+
+]
+
+.pull-right[
+
+**Step 2a**: Calculate the _sample variance_ for each item
+
+`$$\overline{x} = 4.43$$` 
+
+`$$s_{1}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$`
+`$$s_{1}^2 = \frac{43.71}{(7 - 1)} = 7.29$$`
+
+]
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+Create a table for item 2
+
+| Item_2| deviation| squared_deviation|
+|------:|---------:|-----------------:|
+|      6|      1.86|              3.45|
+|      5|      0.86|              0.73|
+|      8|      3.86|             14.88|
+|      2|     -2.14|              4.59|
+|      3|     -1.14|              1.31|
+|      1|     -3.14|              9.88|
+|      4|     -0.14|              0.02|
+
+]
+
+--
+
+.pull-right[
+
+**Step 2b**: Calculate the _sample variance_ for each item
+
+`$$\overline{x} = 4.14$$` 
+
+`$$s_{2}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$`
+`$$s_{2}^2 = \frac{34.86}{(7 - 1)} = 5.81$$`
+
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+Create a table for item 3
+
+| Item_3| deviation| squared_deviation|
+|------:|---------:|-----------------:|
+|      8|      3.14|              9.88|
+|      6|      1.14|              1.31|
+|      6|      1.14|              1.31|
+|      4|     -0.86|              0.73|
+|      2|     -2.86|              8.16|
+|      2|     -2.86|              8.16|
+|      6|      1.14|              1.31|
+
+]
+
+.pull-right[
+
+**Step 2c**: Calculate the _sample variance_ for each item
+
+`$$\overline{x} = 4.86$$` 
+
+`$$s_{3}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$`
+`$$s_{3}^2 = \frac{30.86}{(7 - 1)} = 5.14$$`
+
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+Create a table for the total column
+
+| Total| deviation| squared_deviation|
+|-----:|---------:|-----------------:|
+|    20|      6.57|             43.18|
+|    16|      2.57|              6.61|
+|    23|      9.57|             91.61|
+|     9|     -4.43|             19.61|
+|     7|     -6.43|             41.33|
+|     4|     -9.43|             88.90|
+|    15|      1.57|              2.47|
+
+]
+
+.pull-right[
+
+**Step 2c**: Calculate the _sample variance_ for each item
+
+`$$\overline{x} = 13.43$$` 
+
+`$$s_{y}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$`
+`$$s_{y}^2 = \frac{293.71}{(7 - 1)} = 48.95$$`
+
+]
+
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+
+| Item_1| Item_2| Item_3| Total|
+|------:|------:|------:|-----:|
+|      6|      6|      8|    20|
+|      5|      5|      6|    16|
+|      9|      8|      6|    23|
+|      3|      2|      4|     9|
+|      2|      3|      2|     7|
+|      1|      1|      2|     4|
+|      5|      4|      6|    15|
+
+]
+
+.pull-right[
+
+**Step 3**: Prep all of the variance values we just calculated
+
+
+| Item_1| Item_2| Item_3|  Total|
+|------:|------:|------:|------:|
+|  7.286|   5.81|  5.143| 48.952|
+
+`\(k = 3\)` items in our scale
+
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+.content-box-blue[
+
+.center[
+**Cronbach's Alpha**
+.Large[
+
+`\(\alpha = (\frac{k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})\)`
+]
+]
+]
+
+.pull-left[
+`\(k = 3\)`  
+
+`\(\sum s_{i}^2 = s_{1}^2 + s_{2}^2 + s_{3}^2 = 7.29 + 5.81 + 5.14 = 18.24\)`
+
+`\(s_{y}^2 = 48.95\)`
+]
+]
+
+--
+
+.pull-right[
+
+.Large[
+`$$\alpha = (\frac{3}{3 - 1})(\frac{48.95 - 18.24}{48.95})$$`
+`$$\alpha = .941$$`
+]
+]
+
+.pull-right[
+
+
+]
+
+---
+
+class: center, middle, inverse
+
+# Pearson's Correlation
+
+---
+
+# Correlation: Calculation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+`$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$`  
+]
+]
+]
+
+--
+
+.pull-left[
+
+We just need six values:
+
+]
+
+.pull-right[
+.pull-left[
+
+`\(\sum X\)`  
+`\(\sum Y\)`  
+`\(\sum XY\)` 
+]
+
+.pull-right[
+`\(\sum X^2\)`  
+`\(\sum Y^2\)`  
+`\(n\)`  
+]
+]
+
+---
+
+# Correlation: Calculation
+
+Set up our table with the `\(x\)` and `\(y\)` values
+
+
+| `\(x\)`| `\(y\)`|$$x^2$$ |$$y^2$$ |$$xy$$ |
+|---:|---:|:-------|:-------|:------|
+|   5|   6|        |        |       |
+|   9|  11|        |        |       |
+|  10|   6|        |        |       |
+|   3|   4|        |        |       |
+|   5|   6|        |        |       |
+|   7|   9|        |        |       |
+
+---
+
+# Correlation: Calculation
+
+Square our `\(x\)` values
+
+
+| `\(x\)`| `\(y\)`| `$$x^2$$`|$$y^2$$ |$$xy$$ |
+|---:|---:|-------:|:-------|:------|
+|   5|   6|      25|        |       |
+|   9|  11|      81|        |       |
+|  10|   6|     100|        |       |
+|   3|   4|       9|        |       |
+|   5|   6|      25|        |       |
+|   7|   9|      49|        |       |
+
+---
+
+# Correlation: Calculation
+
+Square our `\(y\)` values
+
+
+| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`|$$xy$$ |
+|---:|---:|-------:|-------:|:------|
+|   5|   6|      25|      36|       |
+|   9|  11|      81|     121|       |
+|  10|   6|     100|      36|       |
+|   3|   4|       9|      16|       |
+|   5|   6|      25|      36|       |
+|   7|   9|      49|      81|       |
+
+---
+
+# Correlation: Calculation
+
+Multiply `\(x\)` and `\(y\)` together row-wise
+
+
+| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`| `$$xy$$`|
+|---:|---:|-------:|-------:|------:|
+|   5|   6|      25|      36|     30|
+|   9|  11|      81|     121|     99|
+|  10|   6|     100|      36|     60|
+|   3|   4|       9|      16|     12|
+|   5|   6|      25|      36|     30|
+|   7|   9|      49|      81|     63|
+
+---
+
+# Correlation: Calculation
+
+.pull-left[
+
+
+| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`| `$$xy$$`|
+|---:|---:|-------:|-------:|------:|
+|   5|   6|      25|      36|     30|
+|   9|  11|      81|     121|     99|
+|  10|   6|     100|      36|     60|
+|   3|   4|       9|      16|     12|
+|   5|   6|      25|      36|     30|
+|   7|   9|      49|      81|     63|
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+
+| `\(\sum x\)`| `\(\sum y\)`| `\(\sum  x^2\)`| `\(\sum y^2\)`| `\(\sum xy\)`|
+|--------:|--------:|-----------:|----------:|---------:|
+|       39|       42|         289|        326|       294|
+
+]
+
+---
+
+# Correlation: Calculation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.small[
+`$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$`  
+
+]
+]
+]
+
+--
+
+.center[
+
+
+| `\(\sum x\)`| `\(\sum y\)`| `\(\sum  x^2\)`| `\(\sum y^2\)`| `\(\sum xy\)`|
+|--------:|--------:|-----------:|----------:|---------:|
+|       39|       42|         289|        326|       294|
+
+]
+
+
+--
+
+`$$r_{xy} = \frac{(6)(294) - (39)(42)}{\sqrt{[(6)(289) - (39)^2][(6)(326) - (42)^2]}}$$`
+
+---
+
+# Correlation: Calculation
+
+
+`$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$`
+
+--
+
+`$$r_{xy} = \frac{(6)(294) - (39)(42)}{\sqrt{[(6)(289) - (39)^2][(6)(326) - (42)^2]}}$$`
+--
+
+`$$r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62$$`
+
+---
+
+class: center, middle, inverse
+
+# z-test statistic
+
+---
+
+# _z_-test Statistic
+
+.center[
+&lt;img src="img/z-test-pointing.png" width="90%"/&gt;
+]
+
+---
+
+# _z_-test Statistic
+
+.pull-left[
+.content-box-blue[
+.center[
+**_z_-test statistic**
+
+.Large[
+
+`$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$`
+
+]
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Standard Error**
+
+.Large[
+`$$\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}$$`
+]
+]
+]
+]
+
+.pull-left[
+`\(\overline{x} =\)` sample mean  
+`\(\mu_{\overline{x}} =\)` population mean when `\(H_{0}\)` is true  
+`\(\sigma_{\overline{x}} =\)` standard error
+]
+
+.pull-right[
+`\(\sigma =\)` population standard deviation   
+`\(n =\)` sample size
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.center[
+
+**In the population**
+
+`\(\mu\)` = 100  
+
+`\(\sigma\)` = 15  
+
+
+
+&lt;img src="img/brain.png" width="50%"/&gt;
+]
+]
+
+.pull-right[
+
+.center[
+
+
+**Our sample**
+
+`\(n = 15\)`  
+
+`\(\overline{X}_{IQ} = 105.9\)`  
+
+`\(s_{IQ} = 15.10\)`
+
+.pull-left[
+&lt;img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="30%"/&gt;
+]
+
+.pull-right[
+`\(101, 122, 132\)` 
+`\(94, 129, 89\)`
+`\(109, 92, 100\)` 
+`\(125, 103, 91\)`
+`\(94, 116, 92\)`
+
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+`\(\mu\)` = 100  
+
+`\(\sigma\)` = 15  
+
+&lt;img src="img/brain.png" width="20%"/&gt;
+]
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+`\(n = 15\)`  
+
+`\(\overline{X}_{IQ} = 105.9\)`  
+
+`\(s_{IQ} = 15.10\)`
+
+&lt;img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/&gt;
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+`\(z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}\)`
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+`\(z_{\overline{x}} = \frac {105.9 - 100}{\sigma_{\overline{x}}}\)`
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+`\(\mu\)` = 100  
+
+`\(\sigma\)` = 15  
+
+&lt;img src="img/brain.png" width="20%"/&gt;
+]
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+`\(n = 15\)`  
+
+`\(\overline{X}_{IQ} = 105.9\)`  
+
+`\(s_{IQ} = 15.10\)`
+
+&lt;img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/&gt;
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+`\(z_{\overline{x}} = \frac {105.9 - 100}{\sigma_{\overline{x}}}\)`
+
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+`\(\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}\)`
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+`\(\sigma_{\overline{x}} = \frac{15}{\sqrt{15}}\)`
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+`\(\sigma_{\overline{x}} = 3.87\)`
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+`\(\mu\)` = 100  
+
+`\(\sigma\)` = 15  
+
+&lt;img src="img/brain.png" width="20%"/&gt;
+]
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+`\(n = 15\)`  
+
+`\(\overline{X}_{IQ} = 105.9\)`  
+
+`\(s_{IQ} = 15.10\)`
+
+&lt;img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/&gt;
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+`\(z_{\overline{x}} = \frac {105.9 - 100}{3.87}\)`
+
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+`\(z_{\overline{x}} = \frac {5.90}{3.87}\)`
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+`\(z_{\overline{x}} = 1.53\)`
+]
+]
+]
+
+---
+
+
+class: center, middle, inverse
+
+# _z_-scores
+
+---
+
+# Standardizing Scores
+
+.center[
+&lt;img src="img/raw-scores-to-z-scores.png" /&gt;
+]
+
+---
+
+# Developing z-scores
+
+.pull-left[
+.center[
+.content-box-blue[
+**Z-score**
+
+.Large[
+`$$z_{i} = \frac{x_{i} - \mu}{\sigma}$$`
+]
+]
+]
+]
+
+--
+
+.right[
+
+.Large[
+`$$z_{i} = \frac{deviation_{i}}{\sigma}$$`
+
+]
+]
+
+--
+
+.pull-right[
+The number of standard deviations a particular score deviates from its corresponding mean
+
+_z_-scoring is useful because a _z_-score of 1 .secondary[_means the same thing in any distribution_]
+]
+
+---
+
+# z-scores
+
+A report in 2010 indicates that Americans between the ages of 8 and 18 spend an average of `\(\mu = 7.5\)` hours per day using some sort of electronic device such as smart phones, computers, or tablets. Assume that the distribution of times is normal with a standard deviation of `\(\sigma = 2.5\)` hours. Aidan checked the ‘screen time’ info on his phone over the last month, and found that in the last four weeks, he spent `\(x = 6.3\)` hours on the phone per day.
+
+--
+
+`$$\mu = 7.5$$`
+--
+
+
+`$$\sigma = 2.5$$`
+
+--
+
+`$$x = 6.3$$`
+
+--
+
+`$$z_{i} = \frac{6.3 - 7.5}{2.5} = -0.48$$`
+
+---
+
+# Key concepts for the Midterm
+
+- Mean, median, and mode and their relationship to skewed distributions
+
+- Scales of measurement
+
+- Reliability
+
+- Alpha, _p_-value, critical region
+
+- Type I and Type II errors
+
+- Factors that influence statistical power
+
+
+---
+
+# Next time
+
+.pull-left[
+
+**Midterm Exam**
+
+- Wednesday 02/02/2022 08:00am MT Sturm Hall 187
+
+  - Bring calculator and pencil
+  
+  - Scantron, Formula Sheet, and scratch paper will be provided with the exam
+
+**Mini-Report**
+
+- Due Wednesday 02/02/2022 11:59pm MT via Canvas
+
+  - Submit `.pdf` or `.docx` file
+
+
+]
+
+.pull-right[
+
+.center[
+
+&lt;img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" /&gt;
+
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

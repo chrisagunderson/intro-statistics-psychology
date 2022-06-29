@@ -1,0 +1,1456 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 16: Final Exam Review
+
+]
+
+---
+
+# Outline for today
+
+```{r echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+
+.pull-left[
+
+**Final Exam Review** 
+
+- Key Computations
+
+  - Q & A
+
+- Key Concepts
+
+  - Q & A
+
+- Materials and general tips
+
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+---
+
+class: center, middle, inverse
+
+# Key Computations for the Final Exam
+
+---
+
+# Key Computations for the Final Exam
+
+- Independent samples _t_-test
+
+- Dependent samples _t_-test
+
+- One-way ANOVA
+
+- Simple linear regression
+
+---
+
+class: center, middle, inverse
+
+# Independent samples _t_-test
+
+---
+
+# Independent Samples _t_-test
+
+.content-box-blue[
+.center[
+
+**Independent samples _t_-test**
+
+$$t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{\overline{x}_{1} - \overline{x}_{2}}{s_{(\overline{x}_{1} - \overline{x}_{2})}}$$
+
+]
+]
+
+--
+
+.content-box-blue[
+.center[
+**Estimated standard error of the mean difference**
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2} \Bigg] \Bigg[ \frac{n_1 + n_2}{n_1 n_2} \Bigg]}$$
+
+]
+]
+
+---
+
+# Example: Independent samples _t_-test
+
+.left-column[
+**No hallway bump**
+
+$n_{1} = 10$
+
+$\bar{x}_{1} = 5.5$
+
+$s_{1}^2 = 2.5$
+
+**Hallway bump**
+
+$n_{2} = 10$
+
+$\bar{x}_{2} = 8.5$
+
+$s_{2}^2 = 3$
+
+]
+
+--
+
+.right-column[
+
+.content-box-blue[
+.center[
+
+**Independent samples _t_-test**
+
+$t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{\overline{x}_{1} - \overline{x}_{2}}{s_{(\overline{x}_{1} - \overline{x}_{2})}}$
+
+]
+]
+
+.content-box-blue[
+.center[
+**Estimated standard error of the mean difference**
+
+$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2} \Bigg] \Bigg[ \frac{n_1 + n_2}{n_1 n_2} \Bigg]}$
+]
+]
+]
+
+
+---
+
+## Estimated standard error of the mean difference
+
+.left-column[
+**No hallway bump**
+
+$n_{1} = 10$
+
+$\bar{x}_{1} = 5.5$
+
+$s_{1}^2 = 2.5$
+
+**Hallway bump**
+
+$n_{2} = 10$
+
+$\bar{x}_{2} = 8.5$
+
+$s_{2}^2 = 3$
+
+]
+
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2} \Bigg] \Bigg[ \frac{n_1 + n_2}{n_1 n_2} \Bigg]}$$
+
+--
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(10 - 1)2.5 + (10 - 1)3}{10 + 10 - 2} \Bigg] \Bigg[ \frac{10 + 10}{(10)(10)} \Bigg]}$$
+--
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(9)2.5 + (9)3}{18} \Bigg] \Bigg[ \frac{20}{100} \Bigg]}$$
+
+---
+
+## Estimated standard error of the mean difference
+
+.left-column[
+**No hallway bump**
+
+$n_{1} = 10$
+
+$\bar{x}_{1} = 5.5$
+
+$s_{1}^2 = 2.5$
+
+**Hallway bump**
+
+$n_{2} = 10$
+
+$\bar{x}_{2} = 8.5$
+
+$s_{2}^2 = 3$
+
+]
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{22.5 + 27}{18} \Bigg] \Bigg[ \frac{20}{100} \Bigg]}$$
+
+--
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ 2.75 \Bigg] \Bigg[ 0.20 \Bigg]} = .7416$$
+
+--
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = .74$$
+
+---
+
+# Independent samples _t_-test statistic
+
+.left-column[
+**No hallway bump**
+
+$n_{1} = 10$
+
+$\bar{x}_{1} = 5.5$
+
+$s_{1}^2 = 2.5$
+
+**Hallway bump**
+
+$n_{2} = 10$
+
+$\bar{x}_{2} = 8.5$
+
+$s_{2}^2 = 3$
+
+]
+
+.Large[
+$$t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{\overline{x}_{1} - \overline{x}_{2}}{s_{(\overline{x}_{1} - \overline{x}_{2})}}$$
+]
+
+--
+
+.Large[
+$$t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{5.5 - 8.5}{0.74}$$
+]
+
+--
+
+.Large[
+$$t_{(\overline{x}_{1} - \overline{x}_{2})} = -4.054$$
+]
+
+---
+
+class: center, middle, inverse
+
+# Dependent Samples _t_-test
+
+---
+
+# Dependent samples _t_-test
+
+.pull-left[
+.content-box-blue[
+.center[
+
+**Dependent samples _t_-test**
+
+.Large[
+
+$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$
+
+]
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Standard error of the difference scores**
+
+.Large[
+$$s_{\bar{x}_{d}} = \sqrt{\frac{s^2_{d}}{n}}$$
+
+]
+]
+]
+]
+
+
+---
+
+# Dependent samples _t_-test
+
+.pull-left[
+.content-box-blue[
+.center[
+
+**Dependent samples _t_-test**
+
+.Large[
+
+$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$
+
+]
+]
+]
+]
+
+.pull-right[
+$\bar{x}_{d}$ is the mean of the difference scores  
+
+$s_{\bar{x}_{d}}$ is the standard error of the mean difference  
+]
+
+---
+
+# Dependent samples _t_-test
+
+.pull-left[
+.content-box-blue[
+.center[
+**Standard error of the difference scores**
+
+.Large[
+$$s_{\bar{x}_{d}} = \sqrt{\frac{s^2_{d}}{n}}$$
+
+]
+]
+]
+]
+
+.pull-right[
+$s^2_{d}$ is the variance of the difference scores
+
+$n$ is the size of the sample (the number of difference scores)
+]
+
+---
+
+# Example: Dependent Samples _t_-test
+
+```{r echo=FALSE}
+
+cbt <- cbt %>% 
+  mutate(difference_score = pre_treatment - post_treatment)
+
+knitr::kable(cbt, "pipe")
+
+
+```
+
+--
+
+$\bar{x}_{d} =$ `r mean(cbt$difference_score)` mean of the difference scores
+
+$s^2_{d}=$ `r round(var(cbt$difference_score),2)` variance of the difference scores
+
+---
+
+# Example: Dependent Samples _t_-test
+
+
+.left-column[
+
+```{r echo=FALSE}
+cbt %>% 
+  select(difference_score) %>% 
+  knitr::kable()
+```
+
+$\bar{x}_{d} =$ `r mean(cbt$difference_score)` 
+
+$s^2_{d}=$ `r round(var(cbt$difference_score),2)`
+
+]
+
+.Large[
+$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$
+]
+
+--
+
+.Large[
+$$t_{\bar{x}_{d}} = \frac{3}{\sqrt{\frac{s^2_{d}}{n}}}$$
+]
+
+--
+
+.Large[
+$$t_{\bar{x}_{d}} = \frac{3}{\sqrt{\frac{4.67}{4}}} = \frac{3}{1.080509} = 2.78$$
+]
+
+
+---
+
+class: center, middle, inverse
+
+# One-way ANOVA
+
+---
+
+.content-box-blue[
+.center[
+
+$F = \frac{MS_{between}}{MS_{within}}$
+
+]
+]
+
+--
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+$MS_{between} = \frac{SS_{between}}{df_{between}}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+
+.center[
+$MS_{within} = \frac{SS_{within}}{df_{within}}$
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}$
+
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$df_{between} = k - 1$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$df_{within} = nT - k$
+
+]
+]
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+.center[
+<img src="img/anova-each-group-calculations-6.png" width="85%"/>
+]
+
+---
+
+# Example Experiment
+
+**Research Question**: Does teaching students about _growth mindsets_ affect students' anxiety more than giving them _general encouragement_ or _no encouragement_?
+
+--
+
+.center[
+
+<img src="img/anova-example-experiment-depiction.png" width="70%"/>
+
+]
+
+---
+
+# Group Calculations: Group 1
+
+.center[
+**Growth Mindset**
+]
+
+.pull-left[
+
+| Growth | Growth<sup>2</sup> |
+| --- | --- |
+| 6 | 36 |
+| 6 | 36 |
+| 5 | 25 |
+| 8 | 64 |
+| 7 | 49 |
+| 6 | 36 |
+| 3 | 9 |
+| 4 | 16 |
+]
+
+--
+
+.pull-right[
+$$n_{1} = 8$$
+
+$$\bar{x}_{1} =5.625$$
+
+$$\Sigma{x}_{1} = 45$$
+
+$$\frac{(\Sigma{x}_{1})^2}{n_{1}} = \frac{45^2}{8} = 253.125$$
+
+$$\Sigma(x^2_{1}) = 271$$
+]
+
+---
+
+# Example Experiment
+
+
+Repeat the same process for each group.
+
+.pull-left[
+
+.pull-left[
+
+**Growth**  
+
+$n_{1} = 8$
+
+$\bar{x}_{1} =5.625$
+
+$\Sigma{x}_{1} = 45$
+
+$\frac{(\Sigma{x}_{1})^2}{n_{1}} =  253.125$
+
+$\Sigma(x^2_{1}) = 271$
+]
+
+.pull-right[
+**General**  
+
+$n_{2} = 8$
+
+$\bar{x}_{2} = 6.625$
+
+$\Sigma{x}_{2} = 53$
+
+$\frac{(\Sigma{x}_{2})^2}{n_{2}} = 351.125$
+
+$\Sigma(x^2_{2}) = 359$
+]
+]
+
+.pull-right[
+**None**  
+
+$n_{3} = 8$
+
+$\bar{x}_{3} = 8.125$
+
+$\Sigma{x}_{3} = 65$
+
+$\frac{(\Sigma{x}_{3})^2}{n_{3}} = 528.125$
+
+$\Sigma(x^2_{3}) = 537$
+]
+
+---
+
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-1.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-2.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-3.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-4.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-5.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+.center[
+<img src="img/anova-each-group-calculations-6.png" width="85%"/>
+]
+
+
+---
+
+# Calculate Terms Across Groups
+
+Calculate all the terms needed for $SS_{between}$ and $SS_{within}$
+
+--
+
+$nT = n_{1} + n_{2} + n_{3} = 8 + 8 + 8 = 24$ 
+
+--
+
+$\Sigma\Sigma{x} = \Sigma{x}_{1} + \Sigma{x}_{2} + \Sigma{x}_{3} = 45 + 53 + 65 = 163$ 
+
+--
+
+$\frac{(\Sigma\Sigma{x})^2}{nT} = \frac{163^2}{24} = 1107.04$ 
+
+--
+
+$\Sigma\frac{(\Sigma{x})^2}{n} = \frac{(\Sigma{x}_{1})^2}{n_{1}} + \frac{(\Sigma{x}_{2})^2}{n_{2}} + \frac{(\Sigma{x}_{3})^2}{n_{3}} = 253.125 + 351.125 + 528.125 = 1132.38$
+
+--
+
+$\Sigma\Sigma(x^2) = \Sigma(x^2_{1}) + \Sigma(x^2_{2}) + \Sigma(x^2_{3}) = 271 + 359 + 537 = 1167$
+
+---
+
+# Calculating _SS<sub>between</sub>_ and _SS<sub>within</sub>_
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}$
+
+]
+]
+]
+.pull-right[
+.content-box-blue[
+.center[
+
+$SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}$
+
+]
+]
+]
+
+--
+.center[
+$\frac{(\Sigma\Sigma{x})^2}{nT} = 1107.04 \qquad \qquad \Sigma\frac{(\Sigma{x})^2}{n} = 1132.38 \qquad \qquad \Sigma\Sigma(x^2) = 1167$
+]
+
+--
+
+$$SS_{between} = 1132.38 - 1107.04 = 25.34$$
+
+--
+
+$$SS_{within} = 1167 - 1132.38 = 34.62$$
+
+---
+
+# Calculating _df<sub>between</sub>_ and _df<sub>within</sub>_
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$df_{between} = k - 1$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$df_{within} = nT - k$
+
+]
+]
+]
+
+
+$k=$ number of groups  
+$nT=$ total sample size  
+$df=$ degrees of freedom
+
+
+--
+
+
+$$df_{between} = k - 1 = 3 - 1 = 2$$
+
+
+--
+
+
+$$df_{within} = nT - k = 24 - 3 = 21$$
+
+---
+
+# Calculating _MS<sub>between</sub>_ and _MS<sub>within</sub>_
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+$MS_{between} = \frac{SS_{between}}{df_{between}}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$MS_{within} = \frac{SS_{within}}{df_{within}}$
+
+]
+]
+]
+
+--
+
+$$SS_{between} = 1132.38 - 1107.04 = 25.34 \qquad \quad SS_{within} = 1167 - 1132.38 = 34.62$$
+
+--
+
+$$df_{between} = k - 1 = 3 - 1 = 2 \qquad \qquad \qquad df_{within} = nT - k = 24 - 3 = 21$$
+
+--
+
+$$MS_{between} = \frac{25.34}{2} = 12.67 \qquad \qquad \qquad MS_{within} = \frac{34.62}{21} = 1.64$$
+
+---
+
+# Calculating the _F_ statistic
+
+.content-box-blue[
+.center[
+$$F = \frac{MS_{between}}{MS_{within}}$$
+]
+]
+
+--
+
+$$MS_{between} = \frac{25.34}{2} = 12.67 \qquad \qquad \qquad \qquad MS_{within} = \frac{34.62}{21} = 1.64$$
+
+--
+
+$$F = \frac{12.67}{1.64} = 7.70$$
+
+---
+
+class: center, middle, inverse
+
+# Simple Linear Regression
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+
+```{r correlation-table-5, echo=FALSE}
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+```{r correlation-table-6, echo=FALSE}
+corr_data_sum_lecture<- corr_data_lecture4 %>% 
+  summarise(across(where(is.numeric), sum)) %>% 
+  rename("$\\sum x$" = `$x$`,
+         "$\\sum y$" = `$y$`,
+         "$\\sum  x^2$" = `$$x^2$$`,
+         "$\\sum y^2$" = `$$y^2$$`,
+         "$\\sum xy$" = `$$xy$$`) %>% 
+  select(-"$i$")
+
+knitr::kable(corr_data_sum_lecture, "pipe")
+```
+]
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+.content-box-blue[
+.center[
+**Slope**
+
+.Large[
+$$b = \frac{\Sigma{XY} - \frac{\Sigma{x}\Sigma{y}}{n}}{\Sigma{X}^2 - \frac{(\Sigma{X})^2}{n}}$$
+]
+]
+]
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE}
+knitr::kable(corr_data_sum_lecture, "pipe")
+
+```
+
+$$b = \frac{294 - \frac{(39)(42)}{6}}{289 - \frac{(39)^2}{6}}$$
+
+$$b = \frac{294 - 273}{289 - 253.5} = \frac{21}{35.5} = 0.59$$
+]
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+.content-box-blue[
+.center[
+**Intercept**
+
+.Large[
+$$a = \frac{\Sigma{Y} - b\Sigma{X}}{n}$$
+]
+]
+]
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE}
+knitr::kable(corr_data_sum_lecture, "pipe")
+
+```
+.center[
+Slope, $b = 0.59$
+]
+
+$$a = \frac{42 - (0.59)(39)}{6} = \frac{18.99}{6} = 3.16$$
+]
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+.content-box-blue[
+.center[
+**Simple linear regression**
+
+.Large[
+$$\hat{y} = bX + a$$
+]
+]
+]
+]
+
+.pull-right[
+.center[
+**Slope**: $b = 0.59$  
+
+**Intercept**: $a = 3.16$
+]
+]
+
+.pull-right[
+.Large[
+$$\hat{y} = 0.59X + 3.16$$
+]
+]
+
+---
+
+class: center, middle
+
+# Q & A: Computations
+
+---
+
+class: center, middle, inverse
+
+# Key Concepts for the Final Exam
+
+---
+
+# Key Concepts
+
+- Identifying when to use a particular test statistic
+
+  - One sample, independent, or dependent _t_-test
+  
+  - One-way ANOVA or Simple linear regression
+
+--
+
+- Identifying design types (within-subjects, between-subjects)
+
+--
+
+- Difference between factors and levels
+
+--
+  
+- Main effects vs. interaction
+
+--
+
+- Why ANOVA instead of many _t_-tests?
+
+--
+
+- Effect size benchmarks
+
+???
+
+Cohen's d
+- A small effect size ranges from 0 to .2.
+- A medium effect size ranges from .2 to .8.
+- A large effect size is any value above .8.
+
+Correlation
+
+0 to .1 Weak or no relationship
+.2 Weak to moderate relationship
+.3 Moderate relationship
+.4 Moderate to strong relationship
+.5 to 1.0 Strong relationship
+
+Eta-squared
+
+- A small effect size is about .01.
+- A medium effect size is about .06.
+- A large effect size is about .14.
+
+---
+
+# _t_-tests: one sample
+
+.pull-left[
+.content-box-blue[
+.center[
+**One-sample _t_-test statistic**
+
+$$t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}}$$
+**Estimated standard error**
+
+$$s_{\overline{x}} = \frac{s}{\sqrt{n}}$$
+]
+]
+]
+
+--
+
+.pull-right[
+**When to use it**
+
+- When you only have one sample of participants
+
+- You are comparing a _sample_ mean to a population mean or a chance value
+
+.secondary[Example 1]: You want to know if a sample of DU students' math performance is higher than the national average (i.e., a population mean)
+
+.secondary[Example 2]: You want to determine whether  a sample's lie detection peformance is above chance, (i.e., 50%) 
+]
+
+---
+
+# One sample design
+
+- We know the population mean but not the standard deviation or variance
+
+- We can estimate it with the sample statistics using a one-sample t-test
+
+.center[
+<img src="img/one-sample-figure.png" width="70%"/>
+]
+
+---
+
+# _t_-tests: independent samples
+
+.pull-left[
+.content-box-blue[
+.center[
+
+**Independent samples _t_-test**
+
+$$t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{\overline{x}_{1} - \overline{x}_{2}}{s_{(\overline{x}_{1} - \overline{x}_{2})}}$$
+]
+]
+]
+
+.pull-right[
+**When to use it**
+
+- You have two independent samples of participants
+
+- Each sample of participants is in only **one** condition in the study
+
+- .secondary[Example 1]: You are comparing participants who were exposed to cognitive behavioral therapy to those who were not
+
+- .secondary[Example 2]: You are comparing two groups not randomly assigned (e.g., DU students vs. CU students)
+]
+
+---
+
+# Independent samples
+
+- This is also referred to as a **between-subjects** design. 
+
+- Why? Because we are comparing the means _between_ two groups
+
+.center[
+
+<img src="img/between-subjects-design.png" width="70%"/>
+
+]
+
+---
+
+# _t_-tests: dependent samples
+
+.pull-left[
+.content-box-blue[
+.center[
+
+**Dependent samples _t_-test**
+
+$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$
+
+]
+]
+]
+
+.pull-right[
+**When to use it**
+
+- One sample of participants are in **both** conditions of a study
+
+- You are comparing a pre-treatment measure to a post-treatment measure
+
+.secondary[Example 1]: We are comparing whether participants are faster at identifying short words compared to long words
+
+.secondary[Exampl 2]: We measure anxiety before a treatment, administer a treatment, and measure anxiety post-treatment
+]
+
+---
+
+# Dependent samples
+
+- This is also referred to as a **within-subjects** design. 
+
+- Why? Because we are comparing two means _within_ groups
+
+.center[
+
+<img src="img/within-subjects-design-5.png" width="70%"/>
+
+]
+
+
+---
+
+# Practice Examples
+
+**Which type of statistical test?**  
+
+A researcher is investigating whether the prevalence of drug use on their campus differs from the national prevalence of universities and colleges. 
+
+--
+
+_One-sample t-test_
+
+--
+
+**What type of design?**  
+
+A researcher wants to know whether a new memory supplement enhances recall. Participants are given an initial memory test. Then, they are given the new supplement and wait for it to take effect by doing a neutral task. Then, the research gives them a final memory test.
+
+--
+
+_Within-subjects_
+
+---
+
+# Practice Examples
+
+**Which type of design and statistical test**?
+
+A researcher wants to know if people will have better job interview performance if they watch funny videos to calm their nerves before the interview. Participants are randomly assigned to watch either funny videos or neutral videos about waves, birds, and clouds. Participants then do a mock interview. The interviewer rates how likely they would be to hire them. 
+
+--
+
+_Between-subjects_, _Independent samples t-test_
+
+---
+
+# Practice Examples
+
+The relationship between research designs and _t_-tests
+
+| Design | Test |
+| --- | --- |
+| One sample of participants | One-sample t-test |
+| Between-subjects | Independent samples t-test |
+| Within-subjects | Dependent samples t-test |
+
+---
+
+# ANOVA: Terminology
+
+
+.content-box-gray[
+**Factor**: Independent variable(s) in the study
+]
+
+.content-box-gray[
+**Level(s)**: Groups within each independent variable
+]
+
+.content-box-gray[
+**Response**: The dependent variable in the study
+]
+
+---
+
+# Example: One factor, several levels
+
+.center[
+
+<img src="img/factor-levels-example.png" width="75%"/>
+
+]
+
+---
+
+# Practice Examples
+
+**Factor or level**?
+
+A researcher is studying DU students. Specifically, the difference in 1 mile running time among DU athletes, DU students who go to the gym regularly, and DU students who are not athletes or go to the gym regularly. Here, _"DU athletes"_ is a:
+
+--
+
+_Level_
+
+--
+
+How many levels are in this factor?
+
+--
+
+_Three levels_:
+
+- DU athletes
+
+- DU students who go to the gym regularly
+
+- DU students who are not athletes or go to the gym regularly
+
+---
+
+# Practice Examples
+
+The same researcher does a follow-up study with DU students. Specifically, the researcher is studying difference in 1 mile running time among DU athletes, DU students who go to the gym regularly, and DU students who are not athletes or go to the gym regularly. The researcher also asks students whether they participated in sports during high school (yes, no) to see if prior experience affects the results. Here, _"participated in sports during high school"_ is a:
+
+--
+
+_Factor_
+
+--
+
+How many factors and levels are in this factorial design?
+
+--
+
+.pull-left[
+_Factor 1: Current Fitness status_
+
+- DU athlete
+- DU gym-goers
+- neither
+]
+
+
+.pull-right[
+
+_Factor 2: Previous Experience_
+
+- Participated in sports in high school
+- Did not participate in sports in high school
+]
+
+---
+
+# Main effects and interactions
+
+.content-box-gray[
+**Main effect**: When an analysis of the data reveals a difference between the levels of any factor
+]
+
+--
+
+.content-box-gray[
+**Interaction**: describes the degree to which the effect of _one factor_ depends on the _level_ of the other factor
+]
+
+---
+
+# ANOVA vs. Regression
+
+**ANOVA**
+
+- In ANOVA the factors (or independent variables) _must be_ nominal or ordinal (i.e., categorical)
+
+- In ANOVA, we are comparing mean differences
+
+--
+
+**Regression** 
+
+- In Regression the predictors (or independent variables) _can be_ interval or ratio (i.e., continuous)
+
+- In regression, we are making predictions
+
+---
+
+class: center, middle
+
+# Q & A: Concepts
+
+---
+
+class: center, middle, inverse
+
+# Materials to Review
+
+---
+
+# Lectures
+
+**Review lectures 10-15 to prepare for the Final Exam**
+
+Lecture 09 | Differences from the population
+
+Lecture 10 | Differences between two groups (part I)
+
+Lecture 11 | Differences between two groups (part II)
+
+Lecture 12 | Differences between many groups
+
+Lecture 13 | Differences between many factors
+
+Lecture 14 | Testing relationships with correlations
+
+Lecture 15 | Making predictions using regression
+
+
+
+---
+
+# Guides
+
+**Review Guides 11-15 to prepare for the Final Exam**
+
+Guide 10 | Calculating independent samples t-test
+
+Guide 11 | Effect size for independent samples t-test
+
+Guide 12 | Calculating dependent samples t-test
+
+Guide 13 | Effect size for dependent samples t-test
+
+Guide 14 | Calculating one way anova
+
+Guide 15 | Effect size for one way anova
+
+
+---
+
+# Readings
+
+**Review Ch.11-16 to prepare for the Final Exam**
+
+Ch.11 | _t(ea) for Two: Tests Between the Means of Different Groups_
+
+Ch.12 | _t(ea) for Two (Again): Tests Between the
+Means of Related Groups_
+
+Ch.13 | _Two Groups Too Many? Try Analysis of Variance_
+
+Ch.14 | _Two Too Many Factors: Factorial Analysis
+of Variance—A Brief Introduction_
+
+Ch.15 | _Testing Relationships Using the Correlation
+Coefficient: Cousins or Just Good Friends?_
+
+Ch.16 | _Using Linear Regression: Predicting the Future_
+
+---
+
+# Formula Sheet
+
+.pull-left[
+
+- Practice identifying each of the equations on the formula sheet
+
+- You may want to make flash cards
+
+- Then, practice with the formula sheet and complete the Final Review Practice Packet
+
+]
+
+.pull-right[
+
+<img src="img/formula-sheet-collated.png" width="80%"/>
+
+]
+
+---
+
+class: center, middle, inverse
+
+# Course Evaluations
+
+---
+
+# The Last Next Time
+
+.pull-left[
+
+**Application Project**
+
+- Due tonight 03/09/2022 at 11:59pm MT
+
+**Final Exam**
+
+- Thursday 03/17/2022 08:00-09:50am Sturm Hall 187
+
+**Extra Credit**
+
+- Due 03/17/2022 11:59pm MT
+
+  - SONA Participation
+  
+  - Make a meme
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

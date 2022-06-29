@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>lecture-12-differences-between-many-groups.knit</title>
+    <meta charset="utf-8" />
+    <script src="lecture-12-differences-between-many-groups_files/header-attrs/header-attrs.js"></script>
+    <link href="lecture-12-differences-between-many-groups_files/remark-css/hygge.css" rel="stylesheet" />
+    <link href="lecture-12-differences-between-many-groups_files/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="lecture-12-differences-between-many-groups_files/tile-view/tile-view.js"></script>
+    <link href="lecture-12-differences-between-many-groups_files/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="lecture-12-differences-between-many-groups_files/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+&lt;img src="img/intro-stats-title-logo.png" width="50%"/&gt;
+]
+
+.center[
+### Lecture 12: Differences Between Many Groups
+
+]
+
+---
+
+# Outline for today
+
+
+
+
+.pull-left[
+
+- Review parts of last class
+
+- The One-Way ANOVA
+
+- Effect size for the One-Way ANOVA
+
+- One-Way ANOVAs in JASP
+
+  - Download `Stats Class 14 Dataset (One-way ANOVA).jasp`
+
+]
+
+.pull-right[
+&lt;img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80" /&gt;
+]
+
+---
+
+class: center, middle, inverse
+
+# Review
+
+---
+
+.center[
+&lt;img src="img/one-sample-figure.png" /&gt;
+]
+
+---
+
+# _t_-tests: one sample
+
+
+We have one sample, but we don't know the population standard deviation or population variance
+
+.pull-left[
+.content-box-blue[
+.center[
+
+**One-sample _t_-test statistic**  
+
+`\(t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**Estimated standard error**  
+
+`\(s_{\overline{x}} = \frac{s}{\sqrt{n}}\)`
+
+]
+]
+]
+
+---
+
+.center[
+
+&lt;img src="img/between-subjects-design.png"/&gt;
+
+]
+
+---
+
+# _t_-tests: independent samples
+
+.left-column[
+
+We have two independent samples
+
+]
+
+.right-column[
+
+.content-box-blue[
+.center[
+
+**Independent samples _t_-test**
+
+`\(t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{\overline{x}_{1} - \overline{x}_{2}}{s_{(\overline{x}_{1} - \overline{x}_{2})}}\)`
+
+]
+]
+
+
+.content-box-blue[
+.center[
+**Estimated standard error of the mean difference**
+
+`\(s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2} \Bigg] \Bigg[ \frac{n_1 + n_2}{n_1 n_2} \Bigg]}\)`
+]
+]
+]
+
+---
+
+
+.center[
+
+&lt;img src="img/within-subjects-generic.png" /&gt;
+
+]
+
+---
+
+# _t_-tests
+
+We want to investigate whether some treatment made an effect compared to a baseline within the same individual(s)
+
+.pull-left[
+.content-box-blue[
+.center[
+**Dependent samples _t_-test**
+
+`$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Estimated standard error of the difference scores**
+
+`$$s_{\bar{x}_{d}} = \sqrt{\frac{s^2_{d}}{n}}$$`
+
+]
+]
+]
+
+
+
+---
+
+# Within-subjects designs
+
+.center[
+
+&lt;img src="img/within-subjects-design-5.png" width="85%"/&gt;
+
+]
+
+
+---
+
+class: center, middle, inverse
+
+# One-way ANOVA
+
+---
+
+# One-way ANOVA
+
+**The problem**: All our tests so far involve only one or two groups
+
+--
+
+**Goal**: To be able to measures differences along some dimension among participants in more than two groups
+
+--
+
+- The test we use to compare many groups is called the ANOVA, or the  
+**AN**alysis **O**f **VA**riance
+
+--
+
+- Instead of _z_ or _t_, ANOVAs use _F_ distributions
+
+---
+
+# ANOVA: Terminology
+
+
+.content-box-gray[
+**Factor**: Independent variable(s) in the study
+]
+
+--
+
+.content-box-gray[
+**Level(s)**: Groups within each independent variable
+]
+
+--
+
+.content-box-gray[
+**Response**: The dependent variable in the study
+]
+
+--
+
+Today, we’ll learn about _one-way ANOVAs_, which have only one factor
+
+---
+
+# Example: One factor, several levels
+
+.center[
+
+&lt;img src="img/factor-levels-example.png" width="75%"/&gt;
+
+]
+
+---
+
+# ANOVA: What does it do?
+
+- The ANOVA asks, “are there any significant differences among the different groups we’re testing?”
+
+--
+
+- Essentially, it investigates whether **any** of the population means of our groups differ
+
+--
+
+- The ANOVA is an **omnibus test**, meaning it tests whether there are _any_ differences among groups
+
+--
+
+- It doesn’t tell which group(s) is(are) different; you need .secondary[post-hoc tests] for this (we’ll come back to this later)
+
+.footnote[
+
+You can also think of _onmibus test_ as an 'overall' test
+
+]
+
+---
+
+# Statistical Hypotheses
+
+.pull-left[
+
+**Null Hypothesis `\(H_{0}\)`**
+
+There is no difference
+
+The means are equal
+
+`\(\mu_{1} = \mu_{2} = \mu_{3} = ... = \mu_{k}\)`
+
+]
+
+--
+
+.pull-right[
+
+**Alternative Hypothesis `\(H_{a}\)`**
+
+There is a difference
+
+The means are not all equal
+
+]
+
+.footnote[
+
+`\(k =\)` the number of groups
+
+]
+
+---
+
+# Why not just use many _t_-tests?
+
+--
+
+.content-box-gray[
+**Experiment-wise alpha level**: the total probability of a Type I error that is accumulated from all of the individual tests in the experiment. Typically, the experiment-wise alpha level is substantially greater than the value of alpha used for any one of the individual tests
+]
+
+--
+
+- _Type I Error rate_ increases drastically as you run additional analyses
+
+- This is called **alpha escalation**
+  - Each test has a risk of a Type I error, and the more tests you do, the more risk there is
+
+---
+
+# Review: Decisions
+
+.center[
+
+&lt;img src="img/decision-table-4.png" width="80%"/&gt;
+]
+
+---
+
+# Building the _F_-statistic
+
+.content-box-blue[
+
+.center[
+
+.Large[
+
+`\(F = \frac{Variance \: due \: to \: group \: differences}{Variance \: due \: to \: random \: chance}\)`
+
+]
+]
+]
+
+--
+
+.center[
+**Numerator**  
+.pull-left[
+Variance between groups will be small if there are no differences between groups, leading to a small _F_ statistic
+]
+
+.pull-right[
+Variance between groups will be large if there are differences between groups, leading to a large _F_ statistic
+]
+]
+
+.center[
+**Denominator**  
+
+Error/random chance differences among individuals within single groups
+
+]
+
+
+---
+
+# Building the _F_-statistic
+
+- That is why is called the ANOVA: We analyze and compare **variance** in the dependent variable separately _between groups_ and _within groups_
+
+--
+
+- There is, however, a lot of calculations needed
+
+.center[
+
+&lt;img src="https://static.thenounproject.com/png/2671768-200.png" /&gt;
+
+]
+
+---
+
+# _F_-statistic: One-way ANOVA
+
+.content-box-blue[
+.center[
+.Large[
+
+`\(F = \frac{MS_{between}}{MS_{within}}\)`
+
+]
+]
+]
+
+--
+
+`\(MS_{between}\)`: mean sum of squares between groups (variance between groups)
+
+`\(MS_{within}\)`: mean sum of squares within groups (variance within groups)
+
+---
+
+# _F_-statistic: One-way ANOVA
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+**Mean sum of squares**   
+**between groups**
+
+`\(MS_{between} = \frac{SS_{between}}{df_{between}}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**Mean sum of squares**  
+**within groups**
+
+`\(MS_{within} = \frac{SS_{within}}{df_{within}}\)`
+
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(df_{between} = k - 1\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(df_{within} = nT - k\)`
+
+]
+]
+]
+
+`\(k=\)` number of groups  
+`\(nT=\)` total number of participants across all groups  
+`\(df=\)` degrees of freedom, an estimate of sample size
+
+---
+
+# _F_-statistic: One-way ANOVA
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+**Mean sum of squares**   
+**between groups**
+
+`\(MS_{between} = \frac{SS_{between}}{df_{between}}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**Mean sum of squares**  
+**within groups**
+
+`\(MS_{within} = \frac{SS_{within}}{df_{within}}\)`
+
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}\)`
+
+]
+]
+]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}\)`
+
+]
+]
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+.center[
+&lt;img src="img/anova-ss-steps.png" width="85%"/&gt;
+]
+
+---
+
+# Sum of Squares: One-way ANOVA
+
+Once you have these values, plug them into the _SS_ formulas
+
+.content-box-blue[
+.center[
+.Large[
+
+`\(SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}\)`
+
+]
+]
+]
+
+.content-box-blue[
+.center[
+
+.Large[
+
+`\(SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}\)`
+
+]
+]
+]
+
+---
+
+# Example Experiment
+
+**Research Question**: Does teaching students about _growth mindsets_ affect students' anxiety more than giving them _general encouragement_ or _no encouragement_?
+
+--
+
+.center[
+
+&lt;img src="img/anova-example-experiment-depiction.png" width="70%"/&gt;
+
+]
+
+---
+
+## Group Calculations
+
+.center[
+&lt;img src="img/anova-ss-steps.png" width="85%"/&gt;
+]
+
+
+---
+
+# Group Calculations: Group 1
+
+.center[
+**Growth Mindset**
+]
+
+.pull-left[
+
+| Growth | Growth&lt;sup&gt;2&lt;/sup&gt; |
+| --- | --- |
+| 6 | 36 |
+| 6 | 36 |
+| 5 | 25 |
+| 8 | 64 |
+| 7 | 49 |
+| 6 | 36 |
+| 3 | 9 |
+| 4 | 16 |
+]
+
+--
+
+.pull-right[
+`$$n_{1} = 8$$`
+
+`$$\bar{x}_{1} =5.625$$`
+
+`$$\sum{x}_{1} = 45$$`
+
+`$$\frac{(\sum{x}_{1})^2}{n_{1}} = \frac{45^2}{8} = 253.125$$`
+
+`$$\sum(x^2_{1}) = 271$$`
+]
+
+---
+
+# Group Calculations: Group 2
+
+.center[
+**General Encouragement**
+]
+
+.pull-left[
+
+| General | General&lt;sup&gt;2&lt;/sup&gt; |
+| --- | --- |
+| 8 | 64 |
+| 7 | 49|
+| 6 | 36 |
+| 5 | 25 |
+| 6 | 36 |
+| 7 | 49 |
+| 8 | 64 |
+| 6 | 36 |
+]
+
+--
+
+.pull-right[
+`$$n_{2} = 8$$`
+
+`$$\bar{x}_{2} = 6.625$$`
+
+`$$\sum{x}_{2} = 53$$`
+
+`$$\frac{(\sum{x}_{2})^2}{n_{2}} = \frac{53^2}{8} = 351.125$$`
+
+`$$\sum(x^2_{2}) = 359$$`
+]
+
+---
+
+# Group Calculations: Group 3
+
+.center[
+**No Encouragement**
+]
+
+.pull-left[
+
+| None | None&lt;sup&gt;2&lt;/sup&gt; |
+| --- | --- |
+| 9 | 81 |
+| 8 | 64 |
+| 9 | 81 |
+| 9 | 81 |
+| 7 | 49 |
+| 8 | 64 |
+| 6 | 36 |
+| 9 | 81 |
+]
+
+--
+
+.pull-right[
+`$$n_{3} = 8$$`
+
+`$$\bar{x}_{3} = 8.125$$`
+
+`$$\sum{x}_{3} = 65$$`
+
+`$$\frac{(\sum{x}_{3})^2}{n_{3}} = \frac{65^2}{8} = 528.125$$`
+
+`$$\sum(x^2_{3}) = 537$$`
+]
+
+---
+
+# Example Experiment
+
+
+We now have all the group statistics we need to compute the across group statistics
+
+.pull-left[
+
+.pull-left[
+
+**Growth**  
+
+`\(n_{1} = 8\)`
+
+`\(\bar{x}_{1} =5.625\)`
+
+`\(\sum{x}_{1} = 45\)`
+
+`\(\frac{(\sum{x}_{1})^2}{n_{1}} =  253.125\)`
+
+`\(\sum(x^2_{1}) = 271\)`
+]
+
+.pull-right[
+**General**  
+
+`\(n_{2} = 8\)`
+
+`\(\bar{x}_{2} = 6.625\)`
+
+`\(\sum{x}_{2} = 53\)`
+
+`\(\frac{(\sum{x}_{2})^2}{n_{2}} = 351.125\)`
+
+`\(\sum(x^2_{2}) = 359\)`
+]
+]
+
+.pull-right[
+**None**  
+
+`\(n_{3} = 8\)`
+
+`\(\bar{x}_{3} = 8.125\)`
+
+`\(\sum{x}_{3} = 65\)`
+
+`\(\frac{(\sum{x}_{3})^2}{n_{3}} = 528.125\)`
+
+`\(\sum(x^2_{3}) = 537\)`
+]
+
+---
+
+## Calculate Terms Across Groups
+
+.center[
+&lt;img src="img/anova-ss-steps.png" width="85%"/&gt;
+]
+
+
+---
+
+# Calculate Terms Across Groups
+
+Calculate all the terms needed for `\(SS_{between}\)` and `\(SS_{within}\)`
+
+--
+
+`\(nT = n_{1} + n_{2} + n_{3} = 8 + 8 + 8 = 24\)` 
+
+--
+
+`\(\sum\sum{x} = \sum{x}_{1} + \sum{x}_{2} + \sum{x}_{3} = 45 + 53 + 65 = 163\)` 
+
+--
+
+`\(\frac{(\sum\sum{x})^2}{nT} = \frac{163^2}{24} = 1107.04\)` 
+
+--
+
+`\(\sum\frac{(\sum{x})^2}{n} = \frac{(\sum{x}_{1})^2}{n_{1}} + \frac{(\sum{x}_{2})^2}{n_{2}} + \frac{(\sum{x}_{3})^2}{n_{3}} = 253.125 + 351.125 + 528.125 = 1132.38\)`
+
+--
+
+`\(\sum\sum(x^2) = \sum(x^2_{1}) + \sum(x^2_{2}) + \sum(x^2_{3}) = 271 + 359 + 537 = 1167\)`
+
+---
+
+# Calculating _SS&lt;sub&gt;between&lt;/sub&gt;_ and _SS&lt;sub&gt;within&lt;/sub&gt;_
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}\)`
+
+]
+]
+]
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}\)`
+
+]
+]
+]
+
+--
+
+`\(\frac{(\sum\sum{x})^2}{nT} = 1107.04 \qquad \qquad \sum\frac{(\sum{x})^2}{n} = 1132.38 \qquad \qquad \sum\sum(x^2) = 1167\)`
+
+--
+
+`$$SS_{between} = 1132.38 - 1107.04 = 25.34$$`
+
+--
+
+`$$SS_{within} = 1167 - 1132.38 = 34.62$$`
+
+---
+
+# Calculating _df&lt;sub&gt;between&lt;/sub&gt;_ and _df&lt;sub&gt;within&lt;/sub&gt;_
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(df_{between} = k - 1\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(df_{within} = nT - k\)`
+
+]
+]
+]
+
+
+`\(k=\)` number of groups  
+`\(nT=\)` total sample size  
+`\(df=\)` degrees of freedom
+
+
+--
+
+
+`$$df_{between} = k - 1 = 3 - 1 = 2$$`
+
+
+--
+
+
+`$$df_{within} = nT - k = 24 - 3 = 21$$`
+
+---
+
+# Calculating _MS&lt;sub&gt;between&lt;/sub&gt;_ and _MS&lt;sub&gt;within&lt;/sub&gt;_
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+`\(MS_{between} = \frac{SS_{between}}{df_{between}}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(MS_{within} = \frac{SS_{within}}{df_{within}}\)`
+
+]
+]
+]
+
+--
+
+`$$SS_{between} = 1132.38 - 1107.04 = 25.34 \qquad \quad SS_{within} = 1167 - 1132.38 = 34.62$$`
+
+--
+
+`$$df_{between} = k - 1 = 3 - 1 = 2 \qquad \qquad \qquad df_{within} = nT - k = 24 - 3 = 21$$`
+
+--
+
+`$$MS_{between} = \frac{25.34}{2} = 12.67 \qquad \qquad \qquad MS_{within} = \frac{34.62}{21} = 1.64$$`
+
+---
+
+# Calculating the _F_ statistic
+
+.content-box-blue[
+.center[
+`$$F = \frac{MS_{between}}{MS_{within}}$$`
+]
+]
+
+--
+
+`$$MS_{between} = \frac{25.34}{2} = 12.67 \qquad \qquad \qquad \qquad MS_{within} = \frac{34.62}{21} = 1.64$$`
+
+--
+
+`$$F = \frac{12.67}{1.64} = 7.70$$`
+
+---
+
+.content-box-blue[
+.center[
+
+`\(F = \frac{MS_{between}}{MS_{within}}\)`
+
+]
+]
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+`\(MS_{between} = \frac{SS_{between}}{df_{between}}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+
+.center[
+`\(MS_{within} = \frac{SS_{within}}{df_{within}}\)`
+]
+]
+]
+
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}\)`
+
+]
+]
+]
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(df_{between} = k - 1\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(df_{within} = nT - k\)`
+
+]
+]
+]
+
+---
+
+class: center, middle, inverse
+
+# Effect size for the One-way ANOVA
+
+---
+
+# Effect size: One-way ANOVA
+
+The effect size for a one-way ANOVA is represented by _Eta squared_, `\(\eta^2\)`, not Cohen’s _d_
+
+--
+
+.content-box-blue[
+.center[
+**Effect size for One-way ANOVA** 
+]
+`$$\eta^2 = \frac{SS_{between}}{SS_{Total}}$$`
+]
+
+--
+
+.content-box-blue[
+.center[
+
+`$$SS_{total} = SS_{between} + SS_{within} = \sum\sum(x^2) - \frac{(\sum\sum{x})^2}{nT}$$`
+
+]
+]
+
+---
+
+# Effect size: One-way ANOVA
+
+**Getting the total sum of squares**
+
+`$$SS_{total} = SS_{between} + SS_{within}$$`
+
+--
+
+`$$\require{cancel} SS_{between} = \xcancel{\sum\frac{(\sum{x})^2}{n}} - \frac{(\sum\sum{x})^2}{nT}$$`
+
+--
+
+`$$\require{cancel} SS_{within} = \sum\sum(x^2) - \xcancel{\sum\frac{(\sum{x})^2}{n}}$$`
+
+--
+
+`$$SS_{total} = \sum\sum(x^2) - \frac{(\sum\sum{x})^2}{nT}$$`
+
+---
+
+# Example Experiment
+
+.center[
+
+&lt;img src="img/anova-example-experiment-depiction.png" width="85%"/&gt;
+
+]
+
+---
+
+# Calculating _SS&lt;sub&gt;between&lt;/sub&gt;_, _SS&lt;sub&gt;within&lt;/sub&gt;_, and _SS&lt;sub&gt;total&lt;/sub&gt;_
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}\)`
+
+]
+]
+]
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}\)`
+
+]
+]
+]
+
+`\(\frac{(\sum\sum{x})^2}{nT} = 1107.04 \qquad \qquad \sum\frac{(\sum{x})^2}{n} = 1132.38 \qquad \qquad \sum\sum(x^2) = 1167\)`
+
+`$$SS_{between} = 1132.38 - 1107.04 = 25.34$$`
+
+`$$SS_{within} = 1167 - 1132.38 = 34.62$$`
+
+--
+
+`$$SS_{total} = SS_{between} + SS_{within}$$`
+
+--
+
+`$$SS_{total} = 25.34 + 34.62 = 59.96$$`
+
+---
+
+# Effect size: One-way ANOVA
+
+.content-box-blue[
+.center[
+**Effect size for One-way ANOVA** 
+]
+`$$\eta^2 = \frac{SS_{between}}{SS_{Total}}$$`
+]
+
+`$$SS_{between} = 1132.38 - 1107.04 = 25.34$$`
+
+`$$SS_{total} = 25.34 - 34.62 = 59.96$$`
+
+`$$\eta^2 = \frac{25.34}{59.96} = 0.42$$`
+
+---
+
+# Effect Size Interpretation for Eta-Squared
+
+.content-box-gray[
+**Eta squared**: the proportion of the total variability in the dependent variable that is accounted for by variation in the independent variable. It is the ratio of the between groups sum of squares to the total sum of squares
+]
+
+- A “small” effect size is about .01 
+
+- A “medium” effect size is about .06 
+
+- A “large” effect size is about .14
+
+---
+
+class: center, middle, inverse
+
+
+# One-way ANOVA in JASP
+
+---
+
+# JASP: One-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-one-way-anova-1.png" width="50%"/&gt;
+
+1
+
+]
+
+---
+
+# JASP: One-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-one-way-anova-2.png" width="50%"/&gt;
+
+2
+
+]
+
+---
+
+# JASP: One-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-one-way-anova-3.png" width="50%"/&gt;
+
+3
+
+]
+
+---
+
+# JASP: One-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-one-way-anova-4.png" width="50%"/&gt;
+
+4
+
+]
+
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Differences between many factors
+
+**Reading**
+
+- Chapter 13
+
+**Quiz 4**
+
+- Due tonight 2/16/2022 11:59pm MT
+
+  - Covers Ch.11-12
+]
+
+.pull-right[
+
+.center[
+
+&lt;img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" /&gt;
+
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

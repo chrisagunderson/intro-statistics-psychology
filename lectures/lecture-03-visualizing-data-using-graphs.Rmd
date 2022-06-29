@@ -1,0 +1,1008 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 03: Visualizing Data Using Graphs
+
+]
+
+---
+
+# Updates: Course Calendar
+
+.center[
+
+<img src="img/updated-course-calendar-2022-09-01.png" width="70%"/>
+]
+
+---
+
+# Announcements: Guides
+
+.pull-left[
+
+- _Guides_ posted on Canvas
+
+- As we learn a new calculation, I will post a new _Guide_
+]
+
+.pull-right[
+
+<img src="img/example-guide.png" />
+
+]
+
+---
+
+
+# Outline for Today
+
+```{r load-font-awesome, echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+
+.pull-left[
+- Review parts of last class
+
+- Basics of data visualization
+
+- Variability practice problem
+
+  - Have `r fa("pencil-alt")` and `r fa("file")` ready
+
+- Descriptive statistics in JASP
+
+  - Have JASP installed and open
+  
+  - Download "`Stats Class 3 Dataset (Pets).csv`" from Canvas Week 02
+
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+
+---
+
+class: center, middle, inverse
+
+# Review Parts of Last Class
+
+---
+
+# Measures of Central Tendency
+
+.content-box-gray[
+**Measures of central tendency**: Numbers that represent the _center_ or _middle_ of a distribution of data
+
+]
+
+???
+One number that summarizes and best represents a set of scores
+
+--
+
+<img src="img/mean-median-mode-squares.png" />
+
+---
+
+# Scales of Measurement
+
+.content-box-gray[
+
+**Mean**: The sum of a set of scores divided by the total number of scores in the set
+
+]
+
+--
+
+.content-box-gray[
+
+**Median**: The point at which half (50%) of the values are above and half (50%) of the values are below
+]
+
+--
+
+.content-box-gray[
+
+**Mode**: The value in a distribution of data that occurs most frequently
+]
+
+---
+
+# Scales of Measurement
+
+.content-box-gray[
+**Scales of measurement**: describes the nature of the information contained in a given set of data
+
+]
+
+.center[
+
+<img src="img/scales-of-measurement-boxes.png" />
+
+]
+
+---
+
+# Scales of Measurement
+
+.pull-left[
+
+**Nominal**
+- Non-numerical
+
+- Each item in the set belongs to a class or category
+
+]
+
+--
+
+.pull-right[
+**Ordinal**
+- Items are _ordered_ in a meaningful direction
+
+- Distance between items is _not necessarily_ equal
+
+]
+
+--
+
+.pull-left[
+
+**Interval**
+- Distance between points is _equal_ and _meaningful_
+
+- But relationship between points is _not_ meaningful
+]
+
+--
+
+.pull-right[
+
+**Ratio**
+- All the qualities of the interval scale plus a _true zero point_
+
+- Relationship between points is _meaningful_
+
+]
+
+---
+
+# Measures of Variability
+
+.content-box-gray[
+
+In statistics, **measures of variability** describe how scores in a given dataset differ from one another (e.g., the spread or clustering of points)
+
+]
+
+.center[
+
+<img src="img/range-sd-var-boxes.png" width="80%"/>
+]
+
+---
+
+# The Range
+
+The range is the simplest measure of variability (or dispersion), and is defined as follows:
+
+.center[
+.content-box-blue[
+
+**Range**  
+
+.Large[
+
+$$r = h - l$$
+
+]
+
+]
+]
+
+.pull-left[
+
+$h$ = highest score in the set
+
+$l$ = lowest score in the set
+]
+
+---
+
+# Standard Deviation: Calculation
+
+.pull-left[
+
+```{r squared-deviations, echo=FALSE}
+index <- seq(1:10)
+x = c(1,2,1,4,3,3,6,1,2,3)
+sd_example_mean = mean(x)
+
+sd_data <- data.frame(index, x) %>% 
+  as_tibble() %>% 
+  mutate(deviations = x - mean(x)) %>% 
+  rename("$$i$$" = index,
+         "$$x$$" = x,
+         "$X_{i} - \\mu$"= deviations)
+
+sd_data_2 <- sd_data %>% 
+  mutate(squared_deviations = `$X_{i} - \\mu$`^2) %>% 
+  rename("$$(X_{i} - \\mu)^2$$" = squared_deviations)
+
+sd_data_2 <- sd_data %>% 
+  mutate(squared_deviations = `$X_{i} - \\mu$`^2) %>% 
+  rename("$(X_{i} - \\mu)^2$" = squared_deviations)
+
+knitr::kable(sd_data_2, escape = FALSE)
+
+```
+
+]
+
+.pull-right[
+.Large[
+
+$\mu$ = `r sd_example_mean`
+
+$\sum(X_{i} - \mu)^2= 22.4$
+
+.content-box-blue[
+
+.center[
+**Sum of Squares**
+
+$\sum(X_{i} - \mu)^2$
+]
+]
+]
+]
+
+---
+
+
+# Standard Deviation and Variance
+
+.pull-left[
+
+.center[
+
+Population Parameter
+
+.content-box-blue[
+**Standard Deviation**  
+$\sigma = \sqrt\frac{\sum (X_{i} - \mu)^2}{N}$
+]
+
+.content-box-blue[
+**Variance**  
+$\sigma^2 = \frac{\sum(X_{i} - \mu)^2}{N}$
+]
+]
+]
+
+.pull-right[
+
+.center[
+
+Sample Statistic
+
+.content-box-blue[
+**Standard Deviation**  
+$s = \sqrt\frac{\sum (x_{i} - \overline{x})^2}{(n - 1)}$
+]
+
+.content-box-blue[
+**Variance**  
+$s^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$
+]
+]
+]
+
+---
+
+class: center, middle, inverse
+
+# Basics of Data Visualization
+
+---
+
+# Same Mean, Different Variability
+
+.pull-left[
+
+$$80, 85, 85, 90, 95$$  
+
+```{r variability-dat-4, echo=FALSE}
+library(tidyverse)
+library(ggpubr)
+dat <- tribble(
+  ~Index, ~data,
+  1, 80,
+  2, 85,
+  3, 85,
+  4, 90,
+  5, 95
+)
+
+ggplot(dat, aes(x = data)) +
+  geom_histogram(fill = "#1381B0", alpha = 1/4, color = "black") +
+  xlim(20, 170) +
+  labs(x = "",
+       y = "") +
+  theme_pubr() +
+  theme(text = element_text(size = 20))
+
+```
+
+.center[
+
+$\overline{x}$ = 87
+
+$r = 15$
+]
+
+]
+
+.pull-right[
+
+$$25, 65, 70, 125, 150$$  
+
+```{r variability-dat-5, echo=FALSE}
+library(tidyverse)
+library(ggpubr)
+dat <- tribble(
+  ~Index, ~data,
+  1, 25,
+  2, 65,
+  3, 70,
+  4, 125,
+  5, 150
+)
+
+ggplot(dat, aes(x = data)) +
+  geom_histogram(fill = "#1381B0", alpha = 1/4, color = "black") +
+  xlim(20, 170) +
+  ylim(0,2) +
+  labs(x = "",
+       y = "") +
+  theme_pubr() +
+  theme(text = element_text(size = 20))
+
+```
+
+.center[
+
+$\overline{x}$ = 87
+
+$r = 125$
+
+]
+]
+
+---
+
+# Pie Chart
+
+```{r pie-chart, echo=FALSE}
+# Create Data
+
+data <- data.frame(
+  Difficulty=c("Easy", "Neutral", "Difficult"),
+  value=c(2.5, 65, 32.5)
+)
+
+library(openintro)
+
+
+# Compute the position of labels
+data <- data %>% 
+  arrange(desc(Difficulty)) %>%
+  mutate(prop = value / sum(data$value) *100) %>%
+  mutate(ypos = cumsum(prop)- 0.5*prop )
+
+# Basic piechart
+ggplot(data, aes(x="", y=prop, fill=Difficulty)) +
+  geom_bar(stat="identity", width=1, color="white") +
+  coord_polar("y", start=0) +
+  theme_void() + 
+  labs(title = "How challenging do you think statistics is?") +
+  geom_text(aes(y = ypos, label = prop), color = "black", size=6) +
+  scale_fill_brewer(palette="Set1")
+```
+
+---
+
+# Pie Chart
+
+.pull-left[
+
+- Appropriate for **nominal** scale variables
+
+- Appropriate for **ordinal** scale variables
+
+- You can indicate values or percentages for each level of the nominal variable
+
+]
+
+
+.pull-right[
+
+```{r pie-chart-2, echo=FALSE}
+ggplot(data, aes(x="", y=prop, fill=Difficulty)) +
+  geom_bar(stat="identity", width=1, color="white") +
+  coord_polar("y", start=0) +
+  theme_void() + 
+  labs(title = "How challenging do you think statistics is?") +
+  geom_text(aes(y = ypos, label = prop), color = "black", size=6) +
+  scale_fill_brewer(palette="Set1")
+```
+
+]
+
+---
+
+# Bar Graph
+
+.center[
+```{r bar-graph, echo=FALSE}
+
+basic_barplot_data <- data.frame(age=c("Child", "Teen", "Adult"),
+                reading=c(5, 10, 15)) %>% 
+  as_tibble() %>% 
+  mutate(age = as_factor(age))
+
+ggplot(data=basic_barplot_data, aes(x=age, y=reading)) +
+  geom_bar(stat="identity", fill="steelblue", width=0.5,
+           color = "black", alpha = 1/4) +
+  labs(x = 'Age Group',
+       y = 'Reading Comprehension') +
+  theme_pubr()
+  
+```
+]
+
+---
+
+# Bar Graph
+
+.pull-left[
+
+- Appropriate for **nominal** and **ordinal** data
+
+- Not appropriate for **ratio** (continuous) data
+
+- Simple and visually appealing
+
+]
+
+.pull-right[
+
+```{r basic-barplot, echo=FALSE, fig.width=3.5, fig.height=3}
+basic_barplot_data <- data.frame(age=c("Child", "Teen", "Adult"),
+                reading=c(5, 10, 15)) %>% 
+  as_tibble() %>% 
+  mutate(age = as_factor(age))
+
+ggplot(data=basic_barplot_data, aes(x=age, y=reading)) +
+  geom_bar(stat="identity", fill="steelblue", width=0.5,
+           color = "black", alpha = 1/4) +
+  labs(x = 'Age Group',
+       y = 'Reading Comprehension') +
+  theme_classic()
+```
+
+]
+
+---
+
+# Histogram
+
+```{r song-length, echo=FALSE}
+ ggplot(ipod, aes(x = song_length)) +
+      geom_histogram(binwidth = 0.50, fill ="#18A3DE", color = "black") +
+  labs(x = "Song length (in min)") +
+  theme_pubr()
+```
+
+---
+
+# Histogram
+
+.pull-left[
+- Appropriate for **Ratio** scale variables
+
+- Not appropriate for nominal or ordinal data
+
+- Values are "binned" 
+
+- Bars are touching
+]
+
+
+.pull-right[
+```{r song-length-2, echo=FALSE}
+ ggplot(ipod, aes(x = song_length)) +
+      geom_histogram(binwidth = 0.50, fill ="#18A3DE", color = "black") +
+  labs(x = "Song length (in min)") +
+  theme_pubr()
+```
+]
+
+---
+
+# Boxplots
+
+```{r boxplot-1a, echo=FALSE}
+
+ggplot(na.omit(major_survey), aes(x = major, y = gpa)) +
+  stat_boxplot(geom = "errorbar", width = 0.15) +
+  geom_boxplot(width=0.30) +
+  labs(x = "Major") +
+  theme_pubr()
+
+```
+
+---
+
+# Boxplots
+
+.pull-left[
+```{r boxplot-1b, echo=FALSE}
+
+ss_gpa_data <- na.omit(major_survey) %>% 
+  filter(major == "social sciences")
+
+ggplot(na.omit(ss_gpa_data), aes(x = major, y = gpa)) +
+  stat_boxplot(geom = "errorbar", width = 0.10) +
+  geom_boxplot(width=0.20) +
+  labs(x = "Major") +
+  theme_pubr()
+
+```
+]
+
+--
+
+.pull-right[
+**Social Sciences Major**  
+
+```{r boxplot-descriptives, echo=FALSE}
+
+# just select arts/humanities data
+
+summary(na.omit(ss_gpa_data))
+```
+]
+
+--
+
+.pull-right[
+
+.pull-left[
+
+.center[
+_The Box_  
+]
+
+First quartile: 3.40  
+Median: 3.66  
+Third quartile: 3.82 
+]
+
+.pull-right[
+
+.center[
+
+_The Whiskers_  
+]
+
+Lowest value: 2.60  
+Highest value: 4.30  
+]
+]
+
+--
+
+.footnote[
+
+.small[
+
+First quartile = 25th percentile  
+Median = 50th percentile  
+Third quartile = 75th percentile  
+
+]
+
+]
+
+---
+
+
+# Boxplots
+
+
+.pull-left[
+
+- Appropriate for **Ratio** scale variable
+
+- Appropriate to use with ratio scale and **Nominal** scale variable (if more than one group)
+
+```{r boxplot-1d, echo=FALSE}
+
+ggplot(na.omit(major_survey), aes(x = major, y = gpa)) +
+  stat_boxplot(geom = "errorbar", width = 0.15) +
+  geom_boxplot(width=0.30) +
+  labs(x = "Major") +
+  theme_pubr()
+
+```
+
+]
+
+.pull-right[
+.small[ 
+```{r major-survey-data, echo=FALSE}
+# load table library
+
+library(DT)
+DT::datatable(major_survey, options = list(pageLength = 4),
+              class = 'cell-border stripe')
+```
+]
+]
+
+---
+
+# Line Graphs
+
+
+```{r line-graph-1, echo=FALSE}
+
+df <- data.frame(Time=c("Day One", "Midterm", "Final Exam"),
+                Stats_Knowledge=c(4.2, 10, 29.5)) %>% 
+  mutate(Time = as_factor(Time))
+
+ggplot(data=df, aes(x=Time, y=Stats_Knowledge, group=1)) +
+  geom_line()+
+  geom_point() +
+  labs(x = "Time",
+       y = "Knowledge of Statistics") +
+  theme_pubr()
+
+```
+
+---
+
+# Line Graphs
+
+.pull-left[
+
+- One **nominal** scale variable on the _x_ axis
+
+- One **ratio** scale variable on the _y_ axis
+
+- Most commonly used to see change over time
+
+]
+
+.pull-right[
+```{r line-graph-2, echo=FALSE}
+
+df <- data.frame(Time=c("Day One", "Midterm", "Final Exam"),
+                Stats_Knowledge=c(4.2, 10, 29.5)) %>% 
+  mutate(Time = as_factor(Time))
+
+ggplot(data=df, aes(x=Time, y=Stats_Knowledge, group=1)) +
+  geom_line()+
+  geom_point() +
+  labs(x = "Time",
+       y = "Knowledge of Statistics") +
+  theme(text = element_text(size = 20)) +
+  theme_pubr()
+
+```
+]
+
+---
+
+# Scatterplot
+
+```{r scatterplot-1, echo=FALSE}
+library(openintro)
+
+ ggplot(gpa_study_hours, aes(x = gpa, y = study_hours)) +
+      geom_point(alpha = 0.5, color = "black") +
+      labs(x = "GPA", y = "Study hours per week") +
+   theme_pubr()
+```
+
+
+---
+
+# Scatterplot
+
+.pull-left[
+- Two **ratio** scale variables
+
+- Each point in the dataset are represented
+
+- Visualize how two variables relate
+
+]
+
+.pull-right[
+
+```{r scatterplot-2, echo=FALSE}
+library(openintro)
+
+ ggplot(gpa_study_hours, aes(x = gpa, y = study_hours)) +
+      geom_point(alpha = 0.5, color = "black") +
+      labs(x = "GPA", y = "Study hours per week") +
+   theme_pubr()
+```
+
+]
+
+---
+
+# Scatterplot: Linear Fit
+
+```{r scatterplot-3, echo=FALSE}
+library(openintro)
+
+ ggplot(gpa_study_hours, aes(x = gpa, y = study_hours)) +
+      geom_point(alpha = 0.5, color = "black") +
+      labs(x = "GPA", y = "Study hours per week") +
+     geom_smooth(method=lm , color="#B04213", se=FALSE) +
+   theme_pubr()
+```
+
+---
+
+# Scatterplot: Curvilinear Fit
+
+```{r scatterplot-curve, echo=FALSE, fig.width=8}
+x <- runif(300,  min=-10, max=10) 
+y <- 0.1*x^3 - 0.5 * x^2 - x + 10 + rnorm(length(x),0,8) 
+ 
+# plot of x and y :
+plot(x,y,col=rgb(0.4,0.4,0.8,0.6),pch=16 , cex=1.3) 
+ 
+# Can we find a polynome that fit this function ?
+model <- lm(y ~ x + I(x^2) + I(x^3))
+ 
+# I can get the features of this model :
+#summary(model)
+#model$coefficients
+#summary(model)$adj.r.squared
+ 
+# For each value of x, I can get the value of y estimated by the model, and add it to the current plot !
+myPredict <- predict( model ) 
+ix <- sort(x,index.return=T)$ix
+lines(x[ix], myPredict[ix], col=2, lwd=2 )  
+
+# I add the features of the model to the plot
+# coeff <- round(model$coefficients , 2)
+# text(3, -70 , paste("Model : ",coeff[1] , " + " , coeff[2] , "*x"  , "+" , coeff[3] , "*x^2" , "+" , coeff[4] , "*x^3" , "\n\n" , "P-value adjusted = ",round(summary(model)$adj.r.squared,2)))
+
+```
+
+---
+
+# And Many More Options
+
+```{r data-to-viz-website, echo=FALSE}
+knitr::include_url("https://www.data-to-viz.com")
+```
+
+.footnote[
+[https://www.data-to-viz.com](https://www.data-to-viz.com)
+]
+
+---
+
+class: center, middle, inverse
+
+# Variability Practice Problem
+
+---
+
+# Variability Practice Problem
+
+Calculate the sum of squares ( $SS$ ) of the following dataset:
+
+$$3, 6, 7, 3, 4, 4, 7, 8, 10$$
+
+Then, use this value to find:
+
+- The sample standard deviation: $s$
+
+- The population standard deviation: $\sigma$
+
+- The sample variance: $s^2$
+
+- The population variance: $\sigma^2$
+
+```{r countdown-timer, echo=FALSE}
+library(countdown)
+
+countdown(minutes = 5, seconds = 0)
+```
+
+---
+
+# Variability Practice Problem
+
+.center[
+**Sum of Squares**  
+
+$\sum(X_{i} - \mu)^2= 47.56$
+]
+
+.pull-left[
+**Population Standard Deviation**
+
+$\sigma =$ 2.30
+
+**Population Variance**
+
+$\sigma^2=$ 5.28
+
+]
+
+.pull-right[
+**Sample Standard Deviation**
+
+$s =$ `r round(2.438123, 2)`
+
+**Sample Variance**
+
+$s^2 =$ `r round(5.944444,2)`
+]
+
+---
+
+class: center, middle, inverse
+
+# Descriptive Statistics in JASP
+
+---
+
+# JASP: Open the File
+
+.center[
+<img src="img/jasp-1.png" width="60%"/>
+]
+
+---
+
+# JASP: Click Descriptives
+
+.center[
+<img src="img/jasp-2.png" width="60%"/>
+]
+
+---
+
+# JASP: Drag Variables
+
+.center[
+<img src="img/jasp-3.png" width="60%"/>
+]
+
+---
+
+# JASP: Additional Descriptives
+
+.center[
+<img src="img/jasp-4.png" width="60%"/>
+]
+
+---
+
+# JASP: Plots
+
+.center[
+<img src="img/jasp-5.png" width="60%"/>
+]
+
+---
+
+# JASP: Split by Nominal Variable
+
+.center[
+<img src="img/jasp-6.png" width="60%"/>
+]
+
+---
+
+# JASP: Save your Work
+
+.center[
+<img src="img/jasp-7.png" width="60%"/>
+]
+
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Correlations, Reliability, and Validity
+
+**Reading**
+
+- Chapter Four
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

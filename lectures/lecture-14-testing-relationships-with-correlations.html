@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>lecture-16-testing-relationships-with-correlations.knit</title>
+    <meta charset="utf-8" />
+    <script src="lecture-16-testing-relationships-with-correlations_files/header-attrs/header-attrs.js"></script>
+    <link href="lecture-16-testing-relationships-with-correlations_files/remark-css/hygge.css" rel="stylesheet" />
+    <link href="lecture-16-testing-relationships-with-correlations_files/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="lecture-16-testing-relationships-with-correlations_files/tile-view/tile-view.js"></script>
+    <link href="lecture-16-testing-relationships-with-correlations_files/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="lecture-16-testing-relationships-with-correlations_files/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+&lt;img src="img/intro-stats-title-logo.png" width="50%"/&gt;
+]
+
+.center[
+### Lecture 16: Testing Relationships Using Correlations
+
+]
+
+---
+
+# Outline for today
+
+
+
+
+.pull-left[
+
+- Review last parts of class
+
+- Correlations Revisited
+
+- Correlations in JASP
+
+  - Download `Stats class 16 Dataset (Correlation T-Test).jasp`
+
+- Continue one-way ANOVA practice activity
+]
+
+
+.pull-right[
+&lt;img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80" /&gt;
+]
+
+
+---
+
+class: center, middle, inverse
+
+# Review
+
+## One-way ANOVA
+
+---
+
+# Goal
+
+To be able to compare whether differences exist between multiple factors, as well as in interactions between the levels of different factors
+
+--
+
+**Research question**: What is the fastest way for me to get to campus?
+
+.center[
+&lt;img src="img/lightrail-vs-car.png" width="65%"/&gt;
+]
+
+---
+
+# ANOVA: factors and levels
+
+.center[
+
+&lt;img src="img/anova-factors-and-levels.png" width="85%"/&gt;
+
+]
+
+
+---
+
+# Factorial Designs
+
+.content-box-gray[
+**Factorial designs**: Designs in which two or more factors are completely crossed (i.e., measurements are taken for every combination of factor levels)
+]
+
+--
+
+.center[
+&lt;img src="img/anova-table.png" width="40%"/&gt;
+]
+
+
+---
+
+# Factorial designs: Plot
+
+&lt;img src="lecture-16-testing-relationships-with-correlations_files/figure-html/factorial-plot-1-1.png" width="100%" /&gt;
+
+---
+
+# Main effect of Commute Type
+
+.right[
+
+&lt;img src="img/anova-table-commute-type.png" width="85%"/&gt;
+
+]
+
+---
+
+# Commute Type: Plot
+
+&lt;img src="lecture-16-testing-relationships-with-correlations_files/figure-html/commute-type-plot-1.png" width="100%" /&gt;
+
+
+.footnote[
+Taking the lightrail and walking takes longer than driving
+]
+
+---
+
+# Main effect of Time of Day
+
+.right[
+&lt;img src="img/anova-table-time-of-day.png" width="85%"/&gt;
+
+
+]
+
+---
+
+# Time of Day: Plot
+
+&lt;img src="lecture-16-testing-relationships-with-correlations_files/figure-html/commute-time-plot-1.png" width="100%" /&gt;
+
+
+.footnote[
+It takes longer to get to campus when leaving at 8:00am than at 6:30am
+]
+
+---
+
+# Interaction between Commute Type and Time
+
+.center[
+
+&lt;img src="img/anova-table-interaction.png" width="85%"/&gt;
+
+]
+
+---
+
+# Interaction
+
+.content-box-gray[
+**Interaction**: describes the degree to which the effect of _one factor_ depends on the _level_ of the other factor
+]
+
+.center[
+
+&lt;img src="img/interaction_plot.png" width="55%"/&gt;
+
+]
+
+---
+
+# Interaction
+
+.center[
+
+
+&lt;img src="img/interaction-600am.png" width="76%"/&gt;
+
+]
+
+---
+
+# Interaction
+
+.center[
+
+
+&lt;img src="img/interaction-800am.png" width="76%"/&gt;
+
+]
+
+
+---
+
+class: center, middle, inverse
+
+# Correlations Revisited
+
+---
+
+# Correlations
+
+.content-box-gray[
+**Correlational designs**: examine the extent to which two variables are associated
+]
+
+--
+
+_Examples_
+
+- Do people who are more creative do better in school?
+
+- Is there a relationship between hours studied and exam scores? Class attendance and final grades?
+
+- Are people who have higher marital satisfaction better parents?
+
+
+---
+
+# Correlations
+
+Correlations are either _positive_, _negative_, or _zero_
+
+
+&lt;img src="img/positive-negative-zero-correlation.png" /&gt;
+
+---
+
+# Correlations
+
+.pull-left[
+.content-box-gray[
+**Positive correlation**: as one variable changes, the other variable changes in the .primary[_same direction_]]
+
+.center[
+_Example_  
+
+Relationship between  
+hours studied and exam grade  
+
+(more hours studied, higher exam grade)
+]
+]
+
+--
+
+.pull-right[
+
+.content-box-gray[
+**Negative correlation**: as one variable changes, the other variable changes in the .primary[_opposite direction_]
+]
+
+.center[
+_Example_
+
+Relationship between  
+running speed and time to finish a race  
+
+(faster running, lower time to finish race)
+]
+
+]
+
+--
+
+.center[
+.content-box-gray[
+**Zero correlation**: there is .primary[_no_] relationship between the two variables
+]
+
+]
+
+
+---
+
+# Correlations
+
+.pull-left[
+ Correlations are _always_ between -1.0 and +1.0
+
+  - This tells you the **magnitude** of relationship
+  
+    - Correlations closer to absolute value of 1 are _stronger_
+  
+    - Correlations closer to a value of 0 are _weaker_
+]
+
+--
+
+.pull-right[
+&lt;img src="img/various-correlation-magnitudes.png"/&gt;
+
+]
+
+---
+
+# Correlations: Practice
+
+Which of the following correlation coefficients depicts the .secondary[_strongest_] relationship?
+
+.pull-left[
+1. 0.43
+
+2. -0.02
+
+3. 0.67
+
+4. -0.73
+
+]
+
+--
+
+.pull-right[
+
+Answer: **-0.73**
+]
+
+---
+
+# Correlations: Practice
+
+Which of the following correlation coefficients depicts the .secondary[_weakest_] relationship?
+
+.pull-left[
+
+1. -0.13
+
+2. 0.33
+
+3. -0.03
+
+4. 0.05
+
+]
+
+--
+
+.pull-right[
+
+Answer: **-0.03**
+
+]
+
+---
+
+# Correlations: Practice
+
+Interpret the following statement in your own words:
+
+&gt; "We found a significant correlation of 0.37 between social media use and anxiety."
+
+.right[
+&lt;img src="https://images.unsplash.com/photo-1622929610538-fc41bdce80c6?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80" width="50%"/&gt;
+
+]
+
+---
+
+# Correlations: Practice
+
+Interpret the following statement in your own words:
+
+&gt; "We found a significant correlation of -0.26 between depressive symptoms and exercise."
+
+.right[
+&lt;img src="https://images.unsplash.com/photo-1583248839364-bd7430a3cd83?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=2942&amp;q=80" width="50%"/&gt;
+]
+
+---
+
+# Calculating Correlations
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+`$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$`  
+]
+]
+]
+
+--
+
+.pull-left[
+
+We just need six values:
+
+]
+
+.pull-right[
+.pull-left[
+
+`\(\sum X\)`  
+`\(\sum Y\)`  
+`\(\sum XY\)` 
+]
+
+.pull-right[
+`\(\sum X^2\)`  
+`\(\sum Y^2\)`  
+`\(n\)`  
+]
+]
+
+
+---
+
+# Calculating Correlations
+
+Set up our table with the `\(x\)` and `\(y\)` values
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`|$$x^2$$ |$$y^2$$ |$$xy$$ |
+|---:|---:|---:|:-------|:-------|:------|
+|   1|   5|   6|        |        |       |
+|   2|   9|  11|        |        |       |
+|   3|  10|   6|        |        |       |
+|   4|   3|   4|        |        |       |
+|   5|   5|   6|        |        |       |
+|   6|   7|   9|        |        |       |
+
+---
+
+# Calculating Correlations
+
+Square our `\(x\)` values
+
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`| `$$x^2$$`|$$y^2$$ |$$xy$$ |
+|---:|---:|---:|-------:|:-------|:------|
+|   1|   5|   6|      25|        |       |
+|   2|   9|  11|      81|        |       |
+|   3|  10|   6|     100|        |       |
+|   4|   3|   4|       9|        |       |
+|   5|   5|   6|      25|        |       |
+|   6|   7|   9|      49|        |       |
+
+---
+
+# Calculating Correlations
+
+Square our `\(y\)` values
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`|$$xy$$ |
+|---:|---:|---:|-------:|-------:|:------|
+|   1|   5|   6|      25|      36|       |
+|   2|   9|  11|      81|     121|       |
+|   3|  10|   6|     100|      36|       |
+|   4|   3|   4|       9|      16|       |
+|   5|   5|   6|      25|      36|       |
+|   6|   7|   9|      49|      81|       |
+
+---
+
+# Correlation: Calculation
+
+Multiply `\(x\)` and `\(y\)` together row-wise
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`| `$$xy$$`|
+|---:|---:|---:|-------:|-------:|------:|
+|   1|   5|   6|      25|      36|     30|
+|   2|   9|  11|      81|     121|     99|
+|   3|  10|   6|     100|      36|     60|
+|   4|   3|   4|       9|      16|     12|
+|   5|   5|   6|      25|      36|     30|
+|   6|   7|   9|      49|      81|     63|
+
+---
+
+# Correlation: Calculation
+
+.pull-left[
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`| `$$xy$$`|
+|---:|---:|---:|-------:|-------:|------:|
+|   1|   5|   6|      25|      36|     30|
+|   2|   9|  11|      81|     121|     99|
+|   3|  10|   6|     100|      36|     60|
+|   4|   3|   4|       9|      16|     12|
+|   5|   5|   6|      25|      36|     30|
+|   6|   7|   9|      49|      81|     63|
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+
+| `\(\sum x\)`| `\(\sum y\)`| `\(\sum  x^2\)`| `\(\sum y^2\)`| `\(\sum xy\)`|
+|--------:|--------:|-----------:|----------:|---------:|
+|       39|       42|         289|        326|       294|
+
+
+$$
+r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62
+$$
+
+]
+
+---
+
+# The Problem
+
+So far, we've only used correlations as .secondary[descriptive statistics]
+
+--
+
+What if we want to make inferences about relationships in the population?
+
+.pull-left[
+.center[
+&lt;img src="https://learninglink.oup.com/static/5e29bfc369c98b0010b09170/resources/sampling.png" /&gt;
+]
+]
+
+.pull-right[
+.center[
+
+&lt;img src="img/noun-regression-analysis-239043.png" width="60%"/&gt;
+
+]
+]
+
+---
+
+# Goal
+
+To be able to determine whether an observed correlation coefficient is significantly different from `\(0\)` or not
+
+--
+
+.pull-left[
+
+.center[
+
+**Null Hypothesis `\(H_{0}\)`**
+
+There is no relationship
+
+`\(H_{0}\)`: `\(\rho = 0\)`
+]
+
+]
+
+--
+
+.pull-right[
+
+.center[
+**Alternative Hypothesis `\(H_{a}\)`**
+
+There is a relationship
+
+`\(H_{a}\)`: `\(\rho \neq 0\)`
+
+]
+
+]
+
+.footnote[
+Note: `\(\rho\)` is "rho", the population parameter version of the sample statistic, `\(r\)`
+]
+
+---
+
+# _t_-test for correlation coefficient
+
+
+.content-box-blue[
+.center[
+
+**_t_-test for correlation coefficient**
+
+.Large[
+
+`$$t_{r_{xy}} = \frac{r_{xy}\sqrt{n - 2}}{\sqrt{1 - r^2_{xy}}}$$`
+
+]
+]
+]
+
+--
+
+`\(r_{xy} =\)` the correlation between the two variables  
+
+`\(r^2_{xy}=\)` the coefficient of determination  
+
+`\(n=\)` the sample size (number of paired observations)
+
+---
+
+# Coefficient of Determination
+
+.content-box-gray[
+**Coefficient of Determination**: Percentage of variances in one variable that is accounted for by the variance in the other variable
+]
+
+--
+
+.center[
+
+&lt;img src="https://doctorlib.info/medical/biostatistics/biostatistics.files/image265.png" /&gt;
+
+]
+
+---
+
+# Calculating Correlations
+
+.pull-left[
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`| `$$xy$$`|
+|---:|---:|---:|-------:|-------:|------:|
+|   1|   5|   6|      25|      36|     30|
+|   2|   9|  11|      81|     121|     99|
+|   3|  10|   6|     100|      36|     60|
+|   4|   3|   4|       9|      16|     12|
+|   5|   5|   6|      25|      36|     30|
+|   6|   7|   9|      49|      81|     63|
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+
+| `\(\sum x\)`| `\(\sum y\)`| `\(\sum  x^2\)`| `\(\sum y^2\)`| `\(\sum xy\)`|
+|--------:|--------:|-----------:|----------:|---------:|
+|       39|       42|         289|        326|       294|
+
+
+$$
+r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62
+$$
+
+]
+
+---
+
+# Calculating coefficient of determination
+
+.Large[
+$$
+r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62
+$$
+]
+
+--
+
+.Large[
+$$
+r^2_{xy} = 0.62^2 = 0.38
+$$
+
+]
+
+--
+
+**Interpretation**
+
+- 38% of the variance in `\(x\)` is accounted for by the variance in `\(y\)`
+
+- 62% of the variance is not accounted for
+
+---
+
+class: middle, inverse, center
+
+# Correlations in JASP
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-1.png" width="53%"/&gt;
+
+1
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-2.png" width="53%"/&gt;
+
+2
+
+]
+
+---
+
+# Correlations in JASP
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-3.png" width="53%"/&gt;
+
+3
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-4.png" width="53%"/&gt;
+
+4
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-5.png" width="53%"/&gt;
+
+5
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-6.png" width="53%"/&gt;
+
+6
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-7.png" width="53%"/&gt;
+
+7
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-8.png" width="53%"/&gt;
+
+8
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-9.png" width="53%"/&gt;
+
+9
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-10.png" width="53%"/&gt;
+
+10
+
+]
+
+---
+
+# Correlations in JASP
+
+
+.center[
+
+&lt;img src="img/jasp-correlation-test-11.png" width="53%"/&gt;
+
+11
+
+]
+
+---
+
+class: middle, center, inverse
+
+# Continue one-way ANOVA 
+## Practice Activity
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Making predictions using regression
+
+**Reading**
+
+- Chapter 15
+
+**Quiz 5**
+
+- Due tonight 02/23/2022 at 11:59pm MT
+
+  - Ch.13-14
+
+
+]
+
+.pull-right[
+
+.center[
+
+&lt;img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" /&gt;
+
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

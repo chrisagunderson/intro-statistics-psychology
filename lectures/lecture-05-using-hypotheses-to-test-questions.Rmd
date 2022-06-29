@@ -1,0 +1,1628 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+```{r load-packages, echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 05: Using Hypotheses to Test Questions
+
+]
+
+---
+
+# Announcements: Seating
+
+.center[
+<img src="img/sturm-hall-187.png" width="30%"/>
+]
+
+.footnote[
+Seat Assignments
+]
+
+---
+
+# Announcements: Zoom
+.center[
+<img src="https://www.dawsoncollege.qc.ca/faculty-hub/wp-content/uploads/sites/182/zoom-logo-with-icon.jpg" width="50%"/>
+]
+
+.footnote[
+In-person classes will also be live-streamed
+]
+
+---
+
+# Announcements: Peer Notetaker
+
+.center[
+<img src="https://images.unsplash.com/photo-1611079830811-865ff4428d17?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2117&q=80" width="50%"/>
+]
+
+.footnote[
+Please email me at [chris.gunderson@du.edu](chris.gunderson@du.edu)
+]
+
+---
+
+# Announcements: Math
+
+.center[
+
+<img src="img/math-basics.png" width="30%"/>
+
+]
+
+.footnote[
+p. 443 in your textbook
+]
+
+
+---
+
+# Outline for today
+
+.pull-left[
+
+- **Open Questions**
+
+- **Review portions of last class**
+
+  - Correlations in JASP
+  
+  - Cronbach's Alpha in JASP
+
+
+- **Hypothesis Testing**
+
+  - The logic of hypothesis testing
+
+  - _z_-test statistic
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+---
+
+# Open Questions
+
+_Do you have any theoretical or computational questions about the following?_
+
+- **Measures of Central Tendency**: Mean, Median, Mode, Skew
+
+- **Scales of Measurement**: Nominal, Ordinal, Interval, Ratio
+
+--
+
+- **Measures of Variability**: Variance, Standard Deviation, Sum of Squares
+
+--
+
+- **Data Visualiztion**: Pie chart, bar graph, histogram, boxplot, line graph, scatterplot
+
+- **Relationships in the world**: Pearson's $r$
+
+--
+
+- **Internal consistency**: Cronbach's $\alpha$
+
+- **Reliability**: Test-retest, Parallel forms, Interrater
+
+- **Validity**: Content, criterion, construct
+
+---
+
+# JASP
+
+.pull-left[
+
+**Correlations in JASP**
+
+- Download `Stats Class 4 Dataset (Correlation).jasp` from Canvas
+
+**Cronbach's Alpha in JASP**
+
+- Download `Stats Class 5 Dataset (Cronbach's Alpha).jasp` from Canvas
+
+]
+.pull-right[
+<img src="https://jasp-stats.org/wp-content/uploads/2019/06/laptop_start1.png" />
+]
+
+---
+
+# JASP: Correlation
+
+.center[
+<img src="img/jasp-correlation-1.png" width="50%"/>
+]
+
+.center[
+1
+]
+
+---
+
+# JASP: Correlation
+
+.center[
+<img src="img/jasp-correlation-2.png" width="50%"/>
+]
+
+.center[
+2
+]
+
+---
+# JASP: Correlation
+
+.center[
+<img src="img/jasp-correlation-3.png" width="50%"/>
+]
+
+.center[
+3
+]
+
+---
+
+# JASP: Cronbach's Alpha
+
+.center[
+<img src="img/jasp-cronbachs-alpha-1.png" width="70%"/>
+]
+
+.center[
+1
+]
+
+---
+
+# JASP: Cronbach's Alpha
+
+.center[
+<img src="img/jasp-cronbachs-alpha-2.png" width="70%"/>
+]
+
+.center[
+2
+]
+
+---
+
+# JASP: Cronbach's Alpha
+
+.center[
+<img src="img/jasp-cronbachs-alpha-3.png" width="70%"/>
+]
+
+.center[
+3
+]
+
+---
+
+# JASP: Cronbach's Alpha
+
+.center[
+<img src="img/jasp-cronbachs-alpha-4.png" width="70%"/>
+]
+
+.center[
+4
+]
+
+
+---
+
+# JASP: Cronbach's Alpha
+
+.center[
+<img src="img/jasp-cronbachs-alpha-5.png" width="70%"/>
+]
+
+.center[
+5
+]
+
+---
+
+# JASP: Cronbach's Alpha
+
+.center[
+<img src="img/jasp-cronbachs-alpha-6.png" width="70%"/>
+]
+
+.center[
+6
+]
+
+---
+
+# JASP: Cronbach's Alpha
+
+.center[
+<img src="img/jasp-cronbachs-alpha-7.png" width="70%"/>
+]
+
+.center[
+7
+]
+
+
+---
+
+class: center, middle, inverse
+
+# The Logic of Hypothesis Testing
+
+---
+
+# Hypothesis
+
+.content-box-gray[
+
+**Hypothesis**: a specific, clear, and testable proposition or predictive statement about the possible outcome of a scientific research study
+
+]
+
+--
+
+Simply put, it is an educated guess
+
+---
+
+# The Basics
+
+Two types of statistics
+
+.content-box-gray[
+**Descriptive Statistics**: Used to organize or describe the characteristics of a dataset
+]
+
+--
+
+.content-box-gray[
+**Inferential Statistics**: Used to make inferences (reach a conclusion) about the data
+]
+
+
+---
+
+# The Basics
+
+Collecting samples of data
+
+.content-box-gray[
+**Sample**: a subset of a population
+]
+
+--
+
+- Example: A researcher wants to know if people higher on emotional intelligence are better lie detectors.
+
+
+.footnote[
+[Click here to find out](https://bpspsychub.onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.2044-8333.2012.02054.x)
+]
+
+
+---
+
+# Hypothesis Testing
+
+Hypothesis testing involves using samples to make inferences about the population
+
+Equivalently, we gather observed scores to make inferences about true scores while simultaneously reducing error scores
+
+.center[
+<img src="https://learninglink.oup.com/static/5e29bfc369c98b0010b09170/resources/sampling.png" />
+]
+
+---
+
+# Hypothesis Testing
+
+When we use _samples_ to approximate _populations_, however, we always have **sampling error** (difference between the sample statistic and the population parameter)
+
+--
+.center[
+.Large[
+.pull-left[
+
+Sample Statistic $\overline{x}$
+
+]
+
+.pull-right[
+
+Population Parameter $\mu$
+
+]
+
+.center[
+Sampling Error $\epsilon$
+
+]
+]
+]
+
+
+---
+
+# Hypothesis Testing
+
+.center[
+.Large[Hypothesis testing is an application of decision theory, designed to help us make reasonable inferences about populations .secondary[_under uncertainty_]]
+]
+
+---
+# Hypothesis Testing
+
+.content-box-gray[
+**Hypothesis Test**: A statistical method that uses sample data to evaluate a hypothesis about a population
+]
+
+---
+
+# Hypothesis Testing
+
+1. Form statistical hypotheses
+
+2. Make predictions and establish a standard of evidence
+
+3. Test hypotheses by collecting data and calculating statistics
+
+4. Evaluate our hypotheses in light of evidence
+
+---
+
+# Hypothesis Testing
+
+1. **Form statistical hypotheses**
+
+2. Make predictions and establish a standard of evidence
+
+3. Test hypotheses by collecting data and calculating statistics
+
+4. Evaluate our hypotheses in light of evidence
+
+---
+
+# Designing an Experiment
+
+**Research Question**: Does NeuroIQ actually change peoples’ IQ?
+
+.center[
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="18%"/>
+]
+
+---
+
+# Designing an Experiment
+
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+<img src="img/brain.png" width="50%"/>
+
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+
+**Give NeuroIQ to the population**
+
+This is what we would like to do, but is unrealistic
+
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="25%"/>
+
+]
+]
+
+---
+
+# Designing an Experiment
+
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+
+
+<img src="img/brain.png" width="50%"/>
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+.pull-left[
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="30%"/>
+]
+
+.pull-right[
+$101, 122, 132$ 
+$94, 129, 89$
+$109, 92, 100$ 
+$125, 103, 91$
+$94, 116, 92$
+
+]
+]
+]
+
+---
+
+# Designing an Experiment
+
+.pull-left[
+Two possibilities
+
+1. There is **no effect** of NeuroIQ on IQ scores. The 5.9-point increase is due only to sampling error, $\epsilon$
+
+2. There is a **real effect** of NeuroIQ on IQ scores, $\tau + \epsilon$
+
+]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+**Epsilon**  
+"error"
+.Large[
+$\epsilon$
+]
+]
+]
+.content-box-blue[
+.center[
+**Tau**  
+"treatment"
+.Large[
+$\tau$
+]
+]
+]
+]
+
+---
+
+# Statistical Hypotheses
+
+.content-box-gray[
+**Null Hypothesis**: there is no change, no difference, or no relationship between variables
+]
+
+--
+
+.pull-left[The difference observed is due only to .secondary[_sampling error_], and not to any real effects in the population]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+**Null Hypothesis**
+.Large[
+$$H_{0} = \epsilon$$
+]
+]
+]
+]
+
+---
+
+# Statistical Hypotheses
+
+.content-box-gray[
+**Research Hypothesis**: there is change, a difference, or a relationship between variables
+]
+
+--
+
+.pull-left[The difference observed is due to both sampling error and .secondary[a real effect]]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+**Research Hypothesis**
+.Large[
+$$H_{1} = \tau + \epsilon$$
+]
+]
+]
+]
+
+--
+
+.footnote[
+.small[The research hypothesis is sometimes  
+called the alternative hypothesis, $H_{a}$]
+]
+
+---
+
+# Statistical Hypotheses
+
+
+.pull-left[
+.center[
+**Null Hypothesis**  
+
+$H_{0}$: No real effect exists  
+
+]
+]
+
+--
+
+.pull-right[
+.center[
+
+**Research Hypothesis**   
+
+$H_{1}$: A real effect does exist  
+]
+]
+
+
+--
+
+.pull-left[
+
+.center[_Mutually exclusive_]
+
+- Only one of these hypotheses can be true in the world
+
+]
+
+--
+
+.pull-right[
+
+.center[_Exhaustive_]
+
+- One of these hypotheses is true in the world and must occur
+  
+]
+
+--
+
+.center[
+As a result, discrediting one explanation gives us reason to believe in the other one
+]
+
+---
+
+background-image: url(https://images.unsplash.com/photo-1617527019968-052733f9cfe8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2128&q=80)
+
+background-size: cover
+
+---
+
+# Dice Example
+
+.pull-left[
+.center[
+**Null Hypothesis** $H_{0}$
+
+_The die is normal_
+
+<img src="img/die-normal.png" width="75%"/>
+]
+]
+
+--
+
+.pull-right[
+.center[
+**Alternative Hypothesis** $H_{a}$
+
+_The die is loaded_
+
+| Number on die | Number of rolls |
+| --- | --- |
+| 1 | 3 |
+| 2 | 2 |
+| 3 | 4 |
+| 4 | 2 |
+| 5 | 3 |
+| 6 | 6 |
+
+]
+]
+
+--
+
+.right[
+.small[
+The evidence here **would probably _not_ be strong enough** to reject the null hypothesis
+]
+]
+
+---
+
+# Dice Example
+
+.pull-left[
+.center[
+**Null Hypothesis** $H_{0}$
+
+_The die is normal_
+
+<img src="img/die-loaded.png" width="75%"/>
+]
+]
+
+--
+
+.pull-right[
+.center[
+**Alternative Hypothesis** $H_{a}$
+
+_The die is loaded_
+
+| Number on die | Number of rolls |
+| --- | --- |
+| 1 | 1 |
+| 2 | 0 |
+| 3 | 0 |
+| 4 | 0 |
+| 5 | 1 |
+| 6 | 18 |
+
+]
+]
+
+--
+
+.right[
+.small[
+The evidence here **would probably be strong enough** to reject the null hypothesis
+]
+]
+
+
+---
+
+# Statistical Hypotheses
+
+.pull-left[
+
+.center[
+**Null Hypothesis** $H_{0}$
+
+.Large[
+
+$\mu_{treatment} = \mu_{without \: treatment}$
+]
+]
+]
+
+--
+
+.pull-right[
+.center[
+**Alternative Hypothesis** $H_{a}$
+.Large[
+$\mu_{treatment} \neq \mu_{without \: treatment}$
+]
+]
+]
+
+--
+
+
+- Note, however, that we aren’t able to treat an entire population; rather, we treat **samples**
+
+--
+
+- Hypotheses are about **population parameters**, but we evaluate them with data from **samples**
+
+
+---
+
+# Hypothesis Testing
+
+1. Form statistical hypotheses
+
+2. **Make predictions and establish a standard of evidence**
+
+3. Test hypotheses by collecting data and calculating statistics
+
+4. Evaluate our hypotheses in light of evidence
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu_{IQ}$ = 100  
+
+$\sigma_{IQ}$ = 15  
+
+
+
+<img src="img/brain.png" width="50%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+.pull-left[
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="30%"/>
+]
+
+.pull-right[
+$101, 122, 132$ 
+$94, 129, 89$
+$109, 92, 100$ 
+$125, 103, 91$
+$94, 116, 92$
+
+]
+]
+]
+
+
+---
+
+# Back to our experiment
+
+.pull-left[
+**Null Hypothesis $H_{0}$**
+
+$\mu_{NeuroIQ} = 100$
+
+**Alternative Hypothesis $H_{a}$**
+
+$\mu_{NeuroIQ} \neq 100$
+
+]
+
+--
+
+.pull-right[
+**The Rationale**
+
+- In science, we seek to **falsify** (or disprove) our hypotheses
+
+- $H_{1}$ is broad and would be hard to falsify by itself, so we choose to test it against $H_{0}$
+
+]
+
+---
+
+# Standard of  Evidence
+
+.pull-left[
+If we’re testing against $H_{0}$, then, we need to determine _how extreme_ (how far from 100) the sample mean would need to be for us to reject $H_{0}$
+
+$\overline{x}_{NeuroIQ}= 150$ ?
+
+$\overline{x}_{NeuroIQ}= 109$ ?
+
+$\overline{x}_{NeuroIQ}= 60$ ?
+
+$\overline{x}_{NeuroIQ}= 92$ ?
+]
+
+--
+
+.pull-right[
+.center[
+<img src="https://manifestedharmony.com/wp-content/uploads/2013/04/Long-line-in-the-sand.jpg" width="60%"/>
+
+]
+]
+
+
+---
+
+# Standard of Evidence
+
+```{r iq-score-dist, echo=FALSE, cache=TRUE}
+
+library(tidyverse)
+iq_id <- seq(1:1000)
+iq <- rnorm(n = 1000, mean = 100, sd = 15)
+iq_fig_data <- data.frame(iq_id, iq)
+
+ggplot(iq_fig_data, aes(x = iq)) +
+  geom_histogram(alpha = 1/2, fill = "#1381B0", color = "black",
+                 binwidth = 10) +
+  geom_vline(xintercept = 100, linetype = "dashed") +
+  labs(x = 'Distribution of Population IQ Scores',
+       y = '') +
+  scale_x_continuous(breaks = seq(50, 150, by = 10)) +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+
+```
+.footnote[
+$\mu = 100$  
+$\sigma = 15$
+]
+
+---
+
+# Standard of Evidence
+
+.center[
+<img src="img/normal-dist-prob-regions.png" />
+]
+
+
+---
+
+# Standard of Evidence
+
+.content-box-gray[
+**Alpha**: the probability value that is used to define which sample outcomes are considered very unlikely if $H_{0}$ is true
+]
+
+--
+
+.pull-left[
+- To be precise about which values are extreme enough, we establish an alpha level
+
+- This is also referred to as .secondary[Significance level] and is our "line in the sand"
+]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**Alpha Level**  
+$\alpha$
+]
+]
+]
+
+---
+
+# Standard of Evidence
+
+The most common $\alpha = .05$
+
+Interpretation: The least likely 5% of samples (in the extreme tails) would be evidence enough to reject $H_{0}$
+
+---
+
+# Standard of Evidence
+
+<img src="img/dist-alpha-prop.png" />
+
+$$\alpha = .05$$
+
+---
+
+# Standard of Evidence
+
+.content-box-gray[
+**Critical Region**: The region (of the sampling distribution) that contains the sample outcomes that are considered _very unlikely_ if $H_{0}$ is true
+]
+
+--
+
+```{r iq-cutoff-2, echo=FALSE, fig.width=12}
+ggplot(iq_fig_data, aes(x = iq)) +
+    geom_rect(aes(xmin = -Inf, xmax = 70, ymin = 0, ymax = Inf),
+            alpha = 0.5,
+            fill = "#DFE6E9") +
+    geom_rect(aes(xmin = 130, xmax = Inf, ymin = 0, ymax = Inf),
+            alpha = 0.5,
+            fill = "#DFE6E9") +
+  geom_histogram(alpha = 1/2, fill = "#1381B0", color = "black",
+                 binwidth = 10) +
+  geom_vline(xintercept = 130, linetype = "dashed", color = "#2D3436") +
+  geom_vline(xintercept = 70, linetype = "dashed", color = "#2D3436") +
+  labs(x = 'Distribution of Population IQ Scores',
+       y = '') +
+  scale_x_continuous(breaks = seq(50, 150, by = 10)) +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+```
+
+---
+
+
+# Standard of Evidence
+
+.center[
+.Large[
+
+If we get a test statistic extreme enough to be in the critical region, we can reasonably **reject** $H_{0}$
+
+]
+]
+
+```{r iq-cutoff-3, echo=FALSE, fig.width=10}
+ggplot(iq_fig_data, aes(x = iq)) +
+    geom_rect(aes(xmin = -Inf, xmax = 70, ymin = 0, ymax = Inf),
+            alpha = 0.5,
+            fill = "#DFE6E9") +
+    geom_rect(aes(xmin = 130, xmax = Inf, ymin = 0, ymax = Inf),
+            alpha = 0.5,
+            fill = "#DFE6E9") +
+  geom_histogram(alpha = 1/2, fill = "#1381B0", color = "black",
+                 binwidth = 10) +
+  geom_vline(xintercept = 130, linetype = "dashed", color = "#2D3436") +
+  geom_vline(xintercept = 70, linetype = "dashed", color = "#2D3436") +
+  labs(x = 'Distribution of Population IQ Scores',
+       y = '') +
+  scale_x_continuous(breaks = seq(50, 150, by = 10)) +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+```
+
+---
+
+# Hypothesis Testing
+
+1. Form statistical hypotheses
+
+2. Make predictions and establish a standard of evidence
+
+3. **Test hypotheses by collecting data and calculating statistics**
+
+4. Evaluate our hypotheses in light of evidence
+
+---
+
+# _p_-value
+
+.content-box-gray[
+**_p_-value**: the probability of getting the observed or more extreme data, _assuming_ the null hypothesis is true
+]
+
+--
+
+.pull-left[
+- Our first line of defense against being fooled by randomness
+
+- _p_-values tell you how surprising the data is, _assuming_ there is no effect
+
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**_p_-value**  
+$p$
+]
+]
+]
+
+---
+
+# _p_-value
+
+.pull-left[
+
+**One-tailed _p_-value**: Proportion of distribution more extreme in one tail
+
+```{r iq-cutoff-one-tail, echo=FALSE}
+ggplot(iq_fig_data, aes(x = iq)) +
+
+    geom_rect(aes(xmin = 130, xmax = Inf, ymin = 0, ymax = Inf),
+            alpha = 0.5,
+            fill = "#DFE6E9") +
+  geom_histogram(alpha = 1/2, fill = "#1381B0", color = "black",
+                 binwidth = 10) +
+  geom_vline(xintercept = 130, linetype = "dashed", color = "#2D3436") +
+  labs(x = 'Distribution of Population IQ Scores',
+       y = '') +
+  scale_x_continuous(breaks = seq(50, 150, by = 10)) +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+```
+]
+
+--
+
+.pull-right[
+
+**Two-tailed _p_-value**: Proportion of distribution more extreme in both tails
+
+```{r iq-cutoff-5, echo=FALSE}
+ggplot(iq_fig_data, aes(x = iq)) +
+    geom_rect(aes(xmin = -Inf, xmax = 70, ymin = 0, ymax = Inf),
+            alpha = 0.5,
+            fill = "#DFE6E9") +
+    geom_rect(aes(xmin = 130, xmax = Inf, ymin = 0, ymax = Inf),
+            alpha = 0.5,
+            fill = "#DFE6E9") +
+  geom_histogram(alpha = 1/2, fill = "#1381B0", color = "black",
+                 binwidth = 10) +
+  geom_vline(xintercept = 130, linetype = "dashed", color = "#2D3436") +
+  geom_vline(xintercept = 70, linetype = "dashed", color = "#2D3436") +
+  labs(x = 'Distribution of Population IQ Scores',
+       y = '') +
+  scale_x_continuous(breaks = seq(50, 150, by = 10)) +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+```
+]
+
+.footnote[
+Using a one- or two-tailed _p_-value  
+will depend on the research hypothesis
+]
+
+---
+
+# Test Statistic
+
+.content-box-gray[
+**Test statistic**: A numerical summary of the degree to which a sample is unlike the samples predicted by the null hypothesis, $H_{0}$
+]
+
+--
+
+.content-box-blue[
+.center[
+**_z_-test statistic**
+
+.Large[
+
+$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$
+
+]
+]
+]
+
+---
+
+# _z_-test Statistic
+
+.content-box-blue[
+.center[
+**_z_-test statistic**
+
+.Large[
+
+$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$
+
+]
+]
+]
+
+---
+
+# _z_-test Statistic
+
+.center[
+<img src="img/z-test-pointing.png" width="90%"/>
+]
+
+---
+
+# _z_-test Statistic
+
+.pull-left[
+.content-box-blue[
+.center[
+**_z_-test statistic**
+
+.Large[
+
+$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$
+
+]
+]
+]
+]
+
+
+.pull-right[
+.content-box-blue[
+.center[
+**Standard Error**
+
+.Large[
+$$\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}$$
+]
+]
+]
+]
+
+.pull-left[
+$\overline{x} =$ sample mean  
+$\mu_{\overline{x}} =$ population mean when $H_{0}$ is true  
+$\sigma_{\overline{x}} =$ standard error
+]
+
+.pull-right[
+$\sigma =$ population standard deviation   
+$n =$ sample size
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+
+
+<img src="img/brain.png" width="50%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+.pull-left[
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="30%"/>
+]
+
+.pull-right[
+$101, 122, 132$ 
+$94, 129, 89$
+$109, 92, 100$ 
+$125, 103, 91$
+$94, 116, 92$
+
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+<img src="img/brain.png" width="20%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/>
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {105.9 - 100}{\sigma_{\overline{x}}}$
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+<img src="img/brain.png" width="20%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/>
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {105.9 - 100}{\sigma_{\overline{x}}}$
+
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}$
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$\sigma_{\overline{x}} = \frac{15}{\sqrt{15}}$
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$\sigma_{\overline{x}} = 3.87$
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+<img src="img/brain.png" width="20%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/>
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {105.9 - 100}{3.87}$
+
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {5.90}{3.87}$
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = 1.53$
+]
+]
+]
+
+---
+
+# Hypothesis Testing
+
+1. Form statistical hypotheses
+
+2. Make predictions and establish a standard of evidence
+
+3. Test hypotheses by collecting data and calculating statistics
+
+4. **Evaluate our hypotheses in light of evidence**
+
+---
+
+# Evaluating the Evidence
+
+.pull-left[
+
+**Results**
+
+$z_{\overline{x}} = 1.53$  
+
+$p = .126017$
+
+$\alpha = .05$
+
+]
+
+--
+
+.pull-right[
+
+**Decision**
+
+If $p < \alpha$, reject the null hypothesis
+
+If $p > \alpha$, fail to reject the null hypothesis
+
+]
+
+--
+
+.left[
+Since $p = .13 > \alpha = .05$, we fail to reject the null hypothesis
+]
+
+--
+
+.left[
+> _"We tested the hypothesis that NeuroIQ would change peoples' IQ. Our results suggest that there is no evidence that NeuroIQ changes peoples' IQ, z = 1.53, p = .13."_
+]
+---
+
+# Interpreting _p_-values
+
+- If  $p < \alpha$, the data you observe is **not** likely due to just sampling error
+
+--
+
+- If $p > \alpha$, the data is likely due to sampling error
+
+--
+
+**Why?**
+
+--
+
+- A _p_-value of .0001 means that only a tiny proportion of the distribution is more extreme than what we found
+
+  - Small _p_-values would be **surprising** if the null hypothesis is true
+
+--
+
+- A _p_-value of .70 means that 70% of the distribution is more extreme than what we found
+
+  - Large _p_-values are not surprising if the null hypothesis is true
+
+---
+
+## Hypothesis Testing
+
+**Form statistical hypotheses**
+
+_NeuroIQ_ changes peoples’ IQ
+
+--
+
+**Make predictions and establish a standard of evidence**  
+
+$H_{0}$: $\mu_{NeuroIQ} = 100$  
+$H_{a}$: $\mu_{NeuroIQ} \neq 100$  
+$\alpha = .05$
+
+--
+
+**Test hypotheses by collecting data and calculating statistics**  
+
+$z_{\overline{x}} = 1.53$
+
+
+--
+
+**Evaluate our hypotheses in light of evidence**  
+
+$p = .13 > \alpha = .05$. Fail to reject the null hypothesis.
+
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Probability and the Normal Curve
+
+**Reading**
+
+- Chapter Seven
+
+**Quiz 1**
+
+- Due tonight at 11:59pm MT
+
+  - Lecture 1-4, Ch.1-5
+
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

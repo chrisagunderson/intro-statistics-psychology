@@ -1,0 +1,1211 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 08: Midterm Review
+
+]
+
+---
+
+# Outline for today
+
+```{r echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+
+.pull-left[
+
+- **Mini-Report Assignment**
+
+- **Midterm Review**
+
+  - Review of key computations
+  
+  - Review of key concepts
+
+- **Q & A**
+  - Any questions about the midterm
+  
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+---
+
+# Mini-Report Assignment
+
+.pull-left[
+.center[
+**Reading**
+]
+
+The psychology-related article must be from a non-scientific source and must present statistics (descriptive or inferential)
+
+- Psychology Today
+
+- Time
+
+- People
+
+]
+
+--
+
+.pull-right[
+
+.center[
+**Writing**
+]
+- 2-pages, double-spaced, 12-point font, 1" margins
+
+- _Summarize_ the article and the statistics it reports
+
+- _Describe_ how well the author reports these statistics and the methods used to generate them
+
+- _Evaluate_ whether a reader who is not scientifically trained would be able to walk away with a clear understanding of the information being presented
+
+]
+
+---
+
+# Key Computations for the Midterm
+
+- Standard deviation (for samples and population)
+
+- Variance (for samples, populations)
+
+- Cronbach's Alpha
+
+- Correlation
+
+- Z-test statistic
+
+- z-scores
+
+---
+
+class: center, middle, inverse
+
+# Measures of Variability
+
+---
+
+# Measures of Variability
+
+.content-box-gray[
+
+**Measures of variability**: describe how scores in a given dataset differ from one another (e.g., the spread or clustering of points)
+
+]
+
+.center[
+
+<img src="img/range-sd-var-boxes.png" width="80%"/>
+]
+
+---
+
+# Measures of Variability
+
+
+.content-box-gray[
+
+**Range**: The difference between the lowest and highest values in a dataset
+]
+
+--
+
+.content-box-gray[
+**Standard Deviation**: The standard (or typical) amount that scores deviate from the mean Variance: The averaged squared deviation from the mean
+]
+
+--
+
+.content-box-gray[
+**Variance**: The averaged squared deviation from the mean
+]
+
+---
+
+# Sum of Squares
+
+.pull-left[
+```{r sd-example-data, echo=FALSE}
+index <- seq(1:10)
+x = c(1,2,1,4,3,3,6,1,2,3)
+sd_example_mean = mean(x)
+
+sd_data <- data.frame(index, x) %>% 
+  as_tibble() %>% 
+  mutate(deviations = x - mean(x)) %>% 
+  rename("$$i$$" = index,
+         "$$x_{i}$$" = x,
+         "$x_{i} - \\mu$"= deviations)
+
+sd_data %>% 
+  select(-"$$i$$") %>% 
+  knitr::kable()
+
+```
+]
+
+.pull-right[
+**Step 1**: calculate the mean. $\mu = 2.6$
+
+**Step 2**: subtract each $x_{i}$ from the mean
+]
+
+---
+
+# Sum of Squares
+
+.pull-left[
+
+```{r squared-deviations, echo=FALSE}
+
+sd_data <- data.frame(index, x) %>% 
+  as_tibble() %>% 
+  mutate(mu = x - mean(x)) %>% 
+  rename("$$i$$" = index,
+         "$$x$$" = x,
+         "$x_{i} - \\mu$"= mu)
+
+sd_data_2 <- sd_data %>% 
+  mutate(squared_deviations = `$x_{i} - \\mu$`^2) %>% 
+  rename("$$(x_{i} - \\mu)^2$$" = squared_deviations) %>% 
+  select(-"$$i$$")
+
+knitr::kable(sd_data_2, escape = FALSE)
+
+```
+
+]
+
+.pull-right[
+**Step 1**: calculate the mean. $\mu = 2.6$
+
+**Step 2**: subtract each $x_{i}$ from the mean
+
+**Step 3**: Square the deviations
+
+**Step 4**: Sum the squared deviations, $\sum (x_{i} - \mu)^2 = 22.4$
+]
+
+---
+
+# Standard Deviation and Variance
+
+
+.pull-left[
+
+.center[
+
+Population Parameter
+
+.content-box-blue[
+**Standard Deviation**  
+$\sigma = \sqrt\frac{\sum (X_{i} - \mu)^2}{N}$
+]
+
+.content-box-blue[
+**Variance**  
+$\sigma^2 = \frac{\sum(X_{i} - \mu)^2}{N}$
+]
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+
+Sample Statistic
+
+.content-box-blue[
+**Standard Deviation**  
+$s = \sqrt\frac{\sum (x_{i} - \overline{x})^2}{(n - 1)}$
+]
+
+.content-box-blue[
+**Variance**  
+$s^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$
+]
+]
+]
+
+---
+
+class: center, middle, inverse
+
+# Cronbach's Alpha
+
+---
+
+# Cronbach's Alpha
+
+.content-box-blue[
+
+.center[
+**Cronbach's Alpha**
+]
+
+.Large[
+$$\alpha = (\frac{k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})$$
+]
+
+]
+
+--
+
+$k$ the number of items
+
+$s_{y}^2$ the variance associated with the observed score "total column"
+
+$\sum  s_{i}^2$ the sum of all the variances for each individual item
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+```{r cronbach-lec-table-1, echo=FALSE}
+cronbach_data_lec <- data.frame("Item_1" = c(6, 5, 9, 3, 2, 1, 5),
+                        "Item_2" = c(6, 5, 8, 2, 3, 1, 4),
+                        "Item_3" = c(8, 6, 6, 4, 2, 2, 6)) %>% 
+  as_tibble()
+
+options(knitr.kable.NA = '')
+knitr::kable(cronbach_data_lec, "pipe")
+
+```
+
+1. I often have worrying thoughts
+2. I often feel nervous
+3. My heart often beats fast as fears enter in
+
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+```{r cronbach-lec-table-2, echo=FALSE}
+cronbach_data_lec2 <- cronbach_data_lec %>% 
+  rowwise() %>% 
+  mutate(Total = sum(Item_1, Item_2, Item_3)) %>% 
+  ungroup()
+
+knitr::kable(cronbach_data_lec2, "pipe")
+
+```
+
+]
+
+.pull-right[
+
+**Step 1**: Sum the values of Item 1, Item 2, and Item 3 _row-wise_ to create a "Total" column
+]
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+
+```{r echo=FALSE}
+knitr::kable(cronbach_data_lec2, "pipe")
+
+```
+
+]
+
+.pull-right[
+
+**Step 1**: Sum the values of Item 1, Item 2, and Item 3 _row-wise_ to create a "Total" column
+
+**Step 2**: Calculate the _sample variance_ for each item and 'total'
+
+$$s_{i}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$
+
+$$s_{y}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$
+
+
+]
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+Create a table for item 1
+```{r echo=FALSE}
+cronbach_data_lec2 %>% 
+  select(Item_1) %>% 
+  mutate(mean = mean(Item_1),
+         deviation = Item_1 - mean,
+         squared_deviation = deviation^2) %>% 
+  select(-mean) %>% 
+  knitr::kable("pipe", digits = 2)
+
+```
+
+]
+
+.pull-right[
+
+**Step 2a**: Calculate the _sample variance_ for each item
+
+$$\overline{x} = 4.43$$ 
+
+$$s_{1}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$
+$$s_{1}^2 = \frac{43.71}{(7 - 1)} = 7.29$$
+
+]
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+Create a table for item 2
+```{r echo=FALSE}
+cronbach_data_lec2 %>% 
+  select(Item_2) %>% 
+  mutate(mean = mean(Item_2),
+         deviation = Item_2 - mean,
+         squared_deviation = deviation^2) %>% 
+  select(-mean) %>% 
+  knitr::kable("pipe", digits = 2)
+
+# cronbach_data_lec2 %>% 
+#   select(Item_2) %>% 
+#   mutate(mean = mean(Item_2),
+#          deviation = Item_2 - mean,
+#          squared_deviation = deviation^2) %>%
+#   summarise(sum_of_squares = sum(squared_deviation))
+
+```
+
+]
+
+--
+
+.pull-right[
+
+**Step 2b**: Calculate the _sample variance_ for each item
+
+$$\overline{x} = 4.14$$ 
+
+$$s_{2}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$
+$$s_{2}^2 = \frac{34.86}{(7 - 1)} = 5.81$$
+
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+Create a table for item 3
+```{r echo=FALSE}
+cronbach_data_lec2 %>% 
+  select(Item_3) %>% 
+  mutate(mean = mean(Item_3),
+         deviation = Item_3 - mean,
+         squared_deviation = deviation^2) %>% 
+  select(-mean) %>% 
+  knitr::kable("pipe", digits = 2)
+
+# cronbach_data_lec2 %>%
+#   select(Item_3) %>%
+#   mutate(mean = mean(Item_3),
+#          deviation = Item_3 - mean,
+#          squared_deviation = deviation^2) %>%
+#   summarise(sum_of_squares = sum(squared_deviation))
+
+```
+
+]
+
+.pull-right[
+
+**Step 2c**: Calculate the _sample variance_ for each item
+
+$$\overline{x} = 4.86$$ 
+
+$$s_{3}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$
+$$s_{3}^2 = \frac{30.86}{(7 - 1)} = 5.14$$
+
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+Create a table for the total column
+```{r echo=FALSE}
+cronbach_data_lec2 %>% 
+  select(Total) %>% 
+  mutate(mean = mean(Total),
+         deviation = Total - mean,
+         squared_deviation = deviation^2) %>% 
+  select(-mean) %>% 
+  knitr::kable("pipe", digits = 2)
+
+# cronbach_data_lec2 %>%
+#   select(Total) %>%
+#   mutate(mean = mean(Total),
+#          deviation = Total - mean,
+#          squared_deviation = deviation^2) %>%
+#   summarise(sum_of_squares = sum(squared_deviation))
+
+```
+
+]
+
+.pull-right[
+
+**Step 2c**: Calculate the _sample variance_ for each item
+
+$$\overline{x} = 13.43$$ 
+
+$$s_{y}^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$$
+$$s_{y}^2 = \frac{293.71}{(7 - 1)} = 48.95$$
+
+]
+
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+```{r echo=FALSE}
+knitr::kable(cronbach_data_lec2, "pipe")
+
+```
+
+]
+
+.pull-right[
+
+**Step 3**: Prep all of the variance values we just calculated
+
+```{r echo=FALSE}
+cronbach_data_lec3 <- cronbach_data_lec2 %>% 
+  summarise(across(where(is.double), var))
+
+knitr::kable(cronbach_data_lec3, "pipe", digits=3)
+```
+
+$k = 3$ items in our scale
+
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+.content-box-blue[
+
+.center[
+**Cronbach's Alpha**
+.Large[
+
+$\alpha = (\frac{k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})$
+]
+]
+]
+
+.pull-left[
+$k = 3$  
+
+$\sum s_{i}^2 = s_{1}^2 + s_{2}^2 + s_{3}^2 = 7.29 + 5.81 + 5.14 = 18.24$
+
+$s_{y}^2 = 48.95$
+]
+]
+
+--
+
+.pull-right[
+
+.Large[
+$$\alpha = (\frac{3}{3 - 1})(\frac{48.95 - 18.24}{48.95})$$
+$$\alpha = .941$$
+]
+]
+
+.pull-right[
+
+
+]
+
+---
+
+class: center, middle, inverse
+
+# Pearson's Correlation
+
+---
+
+# Correlation: Calculation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$  
+]
+]
+]
+
+--
+
+.pull-left[
+
+We just need six values:
+
+]
+
+.pull-right[
+.pull-left[
+
+$\sum X$  
+$\sum Y$  
+$\sum XY$ 
+]
+
+.pull-right[
+$\sum X^2$  
+$\sum Y^2$  
+$n$  
+]
+]
+
+---
+
+# Correlation: Calculation
+
+Set up our table with the $x$ and $y$ values
+
+```{r correlation-table-1, echo=FALSE}
+library(tidyverse)
+corr_data_lecture <- data.frame(x = c(5, 9, 10, 3, 5, 7),
+                        y = c(6, 11, 6, 4, 6, 9))
+
+corr_data_lecture <- corr_data_lecture %>% 
+  as_tibble() %>% 
+  rename("$x$" = x,
+         "$y$" = y) %>%
+   add_column("$$x^2$$" = NA,
+             "$$y^2$$" = NA,
+             "$$xy$$" = NA)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture, "pipe", escape = TRUE)
+
+```
+
+---
+
+# Correlation: Calculation
+
+Square our $x$ values
+
+```{r correlation-table-2, echo=FALSE}
+corr_data_lecture2 <- corr_data_lecture %>% 
+  mutate(`$$x^2$$` = `$x$`^2)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture2, "pipe", escape = TRUE)
+```
+
+---
+
+# Correlation: Calculation
+
+Square our $y$ values
+
+```{r correlation-table-3, echo=FALSE}
+corr_data_lecture3 <- corr_data_lecture2 %>% 
+  mutate(`$$y^2$$` = `$y$`^2)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture3, "pipe", escape = TRUE)
+```
+
+---
+
+# Correlation: Calculation
+
+Multiply $x$ and $y$ together row-wise
+
+```{r correlation-table-4, echo=FALSE}
+corr_data_lecture4 <- corr_data_lecture3 %>% 
+  mutate(`$$xy$$` = `$x$` * `$y$`)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+---
+
+# Correlation: Calculation
+
+.pull-left[
+
+```{r correlation-table-5, echo=FALSE}
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+```{r correlation-table-6, echo=FALSE}
+corr_data_sum_lecture<- corr_data_lecture4 %>% 
+  summarise(across(where(is.numeric), sum)) %>% 
+  rename("$\\sum x$" = `$x$`,
+         "$\\sum y$" = `$y$`,
+         "$\\sum  x^2$" = `$$x^2$$`,
+         "$\\sum y^2$" = `$$y^2$$`,
+         "$\\sum xy$" = `$$xy$$`)
+
+knitr::kable(corr_data_sum_lecture, "pipe")
+```
+
+]
+
+---
+
+# Correlation: Calculation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.small[
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$  
+
+]
+]
+]
+
+--
+
+.center[
+
+```{r corr-sum-table, echo=FALSE}
+knitr::kable(corr_data_sum_lecture, "pipe")
+
+```
+
+]
+
+
+--
+
+$$r_{xy} = \frac{(6)(294) - (39)(42)}{\sqrt{[(6)(289) - (39)^2][(6)(326) - (42)^2]}}$$
+
+---
+
+# Correlation: Calculation
+
+
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$
+
+--
+
+$$r_{xy} = \frac{(6)(294) - (39)(42)}{\sqrt{[(6)(289) - (39)^2][(6)(326) - (42)^2]}}$$
+--
+
+$$r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62$$
+
+---
+
+class: center, middle, inverse
+
+# z-test statistic
+
+---
+
+# _z_-test Statistic
+
+.center[
+<img src="img/z-test-pointing.png" width="90%"/>
+]
+
+---
+
+# _z_-test Statistic
+
+.pull-left[
+.content-box-blue[
+.center[
+**_z_-test statistic**
+
+.Large[
+
+$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$
+
+]
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Standard Error**
+
+.Large[
+$$\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}$$
+]
+]
+]
+]
+
+.pull-left[
+$\overline{x} =$ sample mean  
+$\mu_{\overline{x}} =$ population mean when $H_{0}$ is true  
+$\sigma_{\overline{x}} =$ standard error
+]
+
+.pull-right[
+$\sigma =$ population standard deviation   
+$n =$ sample size
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+
+
+<img src="img/brain.png" width="50%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+.pull-left[
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="30%"/>
+]
+
+.pull-right[
+$101, 122, 132$ 
+$94, 129, 89$
+$109, 92, 100$ 
+$125, 103, 91$
+$94, 116, 92$
+
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+<img src="img/brain.png" width="20%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/>
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {105.9 - 100}{\sigma_{\overline{x}}}$
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+<img src="img/brain.png" width="20%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/>
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {105.9 - 100}{\sigma_{\overline{x}}}$
+
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}$
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$\sigma_{\overline{x}} = \frac{15}{\sqrt{15}}$
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$\sigma_{\overline{x}} = 3.87$
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+<img src="img/brain.png" width="20%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+$n = 15$  
+
+$\overline{X}_{IQ} = 105.9$  
+
+$s_{IQ} = 15.10$
+
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/>
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {105.9 - 100}{3.87}$
+
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = \frac {5.90}{3.87}$
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+$z_{\overline{x}} = 1.53$
+]
+]
+]
+
+---
+
+
+class: center, middle, inverse
+
+# _z_-scores
+
+---
+
+# Standardizing Scores
+
+.center[
+<img src="img/raw-scores-to-z-scores.png" />
+]
+
+---
+
+# Developing z-scores
+
+.pull-left[
+.center[
+.content-box-blue[
+**Z-score**
+
+.Large[
+$$z_{i} = \frac{x_{i} - \mu}{\sigma}$$
+]
+]
+]
+]
+
+--
+
+.right[
+
+.Large[
+$$z_{i} = \frac{deviation_{i}}{\sigma}$$
+
+]
+]
+
+--
+
+.pull-right[
+The number of standard deviations a particular score deviates from its corresponding mean
+
+_z_-scoring is useful because a _z_-score of 1 .secondary[_means the same thing in any distribution_]
+]
+
+---
+
+# z-scores
+
+A report in 2010 indicates that Americans between the ages of 8 and 18 spend an average of $\mu = 7.5$ hours per day using some sort of electronic device such as smart phones, computers, or tablets. Assume that the distribution of times is normal with a standard deviation of $\sigma = 2.5$ hours. Aidan checked the ‘screen time’ info on his phone over the last month, and found that in the last four weeks, he spent $x = 6.3$ hours on the phone per day.
+
+--
+
+$$\mu = 7.5$$
+--
+
+
+$$\sigma = 2.5$$
+
+--
+
+$$x = 6.3$$
+
+--
+
+$$z_{i} = \frac{6.3 - 7.5}{2.5} = -0.48$$
+
+---
+
+# Key concepts for the Midterm
+
+- Mean, median, and mode and their relationship to skewed distributions
+
+- Scales of measurement
+
+- Reliability
+
+- Alpha, _p_-value, critical region
+
+- Type I and Type II errors
+
+- Factors that influence statistical power
+
+
+---
+
+# Next time
+
+.pull-left[
+
+**Midterm Exam**
+
+- Wednesday 02/02/2022 08:00am MT Sturm Hall 187
+
+  - Bring calculator and pencil
+  
+  - Scantron, Formula Sheet, and scratch paper will be provided with the exam
+
+**Mini-Report**
+
+- Due Wednesday 02/02/2022 11:59pm MT via Canvas
+
+  - Submit `.pdf` or `.docx` file
+
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

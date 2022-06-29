@@ -1,0 +1,1602 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 02: Central Tendency and Variability
+]
+
+---
+
+# Reminder: Install JASP
+
+.center[
+<img src="https://jasp-stats.org/wp-content/uploads/2019/06/laptop_start1.png"width="68%"/>
+]
+
+.footnote[
+[Download link here](https://jasp-stats.org)
+]
+
+---
+
+# Outline for Today
+
+.pull-left[
+**Measures of central tendency**
+
+- Mean, Median, Mode
+
+**Scales of Measurement**
+
+- Nominal, Ordinal, Interval, and Ratio scales
+
+**Measures of variability**
+
+- Range, Standard Deviation, Variance
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+
+---
+
+class: center, middle, inverse
+
+# Measures of Central Tendency
+
+---
+
+# Measures of Central Tendency
+
+.content-box-gray[
+**Measures of central tendency**: Numbers that represent the _center_ or _middle_ of a distribution of data
+
+]
+
+???
+One number that summarizes and best represents a set of scores
+
+--
+
+<img src="img/mean-median-mode-squares.png" />
+
+
+
+---
+
+# The Mean
+
+.content-box-blue[
+
+**Mean**: The sum of a set of scores divided by the total number of scores in the set
+
+]
+
+--
+
+```{r mean-simulated, echo=FALSE, fig.height=3}
+library(tidyverse)
+mean_fig_index <- seq(1:1000)
+mean_fig_x <- rnorm(n = 1000, mean = 20, sd = 3)
+mean_fig_data <- data.frame(mean_fig_index, mean_fig_x)
+
+ggplot(mean_fig_data, aes(x = mean_fig_x)) +
+  geom_histogram(alpha = 1/2, fill = "#1381B0", color = "black",
+                 binwidth = 1.5) +
+  geom_vline(xintercept = 20.02342, linetype = "dashed") +
+  labs(x = 'Time to drive to work (in minutes)',
+       y = '') +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+```
+
+---
+
+# The Mean
+
+.pull-left[
+
+.center[
+
+### Populations
+
+.content-box-blue[
+
+.Large[
+
+$\mu$
+
+]
+
+"mew"
+
+]
+
+]
+
+]
+
+--
+
+.pull-right[
+
+.center[
+
+### Samples
+
+.pull-left[
+.content-box-blue[
+
+.Large[
+$\overline{x}$
+]
+
+"x-bar"
+
+]
+]
+
+.pull-right[
+.content-box-blue[
+
+
+.Large[
+$M$
+
+] 
+
+"M"
+]
+
+]
+]
+]
+
+---
+
+# The Mean: Populations
+
+Calculating the mean for populations
+
+
+.pull-left[
+.Large[
+$\mu = \frac{\text Sum \: of \: scores}{\text Number \: of \: scores}$
+]
+]
+
+--
+
+.pull-right[
+.content-box-blue[
+
+.center[
+**Mean for Populations**
+.Large[
+$$\mu = \frac{\sum x}{N}$$
+]
+]
+]
+]
+
+---
+
+# The Mean: Populations
+
+.center[
+<img src="img/population-mean-pointing.png" width="60%"/>
+]
+
+---
+
+# The Mean: Populations
+
+.pull-left[
+
+```{r pop-mean-table, echo=FALSE, include=TRUE, results="asis"}
+mathy.df <- data.frame( 
+                       i = c(1, 2, 3, 4), 
+                       x = c(6, 3, 7, 12))
+
+colnames(mathy.df) <- c("$$i$$", "$$x$$")
+
+knitr::kable(mathy.df, escape=FALSE)
+
+```
+]
+
+--
+
+.pull-right[
+
+$\sum X$  means _"Take the sum of all x values"_
+
+$\sum X = 6 + 3 + 7 + 12 = 28$
+
+]
+
+---
+
+# The Mean: Populations
+
+.pull-left[
+
+```{r example-pop-mean-table, echo=FALSE}
+knitr::kable(mathy.df, escape=FALSE)
+
+```
+
+]
+
+.pull-right[
+
+$\sum X_{i}$ uses in _index notation_
+
+$\sum X_{i} = X_{1} + X_{2} + X_{3} + X_{4}$
+]
+
+--
+
+.pull-right[
+
+$\sum X_{i} = 6 + 3 + 7 + 12$
+
+]
+
+--
+
+.pull-right[
+
+$\frac{\sum X_{i}}{N} = \frac{6 + 3 + 7 + 12}{4} = 7$
+
+]
+
+
+
+---
+
+# The Mean: Populations
+
+.center[
+.content-box-blue[
+**Mean for Populations**
+.Large[
+\begin{equation}
+\mu = \frac{\sum X_i}{N}
+\end{equation}
+]
+]
+]
+
+---
+
+# The Mean: Samples
+
+.content-box-blue[
+.center[
+**Mean for Samples**
+.Large[
+\begin{equation}
+\overline{x} = \frac{\sum X_{i}}{n}
+\end{equation}
+]
+]
+]
+
+Same calculations, different notation
+
+.pull-left[
+$N$ = population size  
+$n$ = sample size
+]
+
+
+---
+
+# What _is_ the mean?
+
+The arithmetic center or "balancing point" of a distribution, where the sum of the signed deviations from the mean always equals zero
+
+--
+
+.pull-left[
+Data: $2, 2, 5, 7$
+
+$\overline{x} = 4$
+
+Signed deviations from the mean: $(-2) + (-2) + (1) + (3) = 0$
+
+]
+
+--
+
+.pull-right[
+
+<img src="img/mean-balancing-point.png" width="100%"/>
+
+]
+
+
+---
+
+# Measures of Central Tendency
+
+
+Measures of central tendency are just that: Numbers that represent the _center_ or _middle_ of a distribution of data
+
+<img src="img/mean-median-mode-squares.png" />
+
+---
+
+# The Median
+
+The _median_ is also an “average,” but of a very different kind
+
+.content-box-gray[
+
+**Median**: the point at which half (50%) of the values are above and half (50%) of the values are below
+]
+
+---
+
+# The Median
+
+Calculating the median
+
+1. List all values in the set in ascending order
+
+2. The **middle-most score** is the median of the set
+
+---
+
+# The Median
+
+Example: Student GPA's
+
+| Raw Scores | Ordered Scores |
+| ---: | ---: |
+| 2.85 | 1.90 |
+| 2.55 | 2.55 |
+| 3.59 | 2.85 |
+| 4.00 | 3.59 |
+| 1.90 | 4.00 |
+
+.center[The **median** is 2.85]
+
+---
+
+# The Median
+
+What if you have an even number of values in the set?
+
+--
+
+Take the **mean** of the two middle-most values
+
+.pull-left[
+| Ordered Scores |
+| ---: |
+| 1.90 |
+| 2.55 |
+| 2.59 |
+| 3.00 |
+| 3.15 |
+| 3.95 |
+]
+
+--
+
+.pull-right[
+.Large[
+$\frac{2.59 + 3.00}{2} = 2.795$
+]
+]
+
+???
+Why use median? Because it is insensitive to extreme scores, which we will discuss shortly.
+
+---
+
+# Measures of Central Tendency
+
+
+Measures of central tendency are just that: Numbers that represent the _center_ or _middle_ of a distribution of data
+
+<img src="img/mean-median-mode-squares.png" />
+
+---
+
+# The Mode
+
+The mode is our third and final measure of central tendency
+
+.content-box-gray[
+
+**Mode**: the value in a distribution of data that occurs most frequently
+]
+
+.center[.Large[2, 4, 5, 5, 6, .blue[7], .blue[7], .blue[7], 8, 9]]
+
+The beauty of the mode is that you can calculate it even if your dataset doesn’t contain numbers
+
+---
+
+# The Mode
+
+Coffee Shop Customer Data
+
+.pull-left[
+
+| Date | Customer | Beverage |
+| --- | --- | --- |
+| 12/1/2021 | Charlie | Espresso |
+| 12/5/2021 | Tiffany | Coffee |
+| 12/17/2021 | Hayley | Latte |
+| 12/17/2021 | Chris | Chai Tea |
+| 12/18/2021 | Becca | Peppermint Mocha |
+| 12/18/2021 | Laura | Peppermint Mocha |
+| 12/18/2021 | Jill | Peppermint Mocha |
+]
+
+--
+
+.pull-right[
+| Beverage | Frequency |
+| --- | ---: |
+| Espresso | 1 |
+| Coffee | 1 |
+| Latte | 1 |
+| Chai Tea | 1 |
+| Peppermint Mocha | 3 |
+
+]
+
+---
+
+# The mean ain't perfect
+
+In a perfectly “normal” (bell-curve) distribution, Mean =  Median = Mode = 50
+
+```{r perfect-normal, echo=FALSE}
+library(bayestestR)  # Load it
+# Generate a perfect sample
+x <- rnorm_perfect(n = 100, mean = 50, sd = 10)
+
+# Visualise it
+x %>% 
+  density() %>%  # Compute density function
+  as.data.frame() %>% 
+  ggplot(aes(x=x, y=y)) +
+  geom_line(color = "#1381B0") +
+  geom_vline(xintercept = 50, linetype = "dashed", color = "#B04213") +
+  labs(x = '',
+       y = '') +
+  theme_classic()
+```
+
+
+---
+
+# The mean ain't perfect
+
+But in a non-normal (or “skewed”) distribution, the three are differentially influenced:
+
+.center[
+<img src="img/mean-median-mode-squares-skew-influence.png" width="70%"/>
+]
+
+---
+
+# The mean ain't perfect
+
+```{r left-skew, echo=FALSE}
+set.seed(123424)
+left_skew_index <- seq(1:10000)
+left_skew_data <- rbeta(10000,10,2)
+left_skew_label <- rep("left", 1000)
+
+left_skew <- data.frame(left_skew_index, left_skew_data, left_skew_label)
+
+ggplot(left_skew, aes(x = left_skew_data)) +
+  geom_histogram(fill = "#1381B0", color = "black", alpha = 1/4) +
+  labs(x = '',
+       y = '') +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+
+```
+
+This distribution is “negatively” or **left-skewed**
+
+---
+
+# The mean ain't perfect
+
+```{r right-skew, echo=FALSE}
+right_skew_index <- seq(1:10000)
+right_skew_data <- rbeta(10000,2,10)
+right_skew_label <- rep("right", 1000)
+right_skew <- data.frame(right_skew_index, right_skew_data, right_skew_label)
+
+
+ggplot(right_skew, aes(x = right_skew_data)) +
+  geom_histogram(fill = "#1381B0", color = "black", alpha = 1/4) +
+  labs(x = '',
+       y = '') +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+
+```
+
+This distribution is “positively” or **right-skewed**
+
+
+---
+
+# The mean ain't perfect
+
+.center[
+
+<img src="img/distribution-skew-comparison.png" width="80%"/>
+]
+
+---
+
+# The mean ain't perfect
+
+The mean is especially susceptible to _extreme values_ in a dataset
+
+.Large[
+
+\begin{equation}
+1,1,3,3,3,4,100
+\end{equation}
+]
+
+$\overline{x} = 16.43$
+
+Median $= 3$
+
+Mode $= 3$
+
+---
+
+class: center, middle, inverse
+
+# Scales of Measurement
+
+---
+
+# Scales of Measurement
+
+We have three options for measures of central tendency – how do we know when to use which?
+
+--
+
+.content-box-gray[
+**Scales of measurement**: describes the nature of the information contained in a given set of data
+
+]
+
+---
+
+# Scales of Measurement
+
+.center[
+
+<img src="img/scales-of-measurement-boxes.png" />
+
+]
+
+---
+
+# Nominal Scale
+
+```{r xaringan-editable-1, echo=FALSE}
+xaringanExtra::use_editable(expires = 1)
+```
+
+
+.pull-left[
+
+- Non-numerical (can only be _qualitative_)
+
+- Each item in the set belongs to a class or category
+
+.center[
+
+<img src="http://unblast.com/wp-content/uploads/2020/03/Fruits-Icons.jpg" width="60%" />
+
+]
+]
+
+--
+
+.pull-right[
+
+.content-box-purple[
+_What are some other examples of nominally-scaled data?_
+
+.can-edit[
+- 
+
+]
+]
+]
+
+---
+
+# Ordinal Scale
+
+```{r xaringan-editable-2, echo=FALSE}
+xaringanExtra::use_editable(expires = 1)
+```
+
+
+.pull-left[
+- Items are **ordered** in a meaningful direction
+
+  - Can be quantitative or qualitative
+  
+  - The “ord” stands for “order”
+
+  - Distance between items is _not necessarily_ equal
+
+.center[
+
+<img src="https://t4.ftcdn.net/jpg/03/25/30/13/360_F_325301361_lu5NaRKLxpYX3OrTJuZN8lbwHFQIz67a.jpg" width="60%"/>
+]
+
+]
+
+--
+
+.pull-right[
+
+.content-box-purple[
+_What are some other examples of ordinally-scaled data?_
+
+.can-edit[
+-  
+]
+]
+]
+
+
+???
+Likert response scales (how happy, how satisfied, movie ratings)
+
+---
+
+# Interval Scale
+
+.pull-left[
+- Numerical (can only be quantitative)
+ 
+- Distance between points is **equal** and **meaningful**
+
+- But relationship between points is _not_ meaningful
+
+- Can have values below 0
+
+.center[
+<img src="https://cdn-icons-png.flaticon.com/512/109/109613.png" width="20%"/>
+<img src="https://www.iconpacks.net/icons/2/free-thermometer-icon-1829-thumb.png" width="30%"/>
+]
+]
+
+--
+
+.pull-right[
+
+Example: degrees in Fahrenheit 
+
+- 5 $^{\circ}F$ vs. 6 $^{\circ}F$ is a difference of 1 $^{\circ}F$
+
+- A 1 $^{\circ}F$ degree difference is meaningful because it will always be 1 degree hotter
+
+- **But**, 10 $^{\circ}F$ is _not_ twice as hot as 5 $^{\circ}F$
+
+]
+
+---
+
+# Ratio Scale
+
+.pull-left[
+
+- Numerical (can only be quantitative)
+
+- All the qualities of the interval scale plus a **true zero point**
+
+  - The _absence_ of whatever is being measured is possible
+
+- Relationship between points is **meaningful**
+]
+
+--
+
+.center[
+
+<img src="https://cdn-icons-png.flaticon.com/512/92/92065.png" width="20%"/>
+<img src="https://cdn-icons-png.flaticon.com/512/2916/2916315.png" width="20%"/>
+
+<img src="https://cdn-icons-png.flaticon.com/512/925/925748.png" width="20%"/>
+
+]
+
+---
+
+```{r countdown-timer, echo=FALSE}
+library(countdown)
+
+countdown(minutes = 0, seconds = 30)
+```
+
+
+# Scales of Measurement: Test Yourself
+
+| Variable | Level of Measurement |
+| :--- | :--- |
+| Eye color |  |
+| Rating of well-being on a 5-point scale |  |
+| Reaction time at a computer task |  |
+| Order of finishers in a 5K race |  |
+| Parents’ marital status |  |
+| Blood alcohol content |  |
+
+.pull-left[
+
+<img src="img/scales-of-measurement-boxes.png" width="100%"/>
+
+]
+
+---
+
+# Scales of Measurement: Test Yourself
+
+| Variable | Level of Measurement |
+| :--- | :---: |
+| Eye color | Nominal |
+| Rating of well-being on a 5-point scale | Ordinal |
+| Reaction time at a computer task | Ratio |
+| Order of finishers in a 5K race | Ordinal |
+| Parents’ marital status | Nominal |
+| Blood alcohol content | Ratio |
+
+---
+
+# Scales of Measurement
+
+The relationship between measures of central tendency and scales of measurement
+
+|   | Nominal |  Ordinal | Interval | Ratio |
+| --- | :---: | :---: | :---: | :---: |
+| Mean | - |  - |  $\checkmark$ |  $\checkmark$ |
+| Median | - | $\checkmark$ | $\checkmark$ | $\checkmark$ |
+| Mode | $\checkmark$ | $\checkmark$ | $\checkmark$ | $\checkmark$ |
+
+---
+
+class: center, middle, inverse
+
+# Measures of Variability
+
+---
+
+# Why Variability Matters
+
+.pull-left[
+
+$$80, 85, 85, 90, 95$$  
+
+```{r variability-dat-1, echo=FALSE}
+library(tidyverse)
+library(ggpubr)
+dat <- tribble(
+  ~Index, ~data,
+  1, 80,
+  2, 85,
+  3, 85,
+  4, 90,
+  5, 95
+)
+
+ggplot(dat, aes(x = data)) +
+  geom_histogram(fill = "#1381B0", alpha = 1/4, color = "black") +
+  xlim(20, 170) +
+  labs(x = "",
+       y = "") +
+  theme_pubr() +
+  theme(text = element_text(size = 20))
+
+```
+
+.center[
+
+$\overline{x}$ = 87
+
+]
+
+]
+
+--
+
+.pull-right[
+
+$$25, 65, 70, 125, 150$$  
+
+```{r variability-dat-2, echo=FALSE}
+library(tidyverse)
+library(ggpubr)
+dat <- tribble(
+  ~Index, ~data,
+  1, 25,
+  2, 65,
+  3, 70,
+  4, 125,
+  5, 150
+)
+
+ggplot(dat, aes(x = data)) +
+  geom_histogram(fill = "#1381B0", alpha = 1/4, color = "black") +
+  xlim(20, 170) +
+  ylim(0,2) +
+  labs(x = "",
+       y = "") +
+  theme_pubr() +
+  theme(text = element_text(size = 20))
+
+```
+
+.center[
+
+$\overline{x}$ = 87
+
+]
+]
+
+---
+
+# Measures of Variability
+
+How can we describe these differences statistically?
+
+.content-box-gray[
+
+In statistics, **measures of variability** describe how scores in a given dataset differ from one another (e.g., the spread or clustering of points)
+
+]
+
+--
+
+.center[
+
+<img src="img/range-sd-var-boxes.png" width="80%"/>
+]
+
+---
+
+# The Range
+
+The range is the simplest measure of variability (or dispersion), and is defined as follows:
+
+.center[
+.content-box-blue[
+
+**Range**  
+
+.Large[
+
+$r = h - l$
+
+]
+
+]
+]
+
+.pull-left[
+
+$h$ = highest score in the set
+
+$l$ = lowest score in the set
+]
+
+---
+
+# The Range
+
+.pull-left[
+
+**Sample A**  
+
+$$80, 85, 85, 90, 95$$  
+
+$$\overline{x} = 87$$
+$$r = 95 - 80 = 15$$
+
+]
+
+--
+
+.pull-right[
+
+**Sample B**
+
+$$25, 65, 70, 125, 150$$  
+
+$$\overline{x} = 87$$
+
+$$r = 150 - 25 = 125$$
+]
+
+--
+
+- Although the range is a simple and useful calculation, it can often miss important information of a dataset’s variability
+
+---
+
+# The Range
+
+
+.pull-left[
+
+$$80, 85, 85, 90, 95$$  
+
+```{r variability-dat-4, echo=FALSE}
+library(tidyverse)
+library(ggpubr)
+dat <- tribble(
+  ~Index, ~data,
+  1, 80,
+  2, 85,
+  3, 85,
+  4, 90,
+  5, 95
+)
+
+ggplot(dat, aes(x = data)) +
+  geom_histogram(fill = "#1381B0", alpha = 1/4, color = "black") +
+  xlim(20, 170) +
+  labs(x = "",
+       y = "") +
+  theme_pubr() +
+  theme(text = element_text(size = 20))
+
+```
+
+.center[
+
+$\overline{x}$ = 87
+
+$r = 15$
+]
+
+]
+
+--
+
+.pull-right[
+
+$$25, 65, 70, 125, 150$$  
+
+```{r variability-dat-5, echo=FALSE}
+library(tidyverse)
+library(ggpubr)
+dat <- tribble(
+  ~Index, ~data,
+  1, 25,
+  2, 65,
+  3, 70,
+  4, 125,
+  5, 150
+)
+
+ggplot(dat, aes(x = data)) +
+  geom_histogram(fill = "#1381B0", alpha = 1/4, color = "black") +
+  xlim(20, 170) +
+  ylim(0,2) +
+  labs(x = "",
+       y = "") +
+  theme_pubr() +
+  theme(text = element_text(size = 20))
+
+```
+
+.center[
+
+$\overline{x}$ = 87
+
+$r = 125$
+
+]
+]
+
+---
+
+# Measures of Variability
+
+How can we describe these differences statistically?
+
+.content-box-gray[
+In statistics, **measures of variability** describe how scores in a given dataset differ from one another (e.g., the spread or clustering of points)
+]
+
+.center[
+
+<img src="img/range-sd-var-boxes.png" width="80%"/>
+]
+
+---
+
+# Standard Deviation
+
+The _standard deviation_ takes into account how far each point in a set is from the mean of the set
+
+.content-box-gray[
+ **Standard Deviation**: The standard (or typical) amount that scores deviate from the mean
+ ]
+
+
+???
+
+Average 20 min to drive to work, +/- 5 min
+
+---
+
+# Standard Deviation
+
+.pull-left[
+.center[
+
+### Populations
+
+.content-box-blue[
+.Large[
+
+$\sigma$
+
+]
+
+"sigma"
+]
+]
+]
+
+.pull-right[
+.center[
+
+### Samples
+
+.content-box-blue[
+.Large[
+
+$S$
+
+]
+
+"s"
+
+]
+]
+]
+
+---
+
+# Standard Deviation
+
+.pull-left[
+Population: University of Denver PhD students, $N$ = 10
+
+How many cups of coffee do you drink each day?
+
+
+$$1,2,1,4,3,3,6,1,2,3$$
+]
+
+.pull-right[
+```{r coffee-example-data, echo=FALSE}
+coffee_cups <- data.frame(index = seq(1:10),
+                          cups = c(1,2,1,4,3,3,6,1,2,3))
+
+ggplot(coffee_cups, aes(x = cups)) +
+  geom_bar(fill = "#804A26", color = "black", alpha = 1/2, bins=10) +
+  scale_x_continuous(breaks = round(seq(min(coffee_cups$cups), max(coffee_cups$cups), by = 1),1)) +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+
+```
+
+.center[
+
+<img src="https://cdn-icons-png.flaticon.com/512/633/633652.png" width="20%"/>
+]
+]
+
+---
+
+# Standard Deviation: Calulation
+
+.content-box-blue[
+ **Standard Deviation**: The standard (or typical) amount that scores deviate from the mean
+ ]
+ 
+.Large[
+$$deviation_{i}= X_{i} - \mu$$
+]
+
+---
+
+# Standard Deviation: Calulation
+
+.pull-left[
+```{r sd-example-data, echo=FALSE}
+index <- seq(1:10)
+x = c(1,2,1,4,3,3,6,1,2,3)
+sd_example_mean = mean(x)
+
+sd_data <- data.frame(index, x) %>% 
+  as_tibble() %>% 
+  mutate(deviations = x - mean(x)) %>% 
+  rename("$$i$$" = index,
+         "$$x$$" = x,
+         "$x_{i} - \\mu$"= deviations)
+
+
+knitr::kable(sd_data)
+```
+]
+
+.pull-right[
+
+.Large[
+
+$\mu$ = `r sd_example_mean`
+
+
+$\sum (X_{i} - \mu) = 0$
+]
+]
+
+---
+
+# Remember this?
+
+The arithmetic center or "balancing point" of a distribution, where the sum of the signed deviations from the mean always equals zero
+
+.center[<img src="img/mean-balancing-point.png" width="35%"/>
+]
+
+\begin{equation}
+(-2) + (-2) + (1) + (3) = 0
+\end{equation}
+
+---
+
+# Standard Deviation: Calulation
+
+.pull-left[
+```{r deviations, echo=FALSE}
+index <- seq(1:10)
+x = c(1,2,1,4,3,3,6,1,2,3)
+
+sd_data <- data.frame(index, x) %>% 
+  as_tibble() %>% 
+  mutate(mu = x - mean(x)) %>% 
+  rename("$$i$$" = index,
+         "$$X$$" = x,
+         "$X_{i} - \\mu$"= mu)
+
+
+knitr::kable(sd_data, escape = FALSE)
+```
+]
+
+.pull-right[
+
+.Large[
+$\mu$ = `r sd_example_mean`
+
+$\sum (X_{i} - \mu) = 0$
+]
+
+Since we can’t do much with 0, we’ll need to do something with the negative signs. Only then will we be able to work with these
+numbers to find the standard deviation.
+
+What’s one possible way to handle these negative signs?
+
+]
+
+---
+
+# Standard Deviation: Calculation
+
+.pull-left[
+.center[
+### Absolute Deviation
+
+.Large[
+$$| X_{i} - \mu |$$
+]
+]
+]
+--
+
+.pull-right[
+.center[
+### Squared Deviation
+
+.Large[
+$$(X_{i} - \mu)^2$$ 
+]
+
+**Squared deviations** (or “squares”) have been shown to better approximate the population, so we use it when calculating standard deviations
+
+]
+]
+
+---
+
+# Standard Deviation: Calculation
+
+.pull-left[
+
+```{r squared-deviations, echo=FALSE}
+
+sd_data_2 <- sd_data %>% 
+  mutate(squared_deviations = `$X_{i} - \\mu$`^2) %>% 
+  rename("$$(X_{i} - \\mu)^2$$" = squared_deviations)
+
+knitr::kable(sd_data_2, escape = FALSE)
+
+```
+
+]
+
+.pull-right[
+.Large[
+
+$$\sum(X_{i} - \mu)^2= 22.4$$
+]
+]
+
+---
+
+# Sum of Squares
+
+.pull-left[
+What we just calculated is important for statistics and is called the **sum of squared deviations** or simply the “sum of squares” ( $SS$)
+]
+.pull-right[
+.content-box-blue[
+
+.center[
+**Sum of Squares**
+.Large[
+
+$$\sum(X_{i} - \mu)^2$$
+]
+]
+]
+]
+
+---
+
+# Standard Deviation: Calculation
+
+We can use the sum of squares to calculate the standard deviation of scores from the mean:
+
+.content-box-blue[
+.Large[
+$$\sigma = \sqrt\frac{SS}{N} = \sqrt\frac{\sum(X_{i} - \mu)^2}{N}$$
+]
+]
+
+---
+
+# Standard Deviation: Calculation
+
+Back to the coffee example.
+
+$$N = 10$$
+
+--
+
+$$\mu = 2.6$$
+
+--
+
+
+$$\sum (X_{i} - \mu)^2 = 22.4$$
+
+--
+
+$$\sigma = \sqrt\frac{SS}{N} = \sqrt\frac{22.4}{10} = 1.5$$
+
+---
+
+# Why is this useful?
+
+.center[
+<img src="https://andymath.com/wp-content/uploads/2019/12/empirical-rule-normdist2.jpg" width="70%"/>
+]
+
+---
+
+# Measures of Variability
+
+How can we describe these differences statistically?
+
+.content-box-gray[
+In statistics, **measures of variability** describe how scores in a given dataset differ from one another (e.g., the spread or clustering of points)
+]
+
+.center[
+
+<img src="img/range-sd-var-boxes.png" width="80%"/>
+]
+
+---
+
+# Variance
+
+Variance is the averaged **squared** deviation from the mean
+
+.pull-left[
+
+.content-box-blue[
+
+.center[
+**Population Standard Deviation** 
+"Sigma"
+]
+
+
+.Large[
+
+$$\sigma = \sqrt\frac{SS}{N}$$
+
+]
+]
+]
+
+.pull-right[
+
+.content-box-blue[
+
+.center[
+**Population Variance**  
+“Sigma squared”
+]
+
+.Large[
+
+$$\sigma^2 = \frac{SS}{N}$$
+
+]
+
+]
+]
+
+---
+
+# Variance
+
+This leads us to our final formula for variance:
+
+.center[
+
+.content-box-blue[
+
+.center[
+**Population Variance**  
+]
+
+.Large[
+
+$$\sigma^2 = \frac{SS}{N} = \frac{\sum(X_{i} - \mu)^2}{N}$$
+]
+]
+]
+
+---
+
+# Standard Deviation vs. Variance
+
+.pull-left[
+
+.center[
+
+
+.content-box-blue[
+
+**Populations**
+
+.Large[
+$$\sigma = \sqrt{\sigma^2}$$
+]
+]
+]
+]
+
+.pull-right[
+
+.content-box-blue[
+
+.center[
+
+**Samples**
+
+.Large[
+$$s = \sqrt{s^2}$$
+]
+]
+]
+]
+
+Whether for populations or samples, the standard deviation is equal to the square root of variance.
+---
+
+# Calculating the Variance
+
+Back to the coffee example.
+
+$$N = 10$$
+
+--
+
+$$\mu = 2.6$$
+
+--
+
+
+$$\sum (X_{i} - \mu)^2 = 22.4$$
+
+--
+
+$$\sigma^2 = \frac{SS}{N} = \frac{22.4}{10} = 2.24$$
+
+--
+
+$$\sqrt {2.24} = 1.5 = \sigma$$
+
+---
+
+# What About _Samples_?
+
+- The formula thus far have been for **populations**, but usually you calculate these descriptive statistics for **samples.** What changes?
+
+---
+
+# What About _Samples_?
+
+.pull-left[
+
+.center[
+
+Population Parameter
+
+.content-box-blue[
+**Standard Deviation**  
+$\sigma = \sqrt\frac{\sum (X_{i} - \mu)^2}{N}$
+]
+
+.content-box-blue[
+**Variance**  
+$\sigma^2 = \frac{\sum(X_{i} - \mu)^2}{N}$
+]
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+
+Sample Statistic
+
+.content-box-blue[
+**Standard Deviation**  
+$s = \sqrt\frac{\sum (x_{i} - \overline{x})^2}{(n - 1)}$
+]
+
+.content-box-blue[
+**Variance**  
+$s^2 = \frac{\sum(x_{i} - \overline{x})^2}{(n - 1)}$
+]
+]
+]
+
+---
+
+# Why _n - 1_ instead of _N_?
+
+Why not just keep using $N$ (instead of $n – 1$) in the sample statistics?
+
+--
+
+- **Answer**: Turns out that $n – 1$ is better because it estimates the population parameters better (i.e., it is an **unbiased** estimator of the population)
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Visualizing data with graphs
+
+**Reading**
+
+- Chapter Two
+
+- Chapter Three
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

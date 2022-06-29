@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>lecture-15-making-predictions-using-regression.knit</title>
+    <meta charset="utf-8" />
+    <script src="lecture-15-making-predictions-using-regression_files/header-attrs/header-attrs.js"></script>
+    <link href="lecture-15-making-predictions-using-regression_files/remark-css/hygge.css" rel="stylesheet" />
+    <link href="lecture-15-making-predictions-using-regression_files/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="lecture-15-making-predictions-using-regression_files/tile-view/tile-view.js"></script>
+    <link href="lecture-15-making-predictions-using-regression_files/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="lecture-15-making-predictions-using-regression_files/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+&lt;img src="img/intro-stats-title-logo.png" width="50%"/&gt;
+]
+
+.center[
+### Lecture 15: Making predictions using regression
+
+]
+
+---
+
+# Outline for today
+
+
+
+
+.pull-left[
+
+- Updates
+
+- Review parts of last class
+
+- Simple Linear Regression
+
+- Multiple Regression
+
+- Regressions in JASP
+
+  - Download `Stats Class 17 Dataset (Regressions).jasp`
+]
+
+
+.pull-right[
+&lt;img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80" /&gt;
+]
+
+---
+
+# Updates
+
+- **Final Exam** is scheduled for Thursday March 17, 2022 08:00-09:50am MT
+
+--
+
+- **Application Project** data and instructions will be posted this afternoon
+
+  - Each focuses on descriptive statistics (mean, range), correlation, independent samples _t_-test, and factorial ANOVA
+  
+  - We will talk about these projects specifically during the next two class sessions
+
+---
+
+class: center, middle, inverse
+
+# Review
+
+## Testing relationships using correlations
+
+---
+
+# Calculating Correlations
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+`$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$`  
+]
+]
+]
+
+.pull-left[
+
+We just need six values:
+
+]
+
+.pull-right[
+.pull-left[
+
+`\(\sum X\)`  
+`\(\sum Y\)`  
+`\(\sum XY\)` 
+]
+
+.pull-right[
+`\(\sum X^2\)`  
+`\(\sum Y^2\)`  
+`\(n\)`  
+]
+]
+
+---
+
+# Correlations: Hypothesis Testing
+
+.pull-left[
+
+.center[
+
+**Null Hypothesis `\(H_{0}\)`**
+
+There is no relationship
+
+`\(H_{0}\)`: `\(\rho = 0\)`
+]
+
+]
+
+.pull-right[
+
+.center[
+**Alternative Hypothesis `\(H_{a}\)`**
+
+There is a relationship
+
+`\(H_{a}\)`: `\(\rho \neq 0\)`
+
+]
+
+]
+
+.footnote[
+Note: `\(\rho\)` is "rho", the population parameter version of the sample statistic, `\(r\)`
+]
+
+---
+
+# _t_-test for correlation coefficient
+
+
+.content-box-blue[
+.center[
+
+**_t_-test for correlation coefficient**
+
+.Large[
+
+`$$t_{r_{xy}} = \frac{r_{xy}\sqrt{n - 2}}{\sqrt{1 - r^2_{xy}}}$$`
+
+]
+]
+]
+
+--
+
+`\(r_{xy} =\)` the correlation between the two variables  
+
+`\(r^2_{xy}=\)` the coefficient of determination  
+
+`\(n=\)` the sample size (number of paired observations)
+
+---
+
+# _t_-test for correlation coefficient
+
+.pull-left[
+**Step 1**: Calculate Pearson's _r_
+
+`$$r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62$$`
+
+**Step 2**: Calculate the coefficient of determination
+
+`$$r_{xy}^2 = 0.62^2 = 0.38$$`
+]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**_t_-test for correlation coefficient**
+
+`$$t_{r_{xy}} = \frac{r_{xy}\sqrt{n - 2}}{\sqrt{1 - r^2_{xy}}}$$`
+
+]
+]
+
+**Step 3**: Solve for the _t_-test statistic for correlations
+
+`$$t_{xy} = \frac{0.62\sqrt{6 - 2}}{\sqrt{1 - 0.38}}$$`
+
+]
+
+---
+
+class: center, middle, inverse
+
+# Simple Linear Regression
+
+---
+
+# Types of Models
+
+- For ANOVAs, your factors need to be _nominal_ or _ordinal_
+
+--
+
+  - These are called **mean structure models** because we seek to explain mean differences between groups or treatment conditions
+
+--
+
+- We also have **regression models**, however, which allows you to have _interval_ or _ratio_ variables on the `\(x\)`-axis
+
+---
+
+# Simple Example
+
+We want to predict **Total Cost** based on the **Number of drinks** you buy at a dance contest
+
+&lt;img src="https://media4.giphy.com/media/ku2YMEjzMwud2/200.gif" width="50%"/&gt; &lt;img src="https://c.tenor.com/HJYpC1p52ocAAAAC/dance-slide.gif" /&gt;
+
+---
+
+# Simple Example
+
+.center[
+
+&lt;img src="img/regression-drink-1.png" width="90%"/&gt;
+
+]
+
+---
+
+# Simple Example
+
+.center[
+
+&lt;img src="img/regression-drink-2.png" width="90%"/&gt;
+
+]
+
+---
+
+# Simple Example
+
+.center[
+
+&lt;img src="img/regression-drink-3.png" width="90%"/&gt;
+
+]
+
+---
+
+# Simple Example
+
+.center[
+
+&lt;img src="img/regression-drink-4.png" width="90%"/&gt;
+
+]
+
+---
+
+# Simple Example
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/simple-model-scatter-1.png" width="100%" /&gt;
+
+---
+
+# Simple Example
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-2-1.png" width="100%" /&gt;
+
+---
+
+# The Problem
+
+- Typically, however, we will have error (which is not reflected in this model)
+
+--
+
+  - For example, different drinks cost different amounts
+
+.center[
+&lt;img src="img/drinks-multiple-costs.png" width="50%"/&gt;
+]
+
+--
+
+- Or if we have **sampling error** more generally
+
+---
+
+# Another Example
+
+Predicting **Final Grade** based on the number of **Hours Studied**
+
+--
+
+Two people who study the same amount may not get the same final grade
+
+--
+
+.pull-left[
+
+.center[
+&lt;img src="img/noun-smile-1074850.png" width="50%"/&gt;
+
+Studied 8 hours  
+
+83%
+]
+]
+
+.pull-right[
+.center[
+&lt;img src="img/noun-sad-1074849.png" width="50%"/&gt;
+
+Studied 8 hours
+
+62%
+]
+]
+
+
+---
+
+# Predicting Grades from Hours Studied
+
+
+
+|Student | Hours_Studied| Final_Grade|
+|:-------|-------------:|-----------:|
+|Niwako  |             7|          88|
+|Kamiko  |             5|          83|
+|John    |             9|          91|
+|Ahmed   |             2|          80|
+|Jimothy |             4|          79|
+|Jane    |            11|          95|
+|Jaleel  |            15|          98|
+|Steve   |             3|          74|
+
+---
+
+# Predicting Grades from Hours Studied
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-4-1.png" width="100%" /&gt;
+
+---
+
+# Predicting Grades from Hours Studied
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-5-1.png" width="100%" /&gt;
+
+---
+
+# Predicting Grades from Hours Studied
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-6-1.png" width="100%" /&gt;
+
+---
+
+# Predicting Grades from Hours Studied
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-7-1.png" width="100%" /&gt;
+
+--
+
+.footnote[
+The .primary[blue] line represents the **Regression Line**
+]
+
+---
+
+# Regression 
+
+.content-box-gray[
+**Regression**: A statistical technique for finding the best-fitting _line_ (i.e., the regression line) for a set of data
+]
+
+--
+
+**Goal**: To be able to model the quantitative relationship between two variables, allowing us to make _predictions_ about one on the basis of the other
+
+.center[
+&lt;img src="img/noun-regression-analysis-239043.png" width="23%"/&gt;
+]
+
+---
+
+# Statistical Hypotheses
+
+.pull-left[
+.center[
+**Null Hypothesis `\(H_{0}\)`**
+
+The slope of the regression equation, `\(b\)` (or "beta") is zero
+
+]
+]
+
+.pull-right[
+.center[
+
+**Alternative Hypothesis `\(H_{a}\)`**
+
+The slope of the regression equation, `\(b\)` (or "beta") is not zero
+
+]
+]
+
+.footnote[
+
+We'll see how this is applied when using JASP
+
+]
+---
+
+# Example
+
+**Research question**: How much does each additional hour of studying, on average, help our final grade?
+
+
+.center[
+.pull-left[
+&lt;img src="img/noun-studying-1314974.png" width="59%"/&gt; 
+]
+.pull-right[
+&lt;img src="img/noun-study-415837.png" width="50%"/&gt;
+]
+]
+
+---
+
+# Simple Linear Regression
+
+.content-box-blue[
+.center[
+**Simple linear regression**
+
+.Large[
+`$$\hat{y} = bX + a$$`
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+**Slope**
+
+.Large[
+`$$b = \frac{\Sigma{XY} - \frac{\Sigma{x}\Sigma{y}}{n}}{\Sigma{X}^2 - \frac{(\Sigma{X})^2}{n}}$$`
+]
+]
+]
+]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+**Intercept**
+
+.Large[
+`$$a = \frac{\Sigma{Y} - b\Sigma{X}}{n}$$`
+]
+]
+]
+]
+
+---
+
+# Review: Correlation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+`$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$`  
+]
+]
+]
+
+--
+
+.pull-left[
+
+Once again, _these_ are the values we need:
+
+]
+
+.pull-right[
+.pull-left[
+
+`\(\sum X\)`  
+`\(\sum Y\)`  
+`\(\sum XY\)` 
+]
+
+.pull-right[
+`\(\sum X^2\)`  
+`\(\sum Y^2\)`  
+`\(n\)`  
+]
+]
+
+---
+
+# Calculating the regression line
+
+Set up our table 
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`|$$x^2$$ |$$y^2$$ |$$xy$$ |
+|---:|---:|---:|:-------|:-------|:------|
+|   1|   5|   6|        |        |       |
+|   2|   9|  11|        |        |       |
+|   3|  10|   6|        |        |       |
+|   4|   3|   4|        |        |       |
+|   5|   5|   6|        |        |       |
+|   6|   7|   9|        |        |       |
+
+---
+
+# Calculating the regression line
+
+Square our `\(x\)` values
+
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`| `$$x^2$$`|$$y^2$$ |$$xy$$ |
+|---:|---:|---:|-------:|:-------|:------|
+|   1|   5|   6|      25|        |       |
+|   2|   9|  11|      81|        |       |
+|   3|  10|   6|     100|        |       |
+|   4|   3|   4|       9|        |       |
+|   5|   5|   6|      25|        |       |
+|   6|   7|   9|      49|        |       |
+
+---
+
+# Calculating the regression line
+
+Square our `\(y\)` values
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`|$$xy$$ |
+|---:|---:|---:|-------:|-------:|:------|
+|   1|   5|   6|      25|      36|       |
+|   2|   9|  11|      81|     121|       |
+|   3|  10|   6|     100|      36|       |
+|   4|   3|   4|       9|      16|       |
+|   5|   5|   6|      25|      36|       |
+|   6|   7|   9|      49|      81|       |
+
+---
+
+# Calculating the regression line
+
+Multiply `\(x\)` and `\(y\)` together row-wise
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`| `$$xy$$`|
+|---:|---:|---:|-------:|-------:|------:|
+|   1|   5|   6|      25|      36|     30|
+|   2|   9|  11|      81|     121|     99|
+|   3|  10|   6|     100|      36|     60|
+|   4|   3|   4|       9|      16|     12|
+|   5|   5|   6|      25|      36|     30|
+|   6|   7|   9|      49|      81|     63|
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+
+
+| `\(i\)`| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`| `$$xy$$`|
+|---:|---:|---:|-------:|-------:|------:|
+|   1|   5|   6|      25|      36|     30|
+|   2|   9|  11|      81|     121|     99|
+|   3|  10|   6|     100|      36|     60|
+|   4|   3|   4|       9|      16|     12|
+|   5|   5|   6|      25|      36|     30|
+|   6|   7|   9|      49|      81|     63|
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+
+| `\(\sum x\)`| `\(\sum y\)`| `\(\sum  x^2\)`| `\(\sum y^2\)`| `\(\sum xy\)`|
+|--------:|--------:|-----------:|----------:|---------:|
+|       39|       42|         289|        326|       294|
+]
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+.content-box-blue[
+.center[
+**Slope**
+
+.Large[
+`$$b = \frac{\Sigma{XY} - \frac{\Sigma{x}\Sigma{y}}{n}}{\Sigma{X}^2 - \frac{(\Sigma{X})^2}{n}}$$`
+]
+]
+]
+]
+
+--
+
+.pull-right[
+
+
+| `\(\sum x\)`| `\(\sum y\)`| `\(\sum  x^2\)`| `\(\sum y^2\)`| `\(\sum xy\)`|
+|--------:|--------:|-----------:|----------:|---------:|
+|       39|       42|         289|        326|       294|
+
+`$$b = \frac{294 - \frac{(39)(42)}{6}}{289 - \frac{(39)^2}{6}}$$`
+
+`$$b = \frac{294 - 273}{289 - 253.5} = \frac{21}{35.5} = 0.59$$`
+]
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+.content-box-blue[
+.center[
+**Intercept**
+
+.Large[
+`$$a = \frac{\Sigma{Y} - b\Sigma{X}}{n}$$`
+]
+]
+]
+]
+
+--
+
+.pull-right[
+
+
+| `\(\sum x\)`| `\(\sum y\)`| `\(\sum  x^2\)`| `\(\sum y^2\)`| `\(\sum xy\)`|
+|--------:|--------:|-----------:|----------:|---------:|
+|       39|       42|         289|        326|       294|
+.center[
+Slope, `\(b = 0.59\)`
+]
+
+`$$a = \frac{42 - (0.59)(39)}{6} = \frac{18.99}{6} = 3.16$$`
+]
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+.content-box-blue[
+.center[
+**Simple linear regression**
+
+.Large[
+`$$\hat{y} = bX + a$$`
+]
+]
+]
+]
+
+.pull-right[
+.center[
+**Slope**: `\(b = 0.59\)`  
+
+**Intercept**: `\(a = 3.16\)`
+]
+]
+
+.pull-right[
+.Large[
+`$$\hat{y} = 0.59X + 3.16$$`
+]
+]
+
+---
+
+# Back to our previous example
+
+**Research question**: How much does each additional hour of studying, on average, help our final grade?
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-10-1.png" width="100%" /&gt;
+
+---
+
+# Visualizing the Regression Formula
+
+`$$\hat{y} = bX + a + \epsilon$$`
+
+--
+
+`$$\hat{y} = 1.79X + 73.47$$`
+
+--
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-11-1.png" width="100%" /&gt;
+
+---
+
+# Visualizing `\(b\)` in the Regression Formula
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-12-1.png" width="100%" /&gt;
+
+.footnote[
+Slope determines how much the `\(y\)` variable changes when `\(X\)` is increased by `\(1\)` point (or unit)
+]
+
+???
+8 hours: (1.7899 * 8) + 73.4710 = 87.7902
+
+9 hours: (1.7899 * 8) + 73.4710 = 89.5801
+
+difference: 1.7899
+
+---
+
+# Visualizing `\(X\)` in the Regression Formula
+
+What if a student studied for 10 hours?
+
+--
+
+`$$\hat{y} = 1.79(10) + 73.47 = 91.37$$`
+--
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-13-1.png" width="100%" /&gt;
+
+---
+
+# Visualizing `\(a\)` in the Regression Formula
+
+What if a student studied for `\(0\)` hours?
+
+--
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-14-1.png" width="100%" /&gt;
+
+.footnote[
+
+The `\(y\)`-intercept, `\(a\)`, is the value of `\(y\)` when `\(X\)` is 0
+
+]
+
+---
+
+# Visualizing `\(\epsilon\)` in the Regression Formula
+
+The model is not perfect; `\(residuals = y - \hat{y}\)`
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-15-1.png" width="100%" /&gt;
+
+---
+
+# Visualizing `\(\epsilon\)` in the Regression Formula
+
+.pull-left[
+
+| Final_Grade| Prediced_Grade| Residual|
+|-----------:|--------------:|--------:|
+|          88|          86.00|     2.00|
+|          83|          82.42|     0.58|
+|          91|          89.58|     1.42|
+|          80|          77.05|     2.95|
+|          79|          80.63|    -1.63|
+|          95|          93.16|     1.84|
+|          98|         100.32|    -2.32|
+|          74|          78.84|    -4.84|
+
+]
+
+.pull-right[
+
+&lt;img src="lecture-15-making-predictions-using-regression_files/figure-html/unnamed-chunk-17-1.png" width="100%" /&gt;
+
+]
+
+---
+
+# Model Error
+
+.pull-left[
+- The best-fitting line is the one that has the _smallest_ total squared error
+
+`$$Total \: Squared \: Error = \Sigma(y - \hat{y})^2$$`
+
+- The resulting line of our linear regression is commonly called the **least-squared-error solution**
+]
+
+.pull-right[
+
+&lt;img src="img/regression-residuals.png"/&gt;
+
+]
+
+.footnote[
+For quizzes and exams, you do not need to know this equation
+]
+
+---
+
+# Simple Linear Regression
+
+.pull-left[
+.content-box-blue[
+.center[
+**Simple linear regression**
+
+`$$\hat{y} = bX + a$$`
+
+]
+]
+- `\(\hat{y}\)` is the predicted value
+
+- `\(b\)` determines how much the `\(y\)` variable changes when `\(x\)` is increased by 1 point (or unit of measurement)
+
+- `\(a\)` is the value of `\(y\)` when `\(x\)` is zero
+
+]
+
+.pull-right[
+
+.content-box-blue[
+.center[
+**Slope**
+
+
+`$$b = \frac{\Sigma{XY} - \frac{\Sigma{x}\Sigma{y}}{n}}{\Sigma{X}^2 - \frac{(\Sigma{X})^2}{n}}$$`
+]
+]
+
+.content-box-blue[
+.center[
+**Intercept**
+
+`$$a = \frac{\Sigma{Y} - b\Sigma{X}}{n}$$`
+]
+]
+]
+
+
+---
+
+class: center, middle, inverse
+
+# JASP: Linear Regression
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-01.png" width="55%"/&gt;
+
+1
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-02.png" width="55%"/&gt;
+
+2
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-03.png" width="55%"/&gt;
+
+3
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-04.png" width="55%"/&gt;
+
+4
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-05.png" width="55%"/&gt;
+
+5
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-06.png" width="55%"/&gt;
+
+6
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-07.png" width="55%"/&gt;
+
+7
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-08.png" width="55%"/&gt;
+
+8
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-09.png" width="55%"/&gt;
+
+9
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-10.png" width="55%"/&gt;
+
+10
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-11.png" width="55%"/&gt;
+
+11
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-12.png" width="55%"/&gt;
+
+12
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-13.png" width="55%"/&gt;
+
+13
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-14.png" width="55%"/&gt;
+
+14
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-15.png" width="55%"/&gt;
+
+15
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+&lt;img src="img/jasp-regression-16.png" width="55%"/&gt;
+
+16
+]
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Analyzing data using JASP I
+
+**Reading**
+
+- Chapter 16
+
+**Quiz 6**
+
+- Due Wednesday 3/2/2022 11:59pm MT
+
+- Covers Ch.15-16
+
+]
+
+.pull-right[
+
+.center[
+
+&lt;img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" /&gt;
+
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

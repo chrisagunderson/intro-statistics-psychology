@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>lecture-13-differences-between-many-factors.knit</title>
+    <meta charset="utf-8" />
+    <script src="lecture-13-differences-between-many-factors_files/header-attrs/header-attrs.js"></script>
+    <link href="lecture-13-differences-between-many-factors_files/remark-css/hygge.css" rel="stylesheet" />
+    <link href="lecture-13-differences-between-many-factors_files/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="lecture-13-differences-between-many-factors_files/tile-view/tile-view.js"></script>
+    <link href="lecture-13-differences-between-many-factors_files/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="lecture-13-differences-between-many-factors_files/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+&lt;img src="img/intro-stats-title-logo.png" width="50%"/&gt;
+]
+
+.center[
+### Lecture 13: Differences Between Many Factors
+
+]
+
+---
+
+# Outline for today
+
+
+
+
+.pull-left[
+
+- More Extra Credit
+
+- Application Project
+
+- Review parts of last class
+
+- Factorial ANOVA
+
+- Factorial ANOVAs in JASP
+  - Download `Stats Class 15 Dataset (Factorial ANOVA).jasp`
+
+- One-Way ANOVA Practice Activity
+
+
+]
+
+.pull-right[
+&lt;img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80" /&gt;
+]
+
+---
+
+# Extra Credit: Make a Meme
+
+Merriam-Webster definition
+
+&gt; **Meme**: An amusing or interesting item (such as a captioned picture or video) or genre of items that is spread widely online especially through social media
+
+--
+
+Up to 1% of extra credit for submitting a statistics-related meme on Canvas.
+
+--
+
+.pull-left[
+.center[
+
+&lt;img src="img/vegas-meme.jpg" width="70%"/&gt; 
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+
+&lt;img src="img/cant-remember-meme.jpg" width="50%"/&gt;
+
+]
+]
+
+---
+
+# Extra Credit: Make a Meme
+
+.pull-left[
+.center[
+&lt;img src="img/paranormal-dist.jpeg" width="40%"/&gt;&lt;img src="img/grad-stats-meme.jpeg" /&gt;
+]
+]
+
+.pull-right[
+.center[
+&lt;img src="img/ryan-gosling-p-value-meme.jpg" width="50%"/&gt;
+&lt;img src="img/mark-walberg-sample-size-power.jpg" /&gt;
+]
+]
+
+.pull-left[
+.center[
+&lt;img src="img/p-value-effect-size-meme.jpg" width="35%"/&gt;
+&lt;img src="img/drake-hypotheses-meme.png" width="35%"/&gt;
+]
+]
+
+.pull-right[
+.center[
+&lt;img src="img/sample-size-meme.png" width="40%"/&gt;
+&lt;img src="img/matrix-studying-meme.jpg" width="30%" /&gt;
+]
+]
+
+---
+
+# Schedule
+
+.center[
+
+&lt;img src="img/syllabus.png" width="70%"/&gt;
+
+]
+
+---
+
+# Application Project
+
+**Goal**: Apply the information we’ve learned in class to a real dataset
+
+.pull-left[
+You'll use JASP &lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/JASP_logo.svg/1200px-JASP_logo.svg.png" width="5%"/&gt; to:
+
+- Compute descriptive statistics (e.g., mean and standard deviation)
+
+- Create data visualizations
+
+- Compute inferential statistics (e.g., _t_-tests, ANOVAs, correlation)
+
+- Interpret the statistics that you compute 
+
+- You are free and _encouraged_ to work in groups
+
+]
+
+.pull-right[
+&lt;img src="https://jasp-stats.org/wp-content/uploads/2019/06/laptop_start1.png"width="200%"/&gt;
+]
+
+---
+
+# Application Project
+
+**Step 1: Download the required dataset on Canvas**
+
+  - You'll have 2-3 options to choose from. Each will focus on a different research question.
+
+--
+
+**Step 2: Read about the dataset** 
+
+- I'll provide any necessary information (e.g., what each variable means). 
+
+--
+
+**Step 3 Respond to the questions** 
+
+- For each question, you will need to (1) run the requested analysis in JASP, (2) label that analysis in JASP, and (3) add notes in JASP to indicate key values and interpret those values when requested.
+
+--
+
+**Step 4: Submit your Application Project**
+
+- Save and export your results to `.pdf` or `.html` file and submit on Canvas
+
+---
+
+class: center, middle, inverse
+
+# Review
+
+---
+
+# ANOVA: Terminology
+
+
+.content-box-gray[
+**Factor**: Independent variable(s) in the study
+]
+
+--
+
+.content-box-gray[
+**Level(s)**: Groups within each independent variable
+]
+
+--
+
+.content-box-gray[
+**Response**: The dependent variable in the study
+]
+
+--
+
+Today, we’ll learn about _two-way ANOVAs_, which have two factors
+
+---
+
+# Example: One factor, several levels
+
+.center[
+
+&lt;img src="img/factor-levels-example.png" width="75%"/&gt;
+
+]
+
+---
+
+# One-way ANOVA
+
+.pull-left[
+
+**What does it do?**
+
+- Investigates whether .secondary[any] of the population means of our groups differ
+
+- It doesn’t tell which group(s) is(are) different; you need .secondary[post-hoc tests] for this (we’ll come back to this later today)
+
+]
+
+--
+
+.pull-right[
+
+
+**Null Hypothesis `\(H_{0}\)`**
+
+There is no difference
+
+The means are equal
+
+`\(\mu_{1} = \mu_{2} = \mu_{3} = ... = \mu_{k}\)`
+
+**Alternative Hypothesis `\(H_{a}\)`**
+
+There is a difference
+
+The means are not all equal
+
+]
+
+---
+
+# Why not just use many _t_-tests?
+
+- _Type I Error rate_ increases drastically as you run additional analyses
+
+  - Each test has a risk of a Type I error, and the more tests you do, the more risk there is (**alpha escalation**)
+
+--
+
+.content-box-blue[
+.center[
+
+**Experiment-wise Significance Level** 
+`$$1-(1-\alpha)^k$$`
+]
+]
+
+--
+
+`$$1 - (1 - 0.05)^3 = 0.14$$`
+
+--
+
+.footnote[
+*You do not need to know this for the final or any quizzes.
+]
+
+---
+
+# Building the _F_-statistic
+
+.content-box-blue[
+.center[
+.Large[
+
+`\(F = \frac{MS_{between}}{MS_{within}}\)`
+
+]
+]
+]
+
+.center[
+
+&lt;img src="https://static.thenounproject.com/png/2671768-200.png" /&gt;
+
+]
+
+---
+
+.content-box-blue[
+.center[
+
+`\(F = \frac{MS_{between}}{MS_{within}}\)`
+
+]
+]
+
+--
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+`\(MS_{between} = \frac{SS_{between}}{df_{between}}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+
+.center[
+`\(MS_{within} = \frac{SS_{within}}{df_{within}}\)`
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}\)`
+
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(df_{between} = k - 1\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(df_{within} = nT - k\)`
+
+]
+]
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+&lt;img src="img/anova-each-group-calculations-1.png" width="85%"/&gt;
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+&lt;img src="img/anova-each-group-calculations-2.png" width="85%"/&gt;
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+&lt;img src="img/anova-each-group-calculations-3.png" width="85%"/&gt;
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+&lt;img src="img/anova-each-group-calculations-4.png" width="85%"/&gt;
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+&lt;img src="img/anova-each-group-calculations-5.png" width="85%"/&gt;
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+.center[
+&lt;img src="img/anova-each-group-calculations-6.png" width="85%"/&gt;
+]
+
+---
+
+.content-box-blue[
+.center[
+
+`\(F = \frac{MS_{between}}{MS_{within}}\)`
+
+]
+]
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+`\(MS_{between} = \frac{SS_{between}}{df_{between}}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+
+.center[
+`\(MS_{within} = \frac{SS_{within}}{df_{within}}\)`
+]
+]
+]
+
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}\)`
+
+]
+]
+]
+
+.pull-left[
+.content-box-blue[
+.center[
+
+`\(df_{between} = k - 1\)`
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+`\(df_{within} = nT - k\)`
+
+]
+]
+]
+
+---
+
+# Effect size: One-way ANOVA
+
+.content-box-blue[
+.center[
+**Effect size for One-way ANOVA** 
+]
+`$$\eta^2 = \frac{SS_{between}}{SS_{Total}}$$`
+]
+
+--
+
+.content-box-blue[
+.center[
+
+`$$SS_{total} = SS_{between} + SS_{within} = \sum\sum(x^2) - \frac{(\sum\sum{x})^2}{nT}$$`
+
+]
+]
+
+---
+
+class: center, middle, inverse
+
+# Two-way (Factorial) ANOVA
+
+---
+
+# Two-way (Factorial) ANOVA
+
+**Goal**: To be able to compare whether differences exist between _multiple_ factors, as well as _interactions_ between the levels of different factors
+
+--
+
+**Research question**: What is the fastest way for me to get to campus?
+
+--
+
+.center[
+&lt;img src="img/lightrail-vs-car.png" width="65%"/&gt;
+]
+
+---
+
+# ANOVA: factors and levels
+
+.center[
+
+&lt;img src="img/anova-factors-and-levels.png" width="85%"/&gt;
+
+]
+
+---
+
+# Example Experiment
+
+&lt;img src="img/factorial-anova-box-1.png" /&gt;
+
+---
+
+# Example Experiment
+
+&lt;img src="img/factorial-anova-box-2.png" /&gt;
+
+---
+
+# Example Experiment
+
+&lt;img src="img/factorial-anova-box-3.png" /&gt;
+
+---
+
+# Example Experiment
+
+&lt;img src="img/factorial-anova-box-4.png" /&gt;
+
+---
+
+# Example Experiment
+
+&lt;img src="img/factorial-anova-box-5.png" /&gt;
+
+---
+
+# Effect of Commute type
+
+&lt;img src="img/anova-table-commute-type.png" /&gt;
+
+---
+
+# Effect of Time of day
+
+&lt;img src="img/anova-table-time-of-day.png" /&gt;
+
+---
+
+# Commute type `\(\times\)` Time of day interaction
+
+&lt;img src="img/anova-table-interaction.png"/&gt;
+
+---
+
+# Factorial Designs
+
+.content-box-gray[
+**Factorial Designs**: Designs in which two or more factors are completely crossed (i.e., measurements are taken for every combination of factor levels) 
+]
+
+.center[
+
+&lt;img src="img/factorial-anova-box-5.png" width="60%"/&gt;
+
+]
+
+---
+
+# Results: Bar Graph
+
+&lt;img src="lecture-13-differences-between-many-factors_files/figure-html/anova-bar-graph-1.png" width="100%" /&gt;
+
+
+---
+
+# Results: Line Plot
+
+&lt;img src="lecture-13-differences-between-many-factors_files/figure-html/factorial-plot-1-1.png" width="100%" /&gt;
+
+---
+
+# Effect of Commute type
+
+&lt;img src="img/anova-table-commute-type.png" /&gt;
+
+---
+
+# Commute Type: Plot
+
+&lt;img src="lecture-13-differences-between-many-factors_files/figure-html/commute-type-plot-1.png" width="100%" /&gt;
+
+--
+
+.footnote[
+**Result**: Taking the lightrail and walking takes longer than driving
+]
+
+---
+
+# Effect of Time of day
+
+&lt;img src="img/anova-table-time-of-day.png" /&gt;
+
+---
+
+# Time of Day: Plot
+
+&lt;img src="lecture-13-differences-between-many-factors_files/figure-html/commute-time-plot-1.png" width="100%" /&gt;
+
+--
+
+.footnote[
+**Result**: It takes longer to get to campus when leaving at 8:00am than at 6:30am
+]
+
+---
+
+# Commute type `\(\times\)` Time of day interaction
+
+&lt;img src="img/anova-table-interaction.png"/&gt;
+
+---
+
+# Interaction 
+
+.content-box-gray[
+**Interaction**: describes the degree to which the effect of _one factor_ depends on the _level_ of the other factor
+]
+
+.center[
+
+&lt;img src="img/anova-table-interaction.png" width="58%"/&gt;
+
+]
+
+---
+
+# Testing the Interaction
+
+.center[
+&lt;img src="img/interaction_plot.png" width="76%"/&gt;
+]
+
+---
+
+# Testing the Interaction
+
+.center[
+
+&lt;img src="img/interaction-600am.png" width="76%"/&gt;
+
+]
+
+---
+
+# Testing the Interaction
+
+.center[
+
+&lt;img src="img/interaction-800am.png" width="76%"/&gt;
+
+]
+
+---
+
+# Effect size: Factorial ANOVA
+
+.content-box-blue[
+.center[
+**Omega Squared**
+
+.Large[
+`\(w^2 = \frac{SS_{between} - (df_{between})(MS_{within})}{MS_{within} + SS_{total}}\)` ]
+]
+]
+
+You can interpret this the same way as eta-squared, `\(\eta^2\)`
+
+.footnote[
+Note: I will **not** ask you to compute this; I only display this formula to illustrate that you can compute the effect size for a factorial ANOVA
+]
+
+---
+
+class: center, middle, inverse
+
+# Two-way (Factorial) ANOVA in JASP
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-1.png" width="52%"/&gt;
+
+1
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-2.png" width="52%"/&gt;
+
+2
+]
+
+---
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-3.png" width="52%"/&gt;
+
+3
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-4.png" width="52%"/&gt;
+
+4
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-5.png" width="52%"/&gt;
+
+5
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-6.png" width="52%"/&gt;
+
+6
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-7.png" width="52%"/&gt;
+
+7
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-8.png" width="52%"/&gt;
+
+8
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-9.png" width="52%"/&gt;
+
+9
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-10.png" width="52%"/&gt;
+
+10
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-11.png" width="52%"/&gt;
+
+11
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-12.png" width="52%"/&gt;
+
+12
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+&lt;img src="img/jasp-two-way-anova-13.png" width="52%"/&gt;
+
+13
+]
+
+---
+
+class: center, middle, inverse
+
+# One-way ANOVA Practice Activity
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Testing relationships using correlations 
+  - _Guest lecture_: Lindsay Goolsby
+
+**Reading**
+
+- Chapter 13
+
+**Quiz 5**
+
+- Due Wednesday 2/23/2022 11:59pm MT
+
+  - Covers Ch.13-14
+]
+
+.pull-right[
+
+.center[
+
+&lt;img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" /&gt;
+
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

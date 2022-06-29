@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>lecture-04-correlation-validity-reliability.knit</title>
+    <meta charset="utf-8" />
+    <script src="lecture-04-correlation-validity-reliability_files/header-attrs/header-attrs.js"></script>
+    <link href="lecture-04-correlation-validity-reliability_files/remark-css/hygge.css" rel="stylesheet" />
+    <link href="lecture-04-correlation-validity-reliability_files/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="lecture-04-correlation-validity-reliability_files/tile-view/tile-view.js"></script>
+    <link href="lecture-04-correlation-validity-reliability_files/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="lecture-04-correlation-validity-reliability_files/tachyons/tachyons.min.css" rel="stylesheet" />
+    <script type="application/json" id="xaringanExtra-editable-docid">{"id":"x71094a658dd4dd88f7a28073556a437","expires":1}</script>
+    <script src="lecture-04-correlation-validity-reliability_files/himalaya/himalaya.js"></script>
+    <script src="lecture-04-correlation-validity-reliability_files/js-cookie/js.cookie.js"></script>
+    <link href="lecture-04-correlation-validity-reliability_files/editable/editable.css" rel="stylesheet" />
+    <script src="lecture-04-correlation-validity-reliability_files/editable/editable.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+&lt;img src="img/intro-stats-title-logo.png" width="50%"/&gt;
+]
+
+.center[
+### Lecture 04: Correlations, Reliability, &amp; Validity
+
+]
+
+---
+
+# Outline for today
+
+
+
+
+.pull-left[
+
+- **Defining relationships in the world**
+
+  - Correlation coefficient
+
+- **Reliability**
+
+  - Test-retest reliablity
+  - Parallel forms reliability
+  - Internal consistency
+  - Interrater reliability
+
+- **Validity**
+  
+  - Content validity
+  - Criterion validity
+  - Construct validity
+]
+
+
+.pull-right[
+&lt;img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80" /&gt;
+]
+
+
+---
+
+class: center, middle, inverse
+
+# Defining Relationships in the World
+
+---
+
+# Correlations
+
+.content-box-gray[
+In psychological science, **correlational designs** examine the extent to which two variables are associated
+]
+
+--
+
+_Examples_
+
+- Do people who are more creative do better in school?
+
+- Is there a relationship between hours studied and exam scores? Class attendance and final grades?
+
+- Are people who have higher marital satisfaction better parents?
+
+
+---
+
+# Correlations
+
+Correlations are either _positive_, _negative_, or _zero_
+
+
+&lt;img src="img/positive-negative-zero-correlation.png" /&gt;
+
+---
+
+# Correlations
+
+
+
+.pull-left[
+**Positive correlation**: as one variable changes, the other variable changes in the .primary[_same direction_]
+
+_Examples_
+
+- Relationship between hours studied and exam grade
+
+  - More hours studied, better exam grade
+  
+  - Fewer hours studied, worse exam grade
+
+]
+
+--
+
+.pull-right[
+
+.center[
+&lt;img src="img/positive-correlations.png" /&gt;
+]
+
+.content-box-purple[
+_Examples of positive correlations?_
+
+.can-edit[
+- 
+
+]
+]
+]
+
+
+---
+
+# Correlations
+
+
+
+.pull-left[
+**Negative correlation**: as one variable changes, the other variable changes in the .primary[_opposite direction_]
+
+_Examples_
+
+- Relationship between running speed and time to finish a race
+
+  - Faster running = Less time to finish
+  
+  - Slower running = More time to finish
+
+]
+
+--
+
+.pull-right[
+&lt;img src="img/negative-correlations.png" /&gt;
+
+.content-box-purple[
+_Examples of negative correlations?_
+
+.can-edit[
+- 
+
+]
+]
+]
+
+---
+
+# Correlations
+
+.pull-left[
+- **Zero correlation**: there is .primary[_no_] relationship between the two variables
+
+_Examples_
+
+- Relationship between math ability and dancing ability
+
+  - Being better at one tells us nothing about how good you'll be at the other
+]
+
+.pull-right[
+&lt;img src="img/zero-correlation.png" /&gt;
+
+]
+
+---
+
+# Correlations
+
+.pull-left[
+ Correlations are _always_ between -1.0 and +1.0
+
+  - This tells you the **magnitude** of relationship
+  
+    - Correlations closer to absolute value of 1 are _stronger_
+  
+    - Correlations closer to a value of 0 are _weaker_
+]
+
+--
+
+.pull-right[
+&lt;img src="img/various-correlation-magnitudes.png"/&gt;
+
+]
+
+---
+
+# Correlation ≠ Causation
+
+.center[
+&lt;img src="img/shark-ice-cream-1.jpeg" width="80%"/&gt;
+]
+
+???
+Correlations do not imply causation, and leave three possibilities for how causation might occur. If we find that there is a positive correlation between ice cream sales and shark attacks, it could be that ice cream causes shark attacks
+
+---
+
+# Correlation ≠ Causation
+
+.center[
+&lt;img src="img/shark-ice-cream-2.jpeg" width="80%"/&gt;
+]
+
+???
+shark attacks cause people to eat more ice cream
+
+---
+
+# Correlation ≠ Causation
+
+.center[
+&lt;img src="img/shark-ice-cream-3.jpeg" width="80%"/&gt;
+]
+
+--
+
+.footnote[
+A _third variable_ could be  
+the cause of the two events
+]
+
+---
+
+# Correlation: Calculation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+`$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$`  
+]
+]
+]
+
+--
+
+.pull-left[
+
+We just need six values:
+
+]
+
+.pull-right[
+.pull-left[
+
+`\(\sum X\)`  
+`\(\sum Y\)`  
+`\(\sum XY\)` 
+]
+
+.pull-right[
+`\(\sum X^2\)`  
+`\(\sum Y^2\)`  
+`\(n\)`  
+]
+]
+
+---
+
+# Correlation: Calculation
+
+Set up our table with the `\(x\)` and `\(y\)` values
+
+
+| `\(x\)`| `\(y\)`|$$x^2$$ |$$y^2$$ |$$xy$$ |
+|---:|---:|:-------|:-------|:------|
+|   5|   6|        |        |       |
+|   9|  11|        |        |       |
+|  10|   6|        |        |       |
+|   3|   4|        |        |       |
+|   5|   6|        |        |       |
+|   7|   9|        |        |       |
+
+---
+
+# Correlation: Calculation
+
+Square our `\(x\)` values
+
+
+| `\(x\)`| `\(y\)`| `$$x^2$$`|$$y^2$$ |$$xy$$ |
+|---:|---:|-------:|:-------|:------|
+|   5|   6|      25|        |       |
+|   9|  11|      81|        |       |
+|  10|   6|     100|        |       |
+|   3|   4|       9|        |       |
+|   5|   6|      25|        |       |
+|   7|   9|      49|        |       |
+
+---
+
+# Correlation: Calculation
+
+Square our `\(y\)` values
+
+
+| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`|$$xy$$ |
+|---:|---:|-------:|-------:|:------|
+|   5|   6|      25|      36|       |
+|   9|  11|      81|     121|       |
+|  10|   6|     100|      36|       |
+|   3|   4|       9|      16|       |
+|   5|   6|      25|      36|       |
+|   7|   9|      49|      81|       |
+
+---
+
+# Correlation: Calculation
+
+Multiply `\(x\)` and `\(y\)` together row-wise
+
+
+| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`| `$$xy$$`|
+|---:|---:|-------:|-------:|------:|
+|   5|   6|      25|      36|     30|
+|   9|  11|      81|     121|     99|
+|  10|   6|     100|      36|     60|
+|   3|   4|       9|      16|     12|
+|   5|   6|      25|      36|     30|
+|   7|   9|      49|      81|     63|
+
+---
+
+# Correlation: Calculation
+
+.pull-left[
+
+
+| `\(x\)`| `\(y\)`| `$$x^2$$`| `$$y^2$$`| `$$xy$$`|
+|---:|---:|-------:|-------:|------:|
+|   5|   6|      25|      36|     30|
+|   9|  11|      81|     121|     99|
+|  10|   6|     100|      36|     60|
+|   3|   4|       9|      16|     12|
+|   5|   6|      25|      36|     30|
+|   7|   9|      49|      81|     63|
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+
+| `\(\sum x\)`| `\(\sum y\)`| `\(\sum  x^2\)`| `\(\sum y^2\)`| `\(\sum xy\)`|
+|--------:|--------:|-----------:|----------:|---------:|
+|       39|       42|         289|        326|       294|
+
+]
+
+---
+
+# Correlation: Calculation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.small[
+`$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$`  
+
+]
+]
+]
+
+--
+
+.center[
+
+
+| `\(\sum x\)`| `\(\sum y\)`| `\(\sum  x^2\)`| `\(\sum y^2\)`| `\(\sum xy\)`|
+|--------:|--------:|-----------:|----------:|---------:|
+|       39|       42|         289|        326|       294|
+
+]
+
+--
+
+`$$r_{xy} = \frac{(6)(294) - (39)(42)}{\sqrt{[(6)(289) - (39)^2][(6)(326) - (42)^2]}}$$`
+
+---
+
+# Correlation: Calculation
+
+
+`$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$`
+
+--
+
+`$$r_{xy} = \frac{(6)(294) - (39)(42)}{\sqrt{[(6)(289) - (39)^2][(6)(326) - (42)^2]}}$$`
+--
+
+`$$r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62306 = 0.62$$`
+--
+
+.footnote[
+*In psychology, round to  
+two decimals except _p_-values
+]
+
+---
+
+class: center, middle, inverse
+
+# Reliability and Validity
+
+## A few preliminaries
+
+---
+
+# Terminology
+
+.content-box-gray[
+**Indendent variable**: The variable that is hypothesized to have an effect on some outcome of interest
+
+]
+
+--
+
+.content-box-gray[
+**Dependent variable**: The outcome of interest that the independent variable might have an effect on
+]
+
+--
+
+| | Hypothesized to influence | Hypothesized to be influenced |
+|--- | :---: | :---: |
+|Experiment | Independent variable | Dependent variable |
+| Correlational study | Predictor variable | Outcome variable |
+
+---
+
+# Terminology
+
+.content-box-gray[
+**Reliability**: Does it work accurately every time?
+]
+
+.content-box-gray[
+**Validity**: Is it actually measuring what it was designed to measure?
+]
+
+--
+
+Why does this matter?
+
+Since we're heading toward .primary[_inferential statistics_], it's very important that our data are what we think they are
+
+You'll learn more about this topic in Research Methods
+
+---
+
+# Validity &amp; Reliability: Example
+
+.pull-left[
+- Are manipulations and measures reliable and valid?
+
+- **Valid**: measuring/manipulating what you intend to
+measure?
+
+- **Reliable**: consistency of measurement/manipulation?
+
+]
+
+--
+
+.pull-right[
+&lt;img src="img/sadness-validity.jpeg" /&gt;
+]
+
+---
+
+# Classical Test Theory
+
+.content-box-gray[
+**True score**: The true value that we are trying to measure
+]
+
+--
+
+You understand 95% of the concepts and computations
+
+In an ideal world, you would receive a 95% on the midterm
+
+--
+
+.content-box-gray[
+**Observed Score**: The value that we actually measure
+]
+
+--
+
+You receive a 78% on the midterm
+
+---
+
+# Classical Test Theory
+
+.center[
+
+&lt;img src="img/observed-score.png" width="50%"/&gt;
+]
+
+---
+
+# Classical Test Theory
+
+.pull-left[
+
+&lt;img src="img/true-score.png" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="img/true-score-def.png"/&gt;
+
+]
+
+--
+
+.right[
+Estimating and evaluating reliability helps us to  
+reduce the error score and more closely align  
+the true score with the observed score
+]
+
+---
+
+class: center, middle, inverse
+
+# Reliability
+
+---
+
+# Reliability
+
+- **Test-Retest Reliability**: Used to determine whether a test (or scale) is reliable over time 
+
+--
+
+- **Parallel Forms Reliability**: Used to examine the equivalence or similarity between two forms of the same test (or scale)
+
+--
+
+- **Internal consistency**: Used to determine whether the items on a test (or scale) are consistent with each other
+
+---
+
+# Test-Retest Reliability
+
+.content-box-gray[
+**Test-Retest Reliability**: Measured as the correlation `\(r_{xy}\)` between scores on a measure at Time 1 and the same measure at Time 2
+]
+
+--
+
+- Example: Developing a new personality measure
+
+.center[
+&lt;img src="img/test-retest-clipboard.png" width="30%"/&gt;
+]
+
+---
+
+# Parallel Forms Reliability
+
+.content-box-gray[
+**Parallel Forms Reliability**: Measured as the correlation `\(r_{xy}\)` between scores for the same individuals on Form A and Form B
+]
+
+--
+
+- Example: Measuring your ability to calculate standard deviations on two different days
+
+  - We would use .secondary[two different forms] because giving you identical problems would be trivial
+
+
+.center[
+&lt;img src="img/form.png" width="10%"/&gt;&lt;img src="img/form.png" width="10%"/&gt;
+
+]
+
+---
+
+# Internal Consistency
+
+.content-box-gray[
+**Internal consistency**: Used to determine whether the items on a test (or scale) are consistent with each other, typically measured with Cronbach's `\(\alpha\)`
+]
+
+--
+
+**.black[Anxiety Scale]**
+
+.small[Rate your agreement to the following statements]
+
+1. I often have worrying thoughts
+2. I have trouble getting out of bed in the morning
+3. I often feel nervous
+4. I no longer take pleasure in things I used to enjoy
+5. My heart often beats fast as fears enter in
+6. I often feel sluggish and tired
+
+---
+
+# Internal Consistency
+
+.pull-left[
+**.black[Anxiety Scale]**
+
+1. .secondary[I often have worrying thoughts]
+
+2. .red[I have trouble getting out of bed in the morning]
+
+3. .secondary[I often feel nervous]
+
+4. .red[I no longer take pleasure in things I used to enjoy]
+
+5. .secondary[My heart often beats fast as fears enter in]
+
+6. .red[I often feel sluggish and tired]
+
+]
+
+--
+
+.pull-right[
+**.black[Issues with this scale]**
+
+- This scale has .secondary[anxiety] and .red[depression] items 
+
+- This would result in _poor_ internal consistency
+
+]
+
+---
+
+# Internal Consistency
+
+.content-box-gray[
+**Internal consistency**: Used to determine whether the items on a test (or scale) are consistent with each other, typically measured with Cronbach's `\(\alpha\)`
+]
+
+- The more consistently individual items vary with the total score on the test, the higher the value of Cronbach's `\(\alpha\)`
+
+- Higher values means more internal consistency
+
+---
+
+# Cronbach's Alpha
+
+.content-box-blue[
+
+.center[
+**Cronbach's Alpha**
+]
+
+.Large[
+`$$\alpha = (\frac{k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})$$`
+]
+
+]
+
+--
+
+`\(k\)` the number of items
+
+`\(s_{y}^2\)` the variance associated with the observed score
+
+`\(\sum  s_{i}^2\)` the sum of all the variances for each individual item
+
+---
+
+# Cronbach's Alpha
+
+
+| Item_1| Item_2| Item_3|
+|------:|------:|------:|
+|      6|      6|      8|
+|      5|      5|      6|
+|      9|      8|      6|
+|      3|      2|      4|
+|      2|      3|      2|
+|      1|      1|      2|
+|      5|      4|      6|
+
+--
+
+1. I often have worrying thoughts
+2. I often feel nervous
+3. My heart often beats fast as fears enter in
+
+
+---
+
+# Cronbach's Alpha
+
+
+| Item_1| Item_2| Item_3| Total|
+|------:|------:|------:|-----:|
+|      6|      6|      8|    20|
+|      5|      5|      6|    16|
+|      9|      8|      6|    23|
+|      3|      2|      4|     9|
+|      2|      3|      2|     7|
+|      1|      1|      2|     4|
+|      5|      4|      6|    15|
+
+Sum the values of Item 1, Item 2, and Item 3 row-wise to create a "Total" column
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+
+| Item_1| Item_2| Item_3| Total|
+|------:|------:|------:|-----:|
+|      6|      6|      8|    20|
+|      5|      5|      6|    16|
+|      9|      8|      6|    23|
+|      3|      2|      4|     9|
+|      2|      3|      2|     7|
+|      1|      1|      2|     4|
+|      5|      4|      6|    15|
+
+]
+
+.pull-right[
+
+Calculate the **sample variance** for each item and 'total'
+
+
+| Item_1| Item_2| Item_3| Total|
+|------:|------:|------:|-----:|
+|   7.29|   5.81|   5.14| 48.95|
+
+`\(\sum s_{i}^2 = s_{1}^2 + s_{2}^2 + s_{3}^2\)`
+
+]
+
+--
+
+.pull-right[
+`\(\sum s_{i}^2 = 7.29 + 5.81 + 5.14 = 18.24\)`
+
+]
+
+---
+
+# Cronbach's Alpha
+
+
+.pull-left[
+
+| Item_1| Item_2| Item_3| Total|
+|------:|------:|------:|-----:|
+|      6|      6|      8|    20|
+|      5|      5|      6|    16|
+|      9|      8|      6|    23|
+|      3|      2|      4|     9|
+|      2|      3|      2|     7|
+|      1|      1|      2|     4|
+|      5|      4|      6|    15|
+
+]
+
+.pull-right[
+
+Calculate the **sample variance** for each item and 'total'
+
+
+| Item_1| Item_2| Item_3| Total|
+|------:|------:|------:|-----:|
+|   7.29|   5.81|   5.14| 48.95|
+
+`\(k = 3\)` items in our scale
+
+`\(s_{y}^2 = 48.95\)` is the 'total' column variance
+]
+
+---
+
+# Cronbach's Alpha
+
+.pull-left[
+.content-box-blue[
+
+.center[
+**Cronbach's Alpha**
+.Large[
+
+`\(\alpha = (\frac{k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})\)`
+]
+]
+]
+
+.pull-left[
+`\(k = 3\)`  
+
+`\(\sum s_{i}^2 = 18.24\)`
+
+`\(s_{y}^2 = 48.95\)`
+]
+]
+
+--
+
+.pull-right[
+
+.Large[
+`$$\alpha = (\frac{3}{3 - 1})(\frac{48.95 - 18.24}{48.95})$$`
+`$$\alpha = .941$$`
+]
+]
+
+.pull-right[
+
+
+]
+
+---
+
+# Interrater Reliability
+
+.content-box-gray[
+**Interrater Reliability**: the degree of agreement among independent observers who rate, code, or agree on their judgments of an outcome of interest
+]
+
+--
+
+.content-box-blue[
+.center[
+
+`\(Interrater \: Reliability = \frac{Number \: of \: agreements}{Number \: of \: possible \: agreements}\)`
+]
+]
+
+.center[&lt;img src="img/agreement.png" width="20%"/&gt;]
+
+---
+
+class: center, middle, inverse
+
+# Validity
+
+---
+
+# Content Validity
+
+.content-box-gray[
+**Content validity**: the extent to which the items on a test are fairly representative of the entire domain the test seeks to measure
+]
+
+--
+
+.center[“I want to design a test to measure my students’ ability in statistics.”]
+
+--
+
+.pull-left[
+.center[<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#B04213;overflow:visible;position:relative;"><path d="M0 56v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24H24C10.745 32 0 42.745 0 56zm40 200c0-13.255 10.745-24 24-24s24 10.745 24 24-10.745 24-24 24-24-10.745-24-24zm272 256c-20.183 0-29.485-39.293-33.931-57.795-5.206-21.666-10.589-44.07-25.393-58.902-32.469-32.524-49.503-73.967-89.117-113.111a11.98 11.98 0 0 1-3.558-8.521V59.901c0-6.541 5.243-11.878 11.783-11.998 15.831-.29 36.694-9.079 52.651-16.178C256.189 17.598 295.709.017 343.995 0h2.844c42.777 0 93.363.413 113.774 29.737 8.392 12.057 10.446 27.034 6.148 44.632 16.312 17.053 25.063 48.863 16.382 74.757 17.544 23.432 19.143 56.132 9.308 79.469l.11.11c11.893 11.949 19.523 31.259 19.439 49.197-.156 30.352-26.157 58.098-59.553 58.098H350.723C358.03 364.34 384 388.132 384 430.548 384 504 336 512 312 512z"/></svg>]
+1. Calculate the mean of sample A. 
+2. Calculate the mean of sample B. 
+3. Calculate the mean of sample C. 
+4. Calculate the mean of sample D. 
+5. Calculate the mean of sample E. 
+6. Calculate the mean of sample F.
+]
+
+--
+
+.pull-right[
+.center[<svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#18A3DE;overflow:visible;position:relative;"><path d="M104 224H24c-13.255 0-24 10.745-24 24v240c0 13.255 10.745 24 24 24h80c13.255 0 24-10.745 24-24V248c0-13.255-10.745-24-24-24zM64 472c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zM384 81.452c0 42.416-25.97 66.208-33.277 94.548h101.723c33.397 0 59.397 27.746 59.553 58.098.084 17.938-7.546 37.249-19.439 49.197l-.11.11c9.836 23.337 8.237 56.037-9.308 79.469 8.681 25.895-.069 57.704-16.382 74.757 4.298 17.598 2.244 32.575-6.148 44.632C440.202 511.587 389.616 512 346.839 512l-2.845-.001c-48.287-.017-87.806-17.598-119.56-31.725-15.957-7.099-36.821-15.887-52.651-16.178-6.54-.12-11.783-5.457-11.783-11.998v-213.77c0-3.2 1.282-6.271 3.558-8.521 39.614-39.144 56.648-80.587 89.117-113.111 14.804-14.832 20.188-37.236 25.393-58.902C282.515 39.293 291.817 0 312 0c24 0 72 8 72 81.452z"/></svg>]
+1. Calculate the mean.
+2. Calculate the standard deviation. 
+3. Calculate the correlation. 
+4. Calculate a _t_-test.
+5. Calculate an ANOVA.
+6. Calculate a regression.
+]
+
+---
+
+# Criterion Validity
+
+.content-box-gray[
+**Criterion validity**: measures how well one measure predicts an outcome for another measure
+
+]
+
+--
+
+.pull-left[
+
+.center[_Here and now_]
+
+**Concurrent Criterion Validity**: Does this test accurately assess my students’ current level of ability?
+
+]
+
+--
+
+.pull-right[
+
+.center[_In the future_]
+
+**Predictive Validity**: Does this test accurately assess how my students will do on the final exam?
+]
+
+--
+
+To find out, correlate scores on your test with some .secondary[well-established] measure of ability
+
+---
+
+# Construct Validity
+
+.content-box-gray[
+**Construct Validity**: the degree to which a test, scale, or assessment measures the construct it claims to measure
+]
+
+--
+
+A .secondary[_construct_] is a group of interrelated variables that you care about
+
+_Example_: When I measure extraversion as a self-report measure, does this correlate with behavioral extraversion?
+
+---
+
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Using hypotheses to test questions
+
+**Reading**
+
+- Chapter Five
+
+- Chapter Six
+
+**Quiz 1**
+
+- Due Wednesday 01/19/2022 at 11:59pm MT
+
+  - Lecture 1-4, Ch.1-5
+
+
+]
+
+.pull-right[
+
+.center[
+
+&lt;img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" /&gt;
+
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

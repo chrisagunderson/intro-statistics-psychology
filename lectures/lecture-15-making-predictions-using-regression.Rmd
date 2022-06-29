@@ -1,0 +1,1278 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 15: Making predictions using regression
+
+]
+
+---
+
+# Outline for today
+
+```{r echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+
+.pull-left[
+
+- Updates
+
+- Review parts of last class
+
+- Simple Linear Regression
+
+- Multiple Regression
+
+- Regressions in JASP
+
+  - Download `Stats Class 17 Dataset (Regressions).jasp`
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+---
+
+# Updates
+
+- **Final Exam** is scheduled for Thursday March 17, 2022 08:00-09:50am MT
+
+--
+
+- **Application Project** data and instructions will be posted this afternoon
+
+  - Each focuses on descriptive statistics (mean, range), correlation, independent samples _t_-test, and factorial ANOVA
+  
+  - We will talk about these projects specifically during the next two class sessions
+
+---
+
+class: center, middle, inverse
+
+# Review
+
+## Testing relationships using correlations
+
+---
+
+# Calculating Correlations
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$  
+]
+]
+]
+
+.pull-left[
+
+We just need six values:
+
+]
+
+.pull-right[
+.pull-left[
+
+$\sum X$  
+$\sum Y$  
+$\sum XY$ 
+]
+
+.pull-right[
+$\sum X^2$  
+$\sum Y^2$  
+$n$  
+]
+]
+
+---
+
+# Correlations: Hypothesis Testing
+
+.pull-left[
+
+.center[
+
+**Null Hypothesis $H_{0}$**
+
+There is no relationship
+
+$H_{0}$: $\rho = 0$
+]
+
+]
+
+.pull-right[
+
+.center[
+**Alternative Hypothesis $H_{a}$**
+
+There is a relationship
+
+$H_{a}$: $\rho \neq 0$
+
+]
+
+]
+
+.footnote[
+Note: $\rho$ is "rho", the population parameter version of the sample statistic, $r$
+]
+
+---
+
+# _t_-test for correlation coefficient
+
+
+.content-box-blue[
+.center[
+
+**_t_-test for correlation coefficient**
+
+.Large[
+
+$$t_{r_{xy}} = \frac{r_{xy}\sqrt{n - 2}}{\sqrt{1 - r^2_{xy}}}$$
+
+]
+]
+]
+
+--
+
+$r_{xy} =$ the correlation between the two variables  
+
+$r^2_{xy}=$ the coefficient of determination  
+
+$n=$ the sample size (number of paired observations)
+
+---
+
+# _t_-test for correlation coefficient
+
+.pull-left[
+**Step 1**: Calculate Pearson's _r_
+
+$$r_{xy} = \frac{126}{\sqrt{(213)(192)}} = 0.62$$
+
+**Step 2**: Calculate the coefficient of determination
+
+$$r_{xy}^2 = 0.62^2 = 0.38$$
+]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**_t_-test for correlation coefficient**
+
+$$t_{r_{xy}} = \frac{r_{xy}\sqrt{n - 2}}{\sqrt{1 - r^2_{xy}}}$$
+
+]
+]
+
+**Step 3**: Solve for the _t_-test statistic for correlations
+
+$$t_{xy} = \frac{0.62\sqrt{6 - 2}}{\sqrt{1 - 0.38}}$$
+
+]
+
+---
+
+class: center, middle, inverse
+
+# Simple Linear Regression
+
+---
+
+# Types of Models
+
+- For ANOVAs, your factors need to be _nominal_ or _ordinal_
+
+--
+
+  - These are called **mean structure models** because we seek to explain mean differences between groups or treatment conditions
+
+--
+
+- We also have **regression models**, however, which allows you to have _interval_ or _ratio_ variables on the $x$-axis
+
+---
+
+# Simple Example
+
+We want to predict **Total Cost** based on the **Number of drinks** you buy at a dance contest
+
+<img src="https://media4.giphy.com/media/ku2YMEjzMwud2/200.gif" width="50%"/> <img src="https://c.tenor.com/HJYpC1p52ocAAAAC/dance-slide.gif" />
+
+---
+
+# Simple Example
+
+.center[
+
+<img src="img/regression-drink-1.png" width="90%"/>
+
+]
+
+---
+
+# Simple Example
+
+.center[
+
+<img src="img/regression-drink-2.png" width="90%"/>
+
+]
+
+---
+
+# Simple Example
+
+.center[
+
+<img src="img/regression-drink-3.png" width="90%"/>
+
+]
+
+---
+
+# Simple Example
+
+.center[
+
+<img src="img/regression-drink-4.png" width="90%"/>
+
+]
+
+---
+
+# Simple Example
+
+```{r simple-model-scatter, echo=FALSE}
+
+dance_party_data <- data.frame(num_drinks = c(1, 2, 3, 4, 5, 6, 7),
+                               total_cost = c(23, 31, 39, 47, 55, 63, 71))
+
+dance_party_fig1 <- ggplot(dance_party_data, aes(x = num_drinks, 
+                             y = total_cost)) +
+  geom_point(size = 2) +
+  labs(x = "Number of drinks",
+       y = "Total cost") +
+  theme_classic() +
+  theme(text = element_text(size = 16))
+
+dance_party_fig1
+
+```
+
+---
+
+# Simple Example
+
+```{r echo=FALSE}
+dance_party_fig1 + 
+  geom_line(color = "#B04213")
+
+```
+
+---
+
+# The Problem
+
+- Typically, however, we will have error (which is not reflected in this model)
+
+--
+
+  - For example, different drinks cost different amounts
+
+.center[
+<img src="img/drinks-multiple-costs.png" width="50%"/>
+]
+
+--
+
+- Or if we have **sampling error** more generally
+
+---
+
+# Another Example
+
+Predicting **Final Grade** based on the number of **Hours Studied**
+
+--
+
+Two people who study the same amount may not get the same final grade
+
+--
+
+.pull-left[
+
+.center[
+<img src="img/noun-smile-1074850.png" width="50%"/>
+
+Studied 8 hours  
+
+83%
+]
+]
+
+.pull-right[
+.center[
+<img src="img/noun-sad-1074849.png" width="50%"/>
+
+Studied 8 hours
+
+62%
+]
+]
+
+
+---
+
+# Predicting Grades from Hours Studied
+
+
+```{r echo=FALSE}
+
+student_grades <- data.frame(Student = c("Niwako","Kamiko","John", "Ahmed","Jimothy","Jane","Jaleel","Steve"),
+                             Hours_Studied = c(7,5,9,2,4,11,15,3),
+                             Motivation = c(6,4,7,2,2,9,9,5),
+                             Final_Grade = c(88,83,91,80,79,95,98,74)) %>% 
+    rowwise() %>% 
+  unite('x_y_values', Hours_Studied, Final_Grade, sep = ",", remove = FALSE)
+
+student_grades %>% 
+  select(-x_y_values, -Motivation) %>% 
+knitr::kable("pipe")
+
+```
+
+---
+
+# Predicting Grades from Hours Studied
+
+```{r echo=FALSE}
+library(ggrepel)
+
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_point(size = 2) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  theme_classic() +
+  theme(text = element_text(size = 16))
+
+```
+
+---
+
+# Predicting Grades from Hours Studied
+
+```{r echo=FALSE}
+library(ggrepel)
+
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_point(size = 2) +
+  geom_text_repel(aes(label = x_y_values)) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  theme_classic() +
+  theme(text = element_text(size = 16))
+
+```
+
+---
+
+# Predicting Grades from Hours Studied
+
+```{r echo=FALSE}
+
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_point(size = 2) +
+  geom_text_repel(aes(label = Student)) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  theme_classic() +
+  theme(text = element_text(size = 16))
+
+```
+
+---
+
+# Predicting Grades from Hours Studied
+
+```{r echo=FALSE}
+
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1381B0") +
+  geom_point(size = 2) +
+  geom_text_repel(aes(label = Student)) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  theme_classic() +
+  theme(text = element_text(size = 16))
+
+```
+
+--
+
+.footnote[
+The .primary[blue] line represents the **Regression Line**
+]
+
+---
+
+# Regression 
+
+.content-box-gray[
+**Regression**: A statistical technique for finding the best-fitting _line_ (i.e., the regression line) for a set of data
+]
+
+--
+
+**Goal**: To be able to model the quantitative relationship between two variables, allowing us to make _predictions_ about one on the basis of the other
+
+.center[
+<img src="img/noun-regression-analysis-239043.png" width="23%"/>
+]
+
+---
+
+# Statistical Hypotheses
+
+.pull-left[
+.center[
+**Null Hypothesis $H_{0}$**
+
+The slope of the regression equation, $b$ (or "beta") is zero
+
+]
+]
+
+.pull-right[
+.center[
+
+**Alternative Hypothesis $H_{a}$**
+
+The slope of the regression equation, $b$ (or "beta") is not zero
+
+]
+]
+
+.footnote[
+
+We'll see how this is applied when using JASP
+
+]
+---
+
+# Example
+
+**Research question**: How much does each additional hour of studying, on average, help our final grade?
+
+
+.center[
+.pull-left[
+<img src="img/noun-studying-1314974.png" width="59%"/> 
+]
+.pull-right[
+<img src="img/noun-study-415837.png" width="50%"/>
+]
+]
+
+---
+
+# Simple Linear Regression
+
+.content-box-blue[
+.center[
+**Simple linear regression**
+
+.Large[
+$$\hat{y} = bX + a$$
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+**Slope**
+
+.Large[
+$$b = \frac{\Sigma{XY} - \frac{\Sigma{x}\Sigma{y}}{n}}{\Sigma{X}^2 - \frac{(\Sigma{X})^2}{n}}$$
+]
+]
+]
+]
+
+--
+
+.pull-right[
+.content-box-blue[
+.center[
+**Intercept**
+
+.Large[
+$$a = \frac{\Sigma{Y} - b\Sigma{X}}{n}$$
+]
+]
+]
+]
+
+---
+
+# Review: Correlation
+
+.content-box-blue[
+.center[
+
+**Pearson's _r_**
+.Large[
+
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$  
+]
+]
+]
+
+--
+
+.pull-left[
+
+Once again, _these_ are the values we need:
+
+]
+
+.pull-right[
+.pull-left[
+
+$\sum X$  
+$\sum Y$  
+$\sum XY$ 
+]
+
+.pull-right[
+$\sum X^2$  
+$\sum Y^2$  
+$n$  
+]
+]
+
+---
+
+# Calculating the regression line
+
+Set up our table 
+
+```{r correlation-table-1, echo=FALSE}
+library(tidyverse)
+reg_data_lecture <- data.frame(i = c(1, 2, 3, 4, 5, 6),
+                                x = c(5, 9, 10, 3, 5, 7),
+                                y = c(6, 11, 6, 4, 6, 9))
+
+corr_data_lecture16 <- reg_data_lecture %>% 
+  as_tibble() %>% 
+  rename("$i$" = i,
+         "$x$" = x,
+         "$y$" = y) %>%
+   add_column("$$x^2$$" = NA,
+             "$$y^2$$" = NA,
+             "$$xy$$" = NA)
+
+i_table <- corr_data_lecture16
+
+
+options(knitr.kable.NA = '')
+knitr::kable(i_table, "pipe", escape = TRUE)
+
+```
+
+---
+
+# Calculating the regression line
+
+Square our $x$ values
+
+
+```{r correlation-table-2, echo=FALSE}
+corr_data_lecture2 <- corr_data_lecture16 %>% 
+  mutate(`$$x^2$$` = `$x$`^2)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture2, "pipe", escape = TRUE)
+```
+
+---
+
+# Calculating the regression line
+
+Square our $y$ values
+
+```{r correlation-table-3, echo=FALSE}
+corr_data_lecture3 <- corr_data_lecture2 %>% 
+  mutate(`$$y^2$$` = `$y$`^2)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture3, "pipe", escape = TRUE)
+```
+
+---
+
+# Calculating the regression line
+
+Multiply $x$ and $y$ together row-wise
+
+```{r correlation-table-4, echo=FALSE}
+corr_data_lecture4 <- corr_data_lecture3 %>% 
+  mutate(`$$xy$$` = `$x$` * `$y$`)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+
+```{r correlation-table-5, echo=FALSE}
+knitr::kable(corr_data_lecture4, "pipe", escape = TRUE)
+```
+
+
+]
+
+.pull-right[
+
+Sum each of the columns
+
+```{r correlation-table-6, echo=FALSE}
+corr_data_sum_lecture<- corr_data_lecture4 %>% 
+  summarise(across(where(is.numeric), sum)) %>% 
+  rename("$\\sum x$" = `$x$`,
+         "$\\sum y$" = `$y$`,
+         "$\\sum  x^2$" = `$$x^2$$`,
+         "$\\sum y^2$" = `$$y^2$$`,
+         "$\\sum xy$" = `$$xy$$`) %>% 
+  select(-"$i$")
+
+knitr::kable(corr_data_sum_lecture, "pipe")
+```
+]
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+.content-box-blue[
+.center[
+**Slope**
+
+.Large[
+$$b = \frac{\Sigma{XY} - \frac{\Sigma{x}\Sigma{y}}{n}}{\Sigma{X}^2 - \frac{(\Sigma{X})^2}{n}}$$
+]
+]
+]
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE}
+knitr::kable(corr_data_sum_lecture, "pipe")
+
+```
+
+$$b = \frac{294 - \frac{(39)(42)}{6}}{289 - \frac{(39)^2}{6}}$$
+
+$$b = \frac{294 - 273}{289 - 253.5} = \frac{21}{35.5} = 0.59$$
+]
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+.content-box-blue[
+.center[
+**Intercept**
+
+.Large[
+$$a = \frac{\Sigma{Y} - b\Sigma{X}}{n}$$
+]
+]
+]
+]
+
+--
+
+.pull-right[
+
+```{r echo=FALSE}
+knitr::kable(corr_data_sum_lecture, "pipe")
+
+```
+.center[
+Slope, $b = 0.59$
+]
+
+$$a = \frac{42 - (0.59)(39)}{6} = \frac{18.99}{6} = 3.16$$
+]
+
+---
+
+# Calculating the regression line
+
+.pull-left[
+.content-box-blue[
+.center[
+**Simple linear regression**
+
+.Large[
+$$\hat{y} = bX + a$$
+]
+]
+]
+]
+
+.pull-right[
+.center[
+**Slope**: $b = 0.59$  
+
+**Intercept**: $a = 3.16$
+]
+]
+
+.pull-right[
+.Large[
+$$\hat{y} = 0.59X + 3.16$$
+]
+]
+
+---
+
+# Back to our previous example
+
+**Research question**: How much does each additional hour of studying, on average, help our final grade?
+
+```{r echo=FALSE, fig.width=8, fig.height=3, fig.retina=3}
+
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1381B0") +
+  geom_point(size = 2) +
+  geom_text_repel(aes(label = Student)) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  theme_classic() +
+  theme(text = element_text(size = 16))
+
+```
+
+---
+
+# Visualizing the Regression Formula
+
+$$\hat{y} = bX + a + \epsilon$$
+
+--
+
+$$\hat{y} = 1.79X + 73.47$$
+
+--
+
+```{r echo=FALSE, fig.width=7, fig.height=2, fig.retina=3}
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1381B0") +
+  geom_point(size = 2) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  theme_classic() +
+  theme(text = element_text(size = 16))
+```
+
+---
+
+# Visualizing $b$ in the Regression Formula
+
+```{r echo=FALSE}
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1381B0") +
+  geom_point(size = 2, alpha = 1/8) +
+  geom_segment(linetype = "dashed", 
+               aes(x = -Inf, xend = 8, y = 87.7902, yend = 87.7902)) +
+  geom_segment(linetype = "dashed", 
+               aes(x = -Inf, xend = 9, y = 89.5801, yend = 89.5801)) +
+  annotate("text", x = 5, y = 92, label = "slope") +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  theme_classic() +
+  theme(text = element_text(size = 16))
+```
+
+.footnote[
+Slope determines how much the $y$ variable changes when $X$ is increased by $1$ point (or unit)
+]
+
+???
+8 hours: (1.7899 * 8) + 73.4710 = 87.7902
+
+9 hours: (1.7899 * 8) + 73.4710 = 89.5801
+
+difference: 1.7899
+
+---
+
+# Visualizing $X$ in the Regression Formula
+
+What if a student studied for 10 hours?
+
+--
+
+$$\hat{y} = 1.79(10) + 73.47 = 91.37$$
+--
+
+```{r echo=FALSE, fig.width=7, fig.height=2, fig.retina=3}
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1381B0") +
+  geom_point(size = 2) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  annotate("point", x= 10, y = 91.37, colour = "#B04213", shape = 1, size = 5) +
+  theme_classic() +
+  theme(text = element_text(size = 16))
+```
+
+---
+
+# Visualizing $a$ in the Regression Formula
+
+What if a student studied for $0$ hours?
+
+--
+
+```{r echo=FALSE, fig.width=7.5, fig.height=2.5, fig.retina=3}
+
+## student data fit
+fit_students <- lm(Final_Grade ~ Hours_Studied, data = student_grades)
+
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_abline(intercept = fit_students$coefficients[1],
+              slope = fit_students$coefficients[2],
+              color = "#1381B0") +
+  geom_point(size = 2) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  geom_point(aes(x=-Inf, y=73.4710), colour="#B04213", size = 3) +
+  annotate("text", x= 1, y = 73.4710, label = "intercept") +
+  scale_x_continuous(expand = c(0, 0), limits = c(0, 17)) + 
+  #scale_y_continuous(expand = c(0, 0), limits = c(0, 100)) +
+  scale_y_continuous(breaks=seq(0,110,5)) +
+  theme_classic() 
+```
+
+.footnote[
+
+The $y$-intercept, $a$, is the value of $y$ when $X$ is 0
+
+]
+
+---
+
+# Visualizing $\epsilon$ in the Regression Formula
+
+The model is not perfect; $residuals = y - \hat{y}$
+
+```{r  echo=FALSE, fig.width=8, fig.height=3, fig.retina=3}
+
+
+# fit regression
+
+Model<-lm(Final_Grade~Hours_Studied, data = student_grades)
+
+student_grades$resid <- Model$residuals
+
+student_grades$fit <- Model$fitted.values
+
+# plot the residuals
+
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1381B0") +
+  geom_point(size = 2) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  geom_segment(linetype = "dotted", aes(x = Hours_Studied, y = Final_Grade, xend = Hours_Studied, yend = fit), color = "#B04213") +
+  theme_classic() +
+  theme(text = element_text(size = 15)) 
+
+```
+
+---
+
+# Visualizing $\epsilon$ in the Regression Formula
+
+.pull-left[
+```{r echo=FALSE}
+residual_table <- student_grades %>% 
+  select(Final_Grade, fit, resid) %>% 
+  rename(Residual = resid,
+         Prediced_Grade = fit)
+
+knitr::kable(residual_table, "pipe", digits = 2)
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE}
+ggplot(student_grades, aes(x = Hours_Studied, 
+                           y = Final_Grade)) +
+  geom_smooth(method = "lm", se = FALSE, color = "#1381B0") +
+  geom_point(size = 2) +
+  labs(x = "Hours Studied",
+       y = "Final Grade") +
+  geom_segment(linetype = "dotted", aes(x = Hours_Studied, y = Final_Grade, xend = Hours_Studied, yend = fit), color = "#B04213") +
+  theme_classic() +
+  theme(text = element_text(size = 15)) 
+```
+
+]
+
+---
+
+# Model Error
+
+.pull-left[
+- The best-fitting line is the one that has the _smallest_ total squared error
+
+$$Total \: Squared \: Error = \Sigma(y - \hat{y})^2$$
+
+- The resulting line of our linear regression is commonly called the **least-squared-error solution**
+]
+
+.pull-right[
+
+<img src="img/regression-residuals.png"/>
+
+]
+
+.footnote[
+For quizzes and exams, you do not need to know this equation
+]
+
+---
+
+# Simple Linear Regression
+
+.pull-left[
+.content-box-blue[
+.center[
+**Simple linear regression**
+
+$$\hat{y} = bX + a$$
+
+]
+]
+- $\hat{y}$ is the predicted value
+
+- $b$ determines how much the $y$ variable changes when $x$ is increased by 1 point (or unit of measurement)
+
+- $a$ is the value of $y$ when $x$ is zero
+
+]
+
+.pull-right[
+
+.content-box-blue[
+.center[
+**Slope**
+
+
+$$b = \frac{\Sigma{XY} - \frac{\Sigma{x}\Sigma{y}}{n}}{\Sigma{X}^2 - \frac{(\Sigma{X})^2}{n}}$$
+]
+]
+
+.content-box-blue[
+.center[
+**Intercept**
+
+$$a = \frac{\Sigma{Y} - b\Sigma{X}}{n}$$
+]
+]
+]
+
+
+---
+
+class: center, middle, inverse
+
+# JASP: Linear Regression
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-01.png" width="55%"/>
+
+1
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-02.png" width="55%"/>
+
+2
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-03.png" width="55%"/>
+
+3
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-04.png" width="55%"/>
+
+4
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-05.png" width="55%"/>
+
+5
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-06.png" width="55%"/>
+
+6
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-07.png" width="55%"/>
+
+7
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-08.png" width="55%"/>
+
+8
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-09.png" width="55%"/>
+
+9
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-10.png" width="55%"/>
+
+10
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-11.png" width="55%"/>
+
+11
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-12.png" width="55%"/>
+
+12
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-13.png" width="55%"/>
+
+13
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-14.png" width="55%"/>
+
+14
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-15.png" width="55%"/>
+
+15
+]
+
+---
+
+## JASP: Linear Regression
+
+.center[
+<img src="img/jasp-regression-16.png" width="55%"/>
+
+16
+]
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Analyzing data using JASP I
+
+**Reading**
+
+- Chapter 16
+
+**Quiz 6**
+
+- Due Wednesday 3/2/2022 11:59pm MT
+
+- Covers Ch.15-16
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

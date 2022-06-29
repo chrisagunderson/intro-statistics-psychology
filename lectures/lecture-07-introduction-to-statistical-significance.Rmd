@@ -1,0 +1,1088 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+```{r load-packages, echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 07: Introduction to Statistical Significance
+
+]
+
+---
+
+# Outline for today
+
+.pull-left[
+
+- Review parts of previous lectures
+
+- Decisions in hypothesis testing
+
+- Statistical power
+
+
+]
+
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+---
+
+# Hypothesis
+
+.content-box-gray[
+
+**Hypothesis**: a specific, clear, and testable proposition or predictive statement about the possible outcome of a scientific research study
+
+]
+
+--
+
+When we use _samples_ to approximate _populations_, however, we always have **sampling error** (difference between the sample statistic and the population parameter)
+
+--
+.center[
+.Large[
+.pull-left[
+
+Sample Statistic $\overline{x}$
+
+]
+
+.pull-right[
+
+Population Parameter $\mu$
+
+]
+
+.center[
+Sampling Error $\epsilon$
+
+]
+]
+]
+
+
+---
+
+# Statistical Hypotheses
+
+.content-box-gray[
+**Null Hypothesis**: there is no change, no difference, or no relationship between variables
+]
+
+
+
+.pull-left[The difference observed is due only to .secondary[_sampling error_], and not to any real effects in the population]
+
+
+
+.pull-right[
+.content-box-blue[
+.center[
+**Null Hypothesis**
+.Large[
+$$H_{0} = \epsilon$$
+]
+]
+]
+]
+
+---
+
+# Statistical Hypotheses
+
+.content-box-gray[
+**Research Hypothesis**: there is change, a difference, or a relationship between variables
+]
+
+
+
+.pull-left[The difference observed is due to both sampling error and .secondary[a real effect]]
+
+
+
+.pull-right[
+.content-box-blue[
+.center[
+**Research Hypothesis**
+.Large[
+$$H_{1} = \tau + \epsilon$$
+]
+]
+]
+]
+
+---
+
+# Standard of Evidence
+
+.content-box-gray[
+**Alpha**: the probability value that is used to define which sample outcomes are considered very unlikely if $H_{0}$ is true
+]
+
+--
+
+The most common $\alpha = .05$
+
+--
+
+.content-box-gray[
+**Critical Region**: The region (of the sampling distribution) that contains the sample outcomes that are considered _very unlikely_ if $H_{0}$ is true
+]
+
+
+---
+
+# Critical Region
+
+.center[
+<img src="img/region-region.png" width="60%"/>
+]
+
+---
+
+# Compute a Test Statistic
+
+.content-box-gray[
+**Test statistic**: A numerical summary of the degree to which a sample is unlike the samples predicted by the null hypothesis, $H_{0}$
+]
+
+--
+
+.content-box-blue[
+.center[
+**_z_-test statistic**
+
+.Large[
+
+$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$
+
+]
+]
+]
+
+---
+
+# Standard of Evidence
+
+.center[
+<img src="img/z-test-rejection-region.png" width="57%"/>
+]
+
+---
+
+# _p_-value
+
+.content-box-gray[
+**_p_-value**: the probability of getting the observed or more extreme data, _assuming_ the null hypothesis is true
+]
+
+--
+
+.pull-left[
+.center[
+If  $p < \alpha$
+]
+
+- The data you observe is **not** likely due to just sampling error
+
+- Reject the null hypothesis
+]
+
+--
+
+.pull-right[
+
+.center[
+If $p > \alpha$
+]
+
+- The data is likely due to sampling error
+
+- We fail to to reject the null hypothesis
+]
+
+---
+
+# _p_-value
+
+.center[
+
+<img src="img/p-and-alpha-figure.png" width="80%"/>
+]
+
+---
+
+# Statistical Significance
+
+.content-box-gray[
+
+**Statistical Significance**: A result is said to be _significant_, or _statistically significant_, if it is very unlikely to occur when the null hypothesis is true. That is, the result is sufficient to reject the null hypothesis. Thus, a treatment has a significant effect if the decision from the hypothesis test is to reject $H_{0}$
+]
+
+.center[
+
+<img src="img/p-and-alpha-figure.png" width="50%"/>
+
+
+]
+
+---
+
+
+# Statistical Hypotheses
+
+
+.pull-left[
+.center[
+**Null Hypothesis**  
+
+$H_{0}$: No real effect exists  
+
+.Large[
+$$\epsilon$$
+]
+
+]
+]
+
+.pull-right[
+.center[
+
+**Research Hypothesis**   
+
+$H_{1}$: A real effect does exist  
+
+.Large[
+$$\tau + \epsilon$$
+]
+]
+]
+
+--
+
+.center[
+
+### Because inferential statistics deals in _probabilities_, we always run the risk of making an error in our conclusions about the null and alternative hypotheses
+
+]
+
+---
+
+class: center, middle, inverse
+
+# Decisions in Hypothesis Testing
+
+---
+
+# Possible Truths in the World
+
+.center[
+
+**Truth**
+
+.pull-left[
+There is no effect, $H_{0}$
+] 
+
+.pull-right[
+There is an effect, $H_{1}$
+]
+]
+
+--
+
+Because these are mutually exclusive and exhaustive, one of these has to be true and only one of them can be true
+
+--
+
+But _sampling error_ is always acting, so occasionally we’ll get samples that are different from the truth in the world, which will lead to erroneous conclusions
+
+---
+
+# Possible Decision Outcomes
+
+.center[
+<img src="img/error-decision-1.png" width="85%"/>
+]
+
+---
+
+# Possible Decision Outcomes
+
+.center[
+<img src="img/error-decision-2.png" width="85%"/>
+]
+
+---
+
+# Possible Decision Outcomes
+
+.center[
+<img src="img/error-decision-3.png" width="85%"/>
+]
+
+---
+
+# Possible Decision Outcomes
+
+.center[
+<img src="img/error-decision-4.png" width="85%"/>
+]
+
+---
+
+# Type I Error
+
+.pull-left[
+
+.content-box-gray[
+
+**Type I error**: Occurs when there is _no_ effect present but the researcher rejects the null hypothesis
+
+]
+]
+
+.pull-right[
+<img src="img/error-decision-4.png" />
+
+]
+
+--
+
+Also known as a '_false alarm_', '_Alpha error_', or '**_False positive_**'
+
+--
+
+Simply put: Saying there is an effect, when there is actually no effect
+
+---
+
+# Decisions
+
+.center[
+<img src="img/error-decision-5.png" width="85%"/>
+]
+
+---
+
+# Type II Error
+
+.pull-left[
+.content-box-gray[
+**Type II error**: Occurs when a real effect _is_ present, but the researcher fails to reject the null hypothesis
+]
+]
+
+.pull-right[
+<img src="img/error-decision-5.png" />
+
+]
+
+--
+
+Also known as a '_miss_' or '_Beta error_', or '**_False negative_**'
+
+--
+
+Simply put: Saying there is no effect, when there is actually an effect
+
+---
+
+# Errors in Practical Terms
+
+.center[
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Smoke_detector.JPG" width="50%"/>
+]
+
+---
+
+# Errors in Practical Terms
+
+.center[
+<img src="img/fire-1.png" width="85%"/>
+
+]
+
+---
+
+# Errors in Practical Terms
+
+.center[
+<img src="img/fire-2.png" width="85%"/>
+
+]
+
+---
+
+# Errors in Practical Terms
+
+.center[
+<img src="img/fire-3.png" width="85%"/>
+
+]
+
+---
+
+# Errors in Practical Terms
+
+.center[
+<img src="img/fire-4.png" width="85%"/>
+
+]
+
+---
+
+# Errors in Practical Terms
+
+.center[
+<img src="img/fire-5.png" width="85%"/>
+
+]
+
+---
+
+class: center, middle, inverse
+
+# Class Activity
+
+## Type I and Type II Errors
+
+---
+
+# Class Activity
+
+.center[
+
+With your classmates, come up with  an additional example of Type I and Type II errors. Draw them like the figure below.
+]
+
+.center[
+<img src="img/fire-5.png" width="70%"/>
+
+]
+
+
+---
+
+# Influences of Type I Errors
+
+- A Type I error occurs when we reject $H_{0}$ even though $H_{0}$ is true
+
+--
+
+- In other words, we found something in the critical region and called it "extreme enough" to be a real effect, when in reality, it wasn't
+
+--
+
+- Recall that boundaries of the critical region are determined by alpha, which is under our control
+
+---
+
+# Critical Regions
+
+The locations of the critical region boundaries for three different levels of significance: $\alpha = .05$, $\alpha = .01$, $\alpha = .001$
+
+.center[
+
+<img src="img/critical-regions-at-different-alphas.png" width="65%"/>
+]
+
+.footnote[
+
+]
+
+---
+
+# Probability of a Type I Error
+
+So, Type I error rates are under our control and their probability is simply equal to alpha (assuming that the true state of the world is that $H_{0}$ is true)
+
+--
+
+If $H_{1}$ is true, what proportion of the time could we have a false positive?
+
+--
+
+.center[
+$p(Type \: I \: error \: | \: H_{1} \:is \: True) = 0$
+
+]
+
+--
+
+.center[
+
+$p(Type \: I \: error \: | \: H_{0} \:is \: True) = \alpha$
+
+]
+
+--
+
+In other words: 
+
+- If $H_{1}$ is true, there is no risk of a Type I error
+
+- If $H_{0}$ is true, the risk of a Type I error is $\alpha$
+
+---
+
+# Probability of a Type I Error
+
+.center[
+
+<img src="img/decision-table-1.png" width="80%"/>
+]
+
+---
+
+# Probability of a Type II Error
+
+.center[
+
+$p(Type \: II \: error \: | \: H_{1} \:is \: True) = \beta$
+
+$p(Type \: II \: error \: | \: H_{0} \:is \: True) = 0$
+
+]
+
+--
+
+In other words: 
+
+- If $H_{1}$ is true, the risk of a Type II error is $\beta$
+
+- If $H_{0}$ is true, there is no risk of a Type II error
+
+.pull-right[
+.content-box-blue[
+.center[
+**Beta**  
+$$\beta$$
+]
+]
+]
+
+---
+
+# Probability of a Type II Error
+
+.center[
+
+<img src="img/decision-table-2.png" width="80%"/>
+]
+
+
+---
+
+# Probability of Specificity
+
+.content-box-gray[
+**Specificity**: The specificity of a test (also called the True Negative Rate) is the probability of failing to reject $H_{0}$ when $H_{0}$ is true
+]
+
+.center[
+
+<img src="img/decision-table-3.png" width="50%"/>
+]
+
+---
+
+# Statistical Power
+
+
+.center[
+
+<img src="img/decision-table-4.png" width="80%"/>
+]
+
+
+---
+
+# Alpha and Beta
+
+**Alpha**: probability of a false positive (Type I error)
+
+**Beta**: probability of a false negative (Type II error)
+
+--
+
+- We know alpha ahead of time and it is under our control, but what about beta?
+
+--
+
+- We often don't know what it is equal to ahead of time, but beta comes from statistical power, $1-\beta$, which we will discuss next
+
+---
+
+class: center, middle, inverse
+
+# Statistical Power
+
+---
+
+# Statistical Power
+
+--
+
+.pull-left[
+.center[
+<img src="img/eyeglasses.png" width="50%"/>
+]
+]
+
+--
+
+.pull-right[
+.center[
+<img src="img/binoculars.png" width="50%"/>
+]
+]
+
+--
+
+.pull-left[
+.center[
+<img src="img/microscope.png" width="50%"/>
+]
+]
+
+--
+
+.pull-right[
+.center[
+<img src="img/telescope.png" width="50%"/>
+]
+]
+
+
+
+---
+
+# Statistical Power
+
+.content-box-gray[
+**Statistical power**: the probability that the test will correctly reject a false null hypothesis. That is, power is the probability that the test will identify an effect if one really exists
+]
+
+--
+
+Simply put: how well a test can _detect_ a real effect and reject the null hypothesis when the null hypothesis is, in fact, false
+ 
+---
+
+# Statistical Power
+
+.pull-left[
+.center[
+
+**In the population**
+
+$\mu$ = 100  
+
+$\sigma$ = 15  
+
+
+
+<img src="img/brain.png" width="50%"/>
+]
+]
+
+.pull-right[
+
+.center[
+
+
+**Our sample**
+
+$n = 100$  
+
+$\overline{X}_{IQ} = 120$  
+
+$s_{IQ} = 15$
+
+
+<img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="20%"/>
+
+]
+]
+
+---
+
+# Statistical Power
+
+.center[
+<img src="img/stat-power-1.png" width="80%"/>
+
+]
+
+---
+
+# Statistical Power
+
+.center[
+<img src="img/stat-power-2.png" width="80%"/>
+
+]
+
+---
+
+# Statistical Power
+
+.center[
+<img src="img/stat-power-3.png" width="80%"/>
+
+]
+
+---
+
+# Statistical Power
+
+.center[
+<img src="img/stat-power-4.png" width="75%"/>
+
+]
+
+---
+
+# Statistical Power
+
+.center[
+<img src="img/stat-power-5.png" width="75%"/>
+
+]
+
+
+---
+
+# Influences of Statistical Power
+
+- The **size of an effect** in the population
+
+  - Bigger effect size `r fa("arrow-right")` more statistical power
+
+---
+
+# Effect Size
+
+.content-box-blue[
+
+.center[
+**Cohen's _d_ for one-sample _z_-test**
+]
+
+.Large[
+$$d_{z} = \frac{\overline{x} - \mu}{\sigma}$$
+
+]
+]
+
+The size of an effect here would be how large our numerator is
+
+$\overline{x}$ estimates the mean under $H_{1}$
+
+$\mu$ is the mean under $H_{0}$
+
+$\sigma$ is the standard deviation under $H_{0}$
+
+---
+
+# Influences of Statistical Power
+
+- The **size of an effect** in the population
+
+  - Bigger effect size `r fa("arrow-right")` more statistical power
+
+- **Variability** in the population
+  - Less variability `r fa("arrow-right")` more statistical power
+
+---
+
+# Variability
+
+.content-box-blue[
+.center[
+**_z_ Test Statistic**
+
+.Large[
+$$z_{\overline{x}} = \frac{\overline{x} - \mu}{\sigma_{\overline{x}}}$$
+]
+]
+]
+
+The more variability in the population, the larger the standard error, the smaller the test statistic
+
+---
+
+# Variability
+
+.center[
+
+<img src="img/power-var-1.png" />
+
+]
+
+---
+
+# Variability
+
+.center[
+
+<img src="img/power-var-2.png" width="90%"/>
+
+]
+
+---
+
+# Influences of Statistical Power
+
+- The **size of an effect** in the population
+
+  - Bigger effect size `r fa("arrow-right")` more statistical power
+
+- **Variability** in the population
+  - Less variability `r fa("arrow-right")` more statistical power
+
+- **Sample size**
+
+  - Larger sample size `r fa("arrow-right")` more statistical power
+
+
+---
+
+# Sample Size
+
+.pull-left[
+As sample size increases, standard error decreases, the test statistic increases, and statistical power increases
+]
+
+.pull-right[
+
+.content-box-blue[
+.center[
+**_z_ Test Statistic**
+$$z_{\overline{x}} = \frac{\overline{x} - \mu} {\sigma_{\overline{x}}}$$
+]
+]
+
+
+.content-box-blue[
+.center[
+**Standard Error**
+$$\sigma_{\overline{x}} = \frac{\sigma}{\sqrt{n}}$$
+]
+]
+]
+
+
+
+---
+
+# Influences of Statistical Power
+
+- The **size of an effect** in the population
+
+  - Bigger effect size `r fa("arrow-right")` more statistical power
+
+- **Variability** in the population
+  - Less variability `r fa("arrow-right")` more statistical power
+
+- **Sample size**
+
+  - Larger sample size `r fa("arrow-right")` more statistical power
+
+- **Alpha level**: Bigger alpha level `r fa("arrow-right")` more statistical power
+
+---
+
+# Alpha Level
+
+.center[
+
+<img src="img/critical-regions-at-different-alphas.png" width="65%"/>
+]
+
+---
+
+class: center, middle, inverse
+
+# Which error rates (Type I, Type II) should you aim for?
+
+---
+
+# Setting Alpha and Statistical Power
+
+Usually we set $\alpha = 0.05$ and statistical power, $1-\beta = 0.80$ 
+
+--
+
+.pull-left[
+.center[
+**Alpha**  
+
+This means in the _long run_,  
+5% of our results will be Type I errors
+
+.red[5% false positive rate]
+]
+]
+
+--
+
+.pull-right[
+.center[
+**Statistical power**  
+
+This means in the _long run_,  
+20% of our results will be Type II errors
+
+.red[20% false negative rate]
+]
+]
+
+---
+
+# Setting Alpha and Statistical Power
+
+.pull-left[
+> Is it more serious to convict an innocent man, or to acquit a guilty?
+> 
+> Determining how the balance must be struck should be left to the investigator.
+>
+— <cite>Neyman & Pearson, 1933</cite>
+]
+
+.pull-right[
+
+.center[
+<img src="https://alchetron.com/cdn/jerzy-neyman-d98b7785-25d2-4ff0-b956-ecc268b0b3a-resize-750.jpeg" />  
+Jerzy Neyman
+
+]
+]
+
+---
+
+class: center, middle, inverse
+
+# Class Activity
+
+---
+
+# Class Activity: Settting Error Rates
+
+With your classmates, determine: 
+
+.center[
+What is an acceptable _false positive rate_ (Type I error), and why?
+
+
+What is an acceptable _false negative rate_ (Type II error), and why?
+]
+
+--
+
+
+
+
+**Example Research Questions**
+
+- We are studying a new education program for increasing reading comprehension, and the intervention will cost $300,000 to implement
+
+- We are studying a new forensic interviewing technique to better differentiate liars from truth-tellers
+
+- We are studying whether violent video games cause aggression 
+
+- We are studying whether social media use is associated with depression and anxiety symptoms
+
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Midterm Review
+
+**Reading**
+
+- Chapter Nine
+
+**Quiz**
+
+- Quiz 2 is due tonight at 11:59pm MT
+
+  - Lecture 4-6, Ch.6-8
+  
+
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

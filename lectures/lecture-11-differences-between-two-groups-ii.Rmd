@@ -1,0 +1,935 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 11: Differences Between Two Groups (Part II)
+
+]
+
+---
+
+# Outline for today
+
+```{r load-packages, echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+
+.pull-left[
+
+-  Review parts of last class
+
+-  The Dependent samples _t_-test
+
+-  Effect size for the Dependent samples _t_-test
+
+-  Dependent Samples _t_-tests in JASP
+
+  - Download `Stats Class 13 Dataset (Dependent-Samples T-Test).jasp`
+
+]
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+---
+
+class: center, middle, inverse
+
+# Review
+
+---
+
+# Review: One-sample _t_-test
+
+.pull-left[
+.content-box-blue[
+.center[
+
+**One-sample _t_-test statistic**  
+
+.Large[
+$$t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}}$$
+
+]
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**Estimated standard error**  
+
+.Large[
+$$
+s_{\overline{x}} = \frac{s}{\sqrt{n}}
+$$
+
+]
+]
+]
+]
+
+- Used when we **don’t know the true standard deviation** in the population
+
+- We can use the estimated standard error, $s_{\bar{x}}$, in place of the true standard error, $\sigma_{\bar{x}}$
+
+---
+
+# Review: one sample _t_-test
+
+As the name implies, we have **_one_ sample** to compare to the population mean under the null hypothesis, $H_{0}$. For example:
+
+--
+
+_Does lie detection accuracy differ significantly from chance?_
+
+--
+
+- We collect $n = 40$ students, they watch videos of liars and truth-tellers, and we compute their accuracy performance as $\bar{x} = 0.56$ and $s = 0.12$
+
+--
+
+  - The null hypothesis is $H_{0}: \mu = 0.50$ which would represent chance performance
+  
+  - The alternative hypothesis is $H_{a}: \mu \neq 0.50$
+
+--
+
+.center[
+
+One sample _t_-test: $t_{\overline{x}} = \frac{0.56 - 0.50}{\frac{0.12}{\sqrt{40}}} = \frac{0.06}{.01897367} = 3.16$
+
+$p = .0003 < \alpha$ so we reject the null hypothesis
+]
+
+---
+
+# Review: Independent samples _t_-test
+
+.left-column[
+
+Used when we have two independent samples
+
+]
+
+.right-column[
+
+.content-box-blue[
+.center[
+
+**Independent samples _t_-test**
+
+$t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{\overline{x}_{1} - \overline{x}_{2}}{s_{(\overline{x}_{1} - \overline{x}_{2})}}$
+
+]
+]
+
+
+.content-box-blue[
+.center[
+**Estimated standard error of the mean difference**
+
+$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2} \Bigg] \Bigg[ \frac{n_1 + n_2}{n_1 n_2} \Bigg]}$
+]
+]
+
+]
+
+---
+
+# Independent Samples
+
+.center[
+
+<img src="img/between-subjects-design.png" width="89%"/>
+
+]
+
+---
+
+# Review: Independent samples _t_-test
+
+As the name implies, we have **_independent_ samples**, specifically two samples, to compare to their respective populations.
+
+--
+
+_Does getting bumped (vs. not getting bumped) in the hallway decrease compassion?_
+
+--
+
+.pull-left[
+
+.pull-left[
+**No hallway bump**
+
+$n_{1} = 10$
+
+$\bar{x}_{1} = 5.5$
+
+$s_{1}^2 = 2.5$
+
+]
+
+.pull-right[
+**Hallway bump**
+
+$n_{2} = 10$
+
+$\bar{x}_{2} = 8.5$
+
+$s_{2}^2 = 3$
+
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+
+$H_{0}: \mu_{1} = \mu_{2}$  
+$H_{a}: \mu_{1} \neq \mu_{2}$
+
+
+$$t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{5.5 - 8.5}{0.74} = -4.054$$
+
+$p = 0.0008 < \alpha$
+
+Reject the null hypothesis 
+]
+]
+
+---
+
+# _t_-test statistic
+
+.content-box-blue[
+.center[
+
+_General form of t-test statistics_
+$$
+t = \frac{sample \: statistic \: - population \: parameter}{estimated \: standard \: error \: of statistic}
+$$
+]
+]
+
+Three types we'll learn:
+
+- One sample _t_-test
+
+- Independent samples _t_-test
+
+- **Dependent samples _t_-test**
+
+
+---
+
+class: center, middle, inverse
+
+# Dependent samples _t_-test
+
+---
+
+# Independent vs. Dependent
+
+- **Independent-samples** (called _between-subjects_) compare two _different_ or unrelated groups of people
+
+
+- **Dependent-samples** (called _within-subjects_) compare the _same_ group of people to themselves
+
+--
+
+Put another way: 
+
+- A _t_-test for independent means indicates that two groups of different participants are being studied under two separate conditions
+
+--
+
+- A _t_-test for dependent means indicates that a single group of the same participants is being studied under two conditions
+
+---
+
+# Goal: Dependent samples _t_-test
+
+- To investigate whether some treatment made an effect compared to a baseline within the same individual(s)
+
+--
+
+- The dependent-samples _t_-test asks whether the mean difference between each subject’s pair of observed values is significantly different from 0
+
+--
+
+Put another way:
+
+- Did _pre-treatment_ scores differ from _post-treatment_ scores?
+
+---
+
+# Example Experiment
+
+.pull-left[
+**Research question** 
+
+Does watching a TED Talk by Carol Dweck affect students’ perceived self-efficacy?
+
+
+.secondary[_Self-efficacy_] is an individual’s belief or confidence in their ability to achieve goals
+
+]
+
+
+.pull-right[
+<img src="img/carol-dweck-youtube-screenshot.png" />
+]
+
+
+---
+
+# Example Experiment
+
+
+**Self-Efficacy Scale**
+
+_"Please rate the following on a scale of 1 (strongly disagree) to 14 (strongly agree)"_
+
+1. If I can’t do a job the first time, I keep trying until I can.
+
+2. When I have something unpleasant to do, I stick to it until I finish it.
+
+3. Failure just makes me try harder.
+
+4. I am a self-reliant person.
+
+.footnote[
+Sherer et al. (1982)
+]
+
+---
+
+# Within-subjects designs
+
+.center[
+
+<img src="img/within-subjects-design-1.png" width="85%"/>
+
+]
+
+---
+
+# Within-subjects designs
+
+.center[
+
+<img src="img/within-subjects-design-2.png" width="85%"/>
+
+]
+
+---
+
+# Within-subjects designs
+
+.center[
+
+<img src="img/within-subjects-design-3.png" width="85%"/>
+
+]
+
+---
+
+# Within-subjects designs
+
+.center[
+
+<img src="img/within-subjects-design-4.png" width="85%"/>
+
+]
+
+---
+
+# Within-subjects designs
+
+.center[
+
+<img src="img/within-subjects-design-5.png" width="85%"/>
+
+]
+
+---
+
+# Statistical Hypotheses
+
+.pull-left[
+.center[
+
+**Null hypothesis $H_{0}$**
+
+$\mu_{d} = 0$
+
+There is no difference
+]
+]
+
+.pull-right[
+
+.center[
+
+**Alternative hypothesis $H_{a}$**
+
+$\mu_{d} \neq 0$
+
+There is a difference
+
+]
+]
+
+---
+
+# Building the _t_-test statistic
+
+.center[
+_General form of t-test statistics_
+]
+
+.content-box-blue[
+.center[
+
+
+
+$$
+t = \frac{sample \: statistic \: - population \: parameter}{estimated \: standard \: error \: of statistic}
+$$
+]
+]
+
+---
+
+# Building the _t_-test statistic
+
+.center[
+
+_General form of dependent samples t-test_
+
+]
+
+.content-box-blue[
+.center[
+
+$$
+t = \frac{sample \: difference \: score \: mean - population \: difference \: score \: mean}{estimated \: standard \: error \: of statistic}
+$$
+]
+]
+
+--
+
+$\bar{x}_{1} - \bar{x}_{2}=$ sample difference score mean
+
+$\mu_{1} - \mu_{2}=$ population difference score mean
+
+--
+
+.pull-left[
+Note:   
+$\bar{x}_{1}$ is the same as $\bar{x}_{pre-treatment}$  
+$\bar{x}_{2}$ is the same as $\bar{x}_{post-treatment}$
+]
+
+
+---
+
+# Building our t-test statistic
+
+.center[
+
+_General form of dependent samples t-test_
+
+
+]
+
+.content-box-blue[
+.center[
+
+$$t = \frac{(\bar{x}_{1} - \bar{x}_{2}) - (\mu_{1} - \mu_{2})}{estimated \: standard \: error \: of statistic}$$
+]
+]
+
+--
+
+.center[
+
+.Large[
+$\bar{x}_{1} - \bar{x}_{2}=\bar{x}_{d}$
+
+$\mu_{1} - \mu_{2}= \mu_{d}$
+]
+]
+
+---
+
+# Building our t-test statistic
+
+.center[
+_General form of dependent samples t-test_
+]
+
+.content-box-blue[
+.center[
+
+$$t = \frac{\bar{x}_{d} - \mu_{d}}{estimated \: standard \: error \: of statistic}$$
+]
+]
+
+--
+
+Under the null hypothesis, $H_{0}$, $\mu_{d} = 0$
+
+---
+
+# Building our t-test statistic
+
+.center[
+_General form of dependent samples t-test_
+]
+
+.content-box-blue[
+.center[
+
+$$t = \frac{\bar{x}_{d}}{estimated \: standard \: error \: of statistic}$$
+]
+]
+
+---
+
+# Dependent samples _t_-test
+
+.content-box-blue[
+.center[
+**Dependent samples _t_-test**
+
+.Large[
+
+$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$
+
+]
+]
+]
+
+
+$\bar{x}_{d}$ is the mean of the difference scores  
+
+$s_{\bar{x}_{d}}$ is the standard error of the mean difference
+
+
+---
+
+# Dependent samples _t_-test
+
+.content-box-blue[
+.center[
+**Estimated standard error of the difference scores**
+
+.Large[
+$$s_{\bar{x}_{d}} = \sqrt{\frac{s^2_{d}}{n}}$$
+
+]
+]
+]
+
+$s^2_{d}$ is the variance of the difference scores
+
+$n$ is the size of the sample (the number of difference scores)
+
+
+
+---
+
+# Dependent samples _t_-test
+
+.pull-left[
+.content-box-blue[
+.center[
+**Dependent samples _t_-test**
+
+.Large[
+
+$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$
+
+]
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Standard error of the difference scores**
+
+.Large[
+$$s_{\bar{x}_{d}} = \sqrt{\frac{s^2_{d}}{n}}$$
+
+]
+]
+]
+]
+
+---
+
+# Practice Activity
+
+Research question: Does cognitive behavioral therapy reduce symptoms of depression?
+
+--
+
+.center[
+```{r echo=FALSE}
+library(tidyverse)
+cbt <- data.frame(participant = c(1, 2, 3, 4),
+                  pre_treatment = c(5, 3, 6, 9),
+                  post_treatment = c(2, 3, 2, 4))
+
+
+knitr::kable(cbt, "pipe")
+
+```
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+**Dependent samples _t_-test**
+
+$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Standard error of the difference scores**
+
+$$s_{\bar{x}_{d}} = \sqrt{\frac{s^2_{d}}{n}}$$
+
+]
+]
+]
+
+
+---
+
+# Practice Activity
+
+```{r echo=FALSE}
+
+cbt <- cbt %>% 
+  mutate(difference_score = pre_treatment - post_treatment)
+
+knitr::kable(cbt, "pipe")
+
+
+```
+
+--
+
+$\bar{x}_{d} =$ `r mean(cbt$difference_score)` mean of the difference scores
+
+$s^2_{d}=$ `r round(var(cbt$difference_score),2)` variance of the difference scores
+
+---
+
+# Practice Activity
+
+.Large[
+$$t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}$$
+]
+
+--
+
+.Large[
+$$t_{\bar{x}_{d}} = \frac{3}{\sqrt{\frac{s^2_{d}}{n}}}$$
+]
+
+--
+
+.Large[
+$$t_{\bar{x}_{d}} = \frac{3}{\sqrt{\frac{4.67}{4}}} = \frac{3}{1.080509} = 2.78$$
+]
+
+---
+
+class: center, middle, inverse
+
+# Effect size for dependent samples _t_-test
+
+---
+
+# Effect size for dependent samples _t_-test
+
+.content-box-blue[
+.center[
+
+**Effect size for dependent samples _t_-test**
+
+.Large[
+
+$$d_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{d}}$$
+
+]
+]
+]
+
+$\bar{x}_{d}$ is the mean of the difference scores
+
+$s_{d}$ is the standard deviation of the difference scores (**NOT** standard error)
+
+---
+
+class: center, middle, inverse
+
+# Dependent samples _t_-test in JASP
+
+---
+
+# Example Experiment
+
+**Research question**: Does watching a TED Talk by Carol Dweck affect students’ perceived self-efficacy?
+
+--
+
+.pull-left[
+**Null hypothesis $H_{0}$**
+
+$\mu_{d} = \mu_{1} - \mu_{2} = 0$
+
+There is no difference
+
+Students' perceived self-efficacy _before_ watching the TED talk **will not differ** from their self-efficacy _after_ watching the TED talk.
+
+]
+
+--
+
+.pull-right[
+
+**Alternative hypothesis $H_{a}$**
+
+$\mu_{d} = \mu_{1} - \mu_{2} \neq 0$
+
+There is a difference
+
+Students' perceived self-efficacy _before_ watching the TED talk **will differ** from their self-efficacy _after_ watching the TED talk.
+
+]
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-1.png" width="55%"/>
+
+1
+
+]
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-2.png" width="55%"/>
+
+2
+
+]
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-3.png" width="55%"/>
+
+3
+
+]
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-4.png" width="55%"/>
+
+4
+
+]
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-5.png" width="55%"/>
+
+5
+
+]
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-6.png" width="55%"/>
+
+6
+
+]
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-7.png" width="55%"/>
+
+7
+
+]
+
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-8.png" width="55%"/>
+
+8
+
+]
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-9.png" width="55%"/>
+
+9
+
+]
+
+---
+
+# JASP: dependent samples _t_-test
+
+.center[
+
+<img src="img/jasp-dependent-samples-10.png" width="55%"/>
+
+10
+
+]
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Difference between many groups
+
+**Reading**
+
+- Chapter 12
+
+**Quiz 4**
+
+- Due Wednesday 2/16/2022 11:59pm MT
+
+  - Covers Ch.11-12
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

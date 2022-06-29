@@ -1,0 +1,1079 @@
+---
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: [xaringan-themer.css, "hygge"]
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#18A3DE",
+  inverse_header_color = "#FFFFFF",
+  text_font_size = "1.3em"
+)
+
+# maybe use this reddish color for slides, too
+#B04213 
+
+# brownish color
+#b06c13
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"
+                                  ))
+```
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+<img src="img/intro-stats-title-logo.png" width="50%"/>
+]
+
+.center[
+### Lecture 13: Differences Between Many Factors
+
+]
+
+---
+
+# Outline for today
+
+```{r load-packages, echo=FALSE}
+library(fontawesome)
+library(tidyverse)
+```
+
+
+.pull-left[
+
+- More Extra Credit
+
+- Application Project
+
+- Review parts of last class
+
+- Factorial ANOVA
+
+- Factorial ANOVAs in JASP
+  - Download `Stats Class 15 Dataset (Factorial ANOVA).jasp`
+
+- One-Way ANOVA Practice Activity
+
+
+]
+
+.pull-right[
+<img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80" />
+]
+
+---
+
+# Extra Credit: Make a Meme
+
+Merriam-Webster definition
+
+> **Meme**: An amusing or interesting item (such as a captioned picture or video) or genre of items that is spread widely online especially through social media
+
+--
+
+Up to 1% of extra credit for submitting a statistics-related meme on Canvas.
+
+--
+
+.pull-left[
+.center[
+
+<img src="img/vegas-meme.jpg" width="70%"/> 
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+
+<img src="img/cant-remember-meme.jpg" width="50%"/>
+
+]
+]
+
+---
+
+# Extra Credit: Make a Meme
+
+.pull-left[
+.center[
+<img src="img/paranormal-dist.jpeg" width="40%"/><img src="img/grad-stats-meme.jpeg" />
+]
+]
+
+.pull-right[
+.center[
+<img src="img/ryan-gosling-p-value-meme.jpg" width="50%"/>
+<img src="img/mark-walberg-sample-size-power.jpg" />
+]
+]
+
+.pull-left[
+.center[
+<img src="img/p-value-effect-size-meme.jpg" width="35%"/>
+<img src="img/drake-hypotheses-meme.png" width="35%"/>
+]
+]
+
+.pull-right[
+.center[
+<img src="img/sample-size-meme.png" width="40%"/>
+<img src="img/matrix-studying-meme.jpg" width="30%" />
+]
+]
+
+---
+
+# Schedule
+
+.center[
+
+<img src="img/syllabus.png" width="70%"/>
+
+]
+
+---
+
+# Application Project
+
+**Goal**: Apply the information we’ve learned in class to a real dataset
+
+.pull-left[
+You'll use JASP <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/JASP_logo.svg/1200px-JASP_logo.svg.png" width="5%"/> to:
+
+- Compute descriptive statistics (e.g., mean and standard deviation)
+
+- Create data visualizations
+
+- Compute inferential statistics (e.g., _t_-tests, ANOVAs, correlation)
+
+- Interpret the statistics that you compute 
+
+- You are free and _encouraged_ to work in groups
+
+]
+
+.pull-right[
+<img src="https://jasp-stats.org/wp-content/uploads/2019/06/laptop_start1.png"width="200%"/>
+]
+
+---
+
+# Application Project
+
+**Step 1: Download the required dataset on Canvas**
+
+  - You'll have 2-3 options to choose from. Each will focus on a different research question.
+
+--
+
+**Step 2: Read about the dataset** 
+
+- I'll provide any necessary information (e.g., what each variable means). 
+
+--
+
+**Step 3 Respond to the questions** 
+
+- For each question, you will need to (1) run the requested analysis in JASP, (2) label that analysis in JASP, and (3) add notes in JASP to indicate key values and interpret those values when requested.
+
+--
+
+**Step 4: Submit your Application Project**
+
+- Save and export your results to `.pdf` or `.html` file and submit on Canvas.
+
+---
+
+class: center, middle, inverse
+
+# Review
+
+---
+
+# ANOVA: Terminology
+
+
+.content-box-gray[
+**Factor**: Independent variable(s) in the study
+]
+
+--
+
+.content-box-gray[
+**Level(s)**: Groups within each independent variable
+]
+
+--
+
+.content-box-gray[
+**Response**: The dependent variable in the study
+]
+
+--
+
+Today, we’ll learn about _two-way ANOVAs_, which have two factors
+
+---
+
+# Example: One factor, several levels
+
+.center[
+
+<img src="img/factor-levels-example.png" width="75%"/>
+
+]
+
+---
+
+# One-way ANOVA
+
+.pull-left[
+
+**What does it do?**
+
+- Investigates whether .secondary[any] of the population means of our groups differ
+
+- It doesn’t tell which group(s) is(are) different; you need .secondary[post-hoc tests] for this (we’ll come back to this later today)
+
+]
+
+--
+
+.pull-right[
+
+
+**Null Hypothesis $H_{0}$**
+
+There is no difference
+
+The means are equal
+
+$\mu_{1} = \mu_{2} = \mu_{3} = ... = \mu_{k}$
+
+**Alternative Hypothesis $H_{a}$**
+
+There is a difference
+
+The means are not all equal
+
+]
+
+---
+
+# Why not just use many _t_-tests?
+
+- _Type I Error rate_ increases drastically as you run additional analyses
+
+  - Each test has a risk of a Type I error, and the more tests you do, the more risk there is (**alpha escalation**)
+
+--
+
+.content-box-blue[
+.center[
+
+**Experiment-wise Significance Level** 
+$$1-(1-\alpha)^k$$
+]
+]
+
+--
+
+$$1 - (1 - 0.05)^3 = 0.14$$
+
+--
+
+.footnote[
+*You do not need to know this for the final or any quizzes.
+]
+
+---
+
+# Building the _F_-statistic
+
+.content-box-blue[
+.center[
+.Large[
+
+$F = \frac{MS_{between}}{MS_{within}}$
+
+]
+]
+]
+
+.center[
+
+<img src="https://static.thenounproject.com/png/2671768-200.png" />
+
+]
+
+---
+
+.content-box-blue[
+.center[
+
+$F = \frac{MS_{between}}{MS_{within}}$
+
+]
+]
+
+--
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+$MS_{between} = \frac{SS_{between}}{df_{between}}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+
+.center[
+$MS_{within} = \frac{SS_{within}}{df_{within}}$
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}$
+
+]
+]
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$df_{between} = k - 1$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$df_{within} = nT - k$
+
+]
+]
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-1.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-2.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-3.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-4.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+
+.center[
+<img src="img/anova-each-group-calculations-5.png" width="85%"/>
+]
+
+---
+
+## Sum of Squares: One-way ANOVA
+
+.center[
+<img src="img/anova-each-group-calculations-6.png" width="85%"/>
+]
+
+---
+
+.content-box-blue[
+.center[
+
+$F = \frac{MS_{between}}{MS_{within}}$
+
+]
+]
+
+.pull-left[
+
+.content-box-blue[
+.center[
+
+$MS_{between} = \frac{SS_{between}}{df_{between}}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+
+.center[
+$MS_{within} = \frac{SS_{within}}{df_{within}}$
+]
+]
+]
+
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$SS_{between} = \sum\frac{(\sum{x})^2}{n} - \frac{(\sum\sum{x})^2}{nT}$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$SS_{within} = \sum\sum(x^2) - \sum\frac{(\sum{x})^2}{n}$
+
+]
+]
+]
+
+.pull-left[
+.content-box-blue[
+.center[
+
+$df_{between} = k - 1$
+
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+$df_{within} = nT - k$
+
+]
+]
+]
+
+---
+
+# Effect size: One-way ANOVA
+
+.content-box-blue[
+.center[
+**Effect size for One-way ANOVA** 
+]
+$$\eta^2 = \frac{SS_{between}}{SS_{Total}}$$
+]
+
+--
+
+.content-box-blue[
+.center[
+
+$$SS_{total} = SS_{between} + SS_{within} = \sum\sum(x^2) - \frac{(\sum\sum{x})^2}{nT}$$
+
+]
+]
+
+---
+
+class: center, middle, inverse
+
+# Two-way (Factorial) ANOVA
+
+---
+
+# Two-way (Factorial) ANOVA
+
+**Goal**: To be able to compare whether differences exist between _multiple_ factors, as well as _interactions_ between the levels of different factors
+
+--
+
+**Research question**: What is the fastest way for me to get to campus?
+
+--
+
+.center[
+<img src="img/lightrail-vs-car.png" width="65%"/>
+]
+
+---
+
+# ANOVA: factors and levels
+
+.center[
+
+<img src="img/anova-factors-and-levels.png" width="85%"/>
+
+]
+
+---
+
+# Example Experiment
+
+<img src="img/factorial-anova-box-1.png" />
+
+---
+
+# Example Experiment
+
+<img src="img/factorial-anova-box-2.png" />
+
+---
+
+# Example Experiment
+
+<img src="img/factorial-anova-box-3.png" />
+
+---
+
+# Example Experiment
+
+<img src="img/factorial-anova-box-4.png" />
+
+---
+
+# Example Experiment
+
+<img src="img/factorial-anova-box-5.png" />
+
+---
+
+# Effect of Commute type
+
+<img src="img/anova-table-commute-type.png" />
+
+---
+
+# Effect of Time of day
+
+<img src="img/anova-table-time-of-day.png" />
+
+---
+
+# Commute type $\times$ Time of day interaction
+
+<img src="img/anova-table-interaction.png"/>
+
+---
+
+# Factorial Designs
+
+.content-box-gray[
+**Factorial Designs**: Designs in which two or more factors are completely crossed (i.e., measurements are taken for every combination of factor levels) 
+]
+
+.center[
+
+<img src="img/factorial-anova-box-5.png" width="60%"/>
+
+]
+
+---
+
+# Results: Bar Graph
+
+```{r anova-bar-graph, echo=FALSE, message=FALSE,warning=FALSE}
+one_way_ANOVA_data <- 
+  data.frame(time_of_day = as_factor(c("6:30am", "8:00am", "6:30am", "8:00am")),
+             commute_type = as_factor(c("lightrail", "lightrail", "car", "car")),
+             time = c(32.9, 31.6, 13.9, 36.7)) %>% 
+  as_tibble()
+
+# marginal means: time of day
+
+mean_time <- one_way_ANOVA_data %>% 
+  group_by(time_of_day) %>% 
+  summarize(mean_time = mean(time),
+            sd_time = sd(time))
+
+
+ggplot(one_way_ANOVA_data, aes(x = time_of_day,
+                               y = time,
+                               fill = commute_type,
+                               group = commute_type)) +
+  geom_bar(stat = "identity",
+           position=position_dodge(),
+           color = "black") +
+  scale_fill_manual(values=c("#B04213", "#1381B0")) +
+  labs(x = "Time of Day",
+       y = "Commute time (min)") +
+  guides(fill=guide_legend("Commute Type")) +
+  theme_classic() +
+  theme(text = element_text(size = 20))
+```
+
+
+---
+
+# Results: Line Plot
+
+```{r factorial-plot-1, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(tidyverse)
+library(ggpubr)
+
+one_way_ANOVA_data <- 
+  data.frame(time_of_day = as_factor(c("6:30am", "8:00am", "6:30am", "8:00am")),
+             commute_type = as_factor(c("lightrail", "lightrail", "car", "car")),
+             time = c(32.9, 31.6, 13.9, 36.7)) %>% 
+  as_tibble()
+
+# marginal means: time of day
+
+mean_time <- one_way_ANOVA_data %>% 
+  group_by(time_of_day) %>% 
+  summarize(mean_time = mean(time),
+            sd_time = sd(time))
+
+# marginal means: commute type
+
+margina_commute <- one_way_ANOVA_data %>% 
+  group_by(commute_type) %>% 
+  summarize(mean_time = mean(time),
+            sd_time = sd(time))
+
+interaction_plot <- ggplot(one_way_ANOVA_data, aes(x = time_of_day, 
+                               y = time, 
+                               group = commute_type,
+                               color = commute_type)) +
+  geom_line() +
+  geom_point(size=3) +
+  labs(x = "Time of Day",
+       y = "Commute Time (min)",
+       color = "Commute Type") +
+  scale_color_manual(values = c("#B04213", "#1381B0")) +
+  theme_pubr() +
+  theme(text = element_text(size = 15))
+
+interaction_plot
+
+```
+
+---
+
+# Effect of Commute type
+
+<img src="img/anova-table-commute-type.png" />
+
+---
+
+# Commute Type: Plot
+
+```{r commute-type-plot, echo = FALSE}
+
+# main effect of commute type
+
+base_plot <- ggplot() +
+  geom_line(data = one_way_ANOVA_data, aes(x = time_of_day, 
+                                           y = time, 
+                                           group = commute_type,
+                                           color = commute_type),
+            alpha = 1/4) +
+  geom_point(data = one_way_ANOVA_data, aes(x = time_of_day, 
+                                            y = time, 
+                                            group = commute_type,
+                                            color = commute_type),
+             alpha = 1/4) +
+  labs(x = "Time of Day",
+       y = "Commute Time (min)",
+       color = "Commute Type") +
+  scale_color_manual(values = c("#B04213", "#1381B0")) +
+  theme_pubr()
+
+
+marginal <- base_plot  +
+  geom_point() +
+  annotate("point", x= 1.5, y = 32.2, colour = "#B04213", shape = 7, size = 6) +
+  annotate("point", x= 1.5, y = 25.3, colour = "#1381B0", shape = 7, size = 6)
+
+marginal
+
+```
+
+--
+
+.footnote[
+**Result**: Taking the lightrail and walking takes longer than driving
+]
+
+---
+
+# Effect of Time of day
+
+<img src="img/anova-table-time-of-day.png" />
+
+---
+
+# Time of Day: Plot
+
+```{r commute-time-plot, echo =FALSE}
+ggplot() +
+  geom_line(data = one_way_ANOVA_data, aes(x = time_of_day, 
+                                           y = time, 
+                                           group = commute_type,
+                                           color = commute_type),
+            alpha = 1/4) +
+  geom_point(data = one_way_ANOVA_data, aes(x = time_of_day, 
+                                            y = time, 
+                                            group = commute_type,
+                                            color = commute_type),
+             alpha = 1/4) +
+  geom_point(data = mean_time, aes(x = time_of_day,
+                                   y = mean_time),
+             shape = 7, size = 6) +
+  geom_line(data = mean_time, aes(x = time_of_day,
+                                  y = mean_time,
+                                  group = 1),
+            linetype = "dashed") +
+  labs(x = "Time of Day",
+       y = "Commute Time (min)",
+       color = "Commute Type") +
+  scale_color_manual(values = c("#B04213", "#1381B0")) +
+  theme_pubr() +
+  theme(text = element_text(size = 15))
+
+```
+
+--
+
+.footnote[
+**Result**: It takes longer to get to campus when leaving at 8:00am than at 6:30am
+]
+
+---
+
+# Commute type $\times$ Time of day interaction
+
+<img src="img/anova-table-interaction.png"/>
+
+---
+
+# Interaction 
+
+.content-box-gray[
+**Interaction**: describes the degree to which the effect of _one factor_ depends on the _level_ of the other factor
+]
+
+.center[
+
+<img src="img/anova-table-interaction.png" width="58%"/>
+
+]
+
+---
+
+# Testing the Interaction
+
+.center[
+<img src="img/interaction_plot.png" width="76%"/>
+]
+
+---
+
+# Testing the Interaction
+
+.center[
+
+<img src="img/interaction-600am.png" width="76%"/>
+
+]
+
+---
+
+# Testing the Interaction
+
+.center[
+
+<img src="img/interaction-800am.png" width="76%"/>
+
+]
+
+---
+
+# Effect size: Factorial ANOVA
+
+.content-box-blue[
+.center[
+**Omega Squared**
+
+.Large[
+$w^2 = \frac{SS_{between} - (df_{between})(MS_{within})}{MS_{within} + SS_{total}}$ ]
+]
+]
+
+You can interpret this the same way as eta-squared, $\eta^2$
+
+.footnote[
+Note: I will **not** ask you to compute this; I only display this formula to illustrate that you can compute the effect size for a factorial ANOVA
+]
+
+---
+
+class: center, middle, inverse
+
+# Two-way (Factorial) ANOVA in JASP
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-1.png" width="52%"/>
+
+1
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-2.png" width="52%"/>
+
+2
+]
+
+---
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-3.png" width="52%"/>
+
+3
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-4.png" width="52%"/>
+
+4
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-5.png" width="52%"/>
+
+5
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-6.png" width="52%"/>
+
+6
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-7.png" width="52%"/>
+
+7
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-8.png" width="52%"/>
+
+8
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-9.png" width="52%"/>
+
+9
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-10.png" width="52%"/>
+
+10
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-11.png" width="52%"/>
+
+11
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-12.png" width="52%"/>
+
+12
+]
+
+---
+
+# JASP: Two-way ANOVA
+
+.center[
+
+<img src="img/jasp-two-way-anova-13.png" width="52%"/>
+
+13
+]
+
+---
+
+class: center, middle, inverse
+
+# One-way ANOVA Practice Activity
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+
+- Testing relationships using correlations 
+  - _Guest lecture_: Lindsay Goolsby
+
+**Reading**
+
+- Chapter 13
+
+**Quiz 5**
+
+- Due Wednesday 2/23/2022 11:59pm MT
+
+  - Covers Ch.13-14
+]
+
+.pull-right[
+
+.center[
+
+<img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" />
+
+]
+]

@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>lecture-09-differences-from-the-population.knit</title>
+    <meta charset="utf-8" />
+    <script src="lecture-09-differences-from-the-population_files/header-attrs/header-attrs.js"></script>
+    <link href="lecture-09-differences-from-the-population_files/remark-css/hygge.css" rel="stylesheet" />
+    <link href="lecture-09-differences-from-the-population_files/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="lecture-09-differences-from-the-population_files/tile-view/tile-view.js"></script>
+    <link href="lecture-09-differences-from-the-population_files/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="lecture-09-differences-from-the-population_files/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+
+.center[
+# PSYC 2300
+## Introduction to Statistics
+]
+
+.center[
+&lt;img src="img/intro-stats-title-logo.png" width="50%"/&gt;
+]
+
+.center[
+### Lecture 09: Differences from the Population
+
+]
+
+---
+
+# Outline for today
+
+
+
+
+.pull-left[
+
+- **Review**
+  - Midterm Exam, Extra Credit
+
+- **One-sample tests** 
+
+  - One-sample _z_-test
+
+  - One-sample _t_-test
+
+- **Calculating effect sizes**
+
+- **_t_-tests in JASP**
+
+  - Download `Stats Class 3 Dataset (Pets).csv`
+
+
+]
+
+
+.pull-right[
+&lt;img src="https://images.unsplash.com/photo-1483546416237-76fd26bbcdd1?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80" /&gt;
+]
+
+---
+
+# Midterm Review
+
+.pull-left[
+**Overall (25 points)**
+
+_M_ = 74%  
+
+_SD_ = 15%  
+
+**Conceptual (20 questions, 10 points)**
+
+_M_ = 63%  
+
+_SD_ = 16%
+
+**Computational (4 problems, 15 points)**  
+
+_M_ = 81%  
+
+_SD_ = 20%
+]
+
+.pull-right[
+.center[
+&lt;img src="img/midterm-picture.png" width="72%"/&gt;
+]
+]
+
+---
+
+# Classical Test Theory
+
+.center[
+
+&lt;img src="img/observed-score.png" width="50%"/&gt;
+]
+
+
+---
+
+# Question 2
+
+A dataset containing responses to a question in which participants can select between "_Not Angry_", "_Sort of Angry_", and "_Very Angry_" would be what scale of measurement?
+
+--
+
+  A. **Ordinal**
+  
+  B. Nominal
+  
+  C. Ratio
+  
+  D. Interval
+
+--
+
+.center[
+Not angry `\(&lt;\)` sort of angry `\(&lt;\)` very angry
+]
+
+
+---
+
+# Question 10
+
+A researcher develops a new test to measure people’s reaction times. To investigate whether his test is performing well, he asks the same group of 10 people to take the test once this week and another time next month. He correlates the participants’ scores from these two testing sessions and **finds a correlation coefficient of 0.09**. Which of the following statements would be reasonable to conclude about this researcher’s test?
+
+--
+
+  A. **The test is probably not a valid measure of people’s reaction times.**
+  
+  B. The test has acceptable test-retest reliability.
+  
+  C. The test has acceptable parallel forms reliability.
+  
+  D. The researcher should have calculated internal consistency instead.
+
+---
+
+# Question 12
+
+A professor wants to know whether her final exam actually does a good job at measuring her students’ current level of understanding. The professor compares her final exam to a **well-established, standardized test** on the same topic. What form of validity is the professor interested in assessing?
+
+--
+
+  A. **Concurrent criterion validity.**
+  
+  B. Predictive validity.
+  
+  C. Construct validity.
+  
+  D. Content validity.
+
+---
+
+# Question 13
+
+Which of the following is the best interpretation of an alpha ( `\(\alpha\)` ) level of 0.10?
+
+--
+
+  A. **We will only accept the 10% most extreme values under the null hypothesis as evidence to reject the null hypothesis.**
+  
+  B. We will only accept the 10% most extreme values under the alternative hypothesis as evidence to reject the alternative hypothesis.
+  
+  C. There is a 10% chance that we will find a value extreme enough to reject the alternative hypothesis
+  
+  D. There is a 10% chance that we will find a value extreme enough to reject the null hypothesis.
+
+---
+
+# Question 19
+
+What is the probability of committing a Type II Error _assuming the null hypothesis is true?_
+
+--
+
+A. **0**
+
+B. Alpha
+
+C. Beta
+
+D. There is not enough information to know.
+
+--
+
+**Instructions**
+&gt; "_Part One_ contains 20 multiple-choice conceptual questions with four answer options for each. Select the best possible answer for each, even if multiple options seem to apply. Each will be worth 0.5 points, for a total of 20 × 0.5 = 10 points possible."
+
+---
+
+# Extra Credit Opportunities: SONA
+
+.pull-left[
+&lt;img src="img/sona-1.png" /&gt;
+]
+
+.pull-right[
+&lt;img src="img/sona-2.png" /&gt;
+
+]
+
+.footnote[See Syllabus for more details]
+
+---
+
+class: center, middle, inverse
+
+# One-sample _z_-test
+
+---
+
+# Goal
+
+- To develop a way to investigate whether a .secondary[_sample_] mean differs significantly from a .primary[_population_] mean
+
+--
+
+- Both the one-sample _z_-test and the one-sample _t_-test allow you to do this
+
+.center[
+
+.Large[
+
+`$$z_{\overline{x}} \qquad t_{\overline{x}}$$` 
+]
+]
+
+
+---
+
+# Test Statistic
+
+.content-box-gray[
+**Test statistic**: A numerical summary of the degree to which a sample is unlike the samples predicted by the null hypothesis, `\(H_{0}\)`
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+**_z_-test statistic**
+
+.Large[
+
+`$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$`
+
+]
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Standard Error**
+.Large[
+`$$\sigma_{\overline{x}} = \frac{\sigma}{\sqrt{n}}$$`
+]
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.center[
+
+**In the population**
+
+`\(\mu\)` = 100  
+
+`\(\sigma\)` = 15  
+
+
+
+&lt;img src="img/brain.png" width="50%"/&gt;
+]
+]
+
+.pull-right[
+
+.center[
+
+
+**Our sample**
+
+`\(n = 15\)`  
+
+`\(\overline{X}_{IQ} = 105.9\)`  
+
+`\(s_{IQ} = 15.10\)`
+
+.pull-left[
+&lt;img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="30%"/&gt;
+]
+
+.pull-right[
+`\(101, 122, 132\)` 
+`\(94, 129, 89\)`
+`\(109, 92, 100\)` 
+`\(125, 103, 91\)`
+`\(94, 116, 92\)`
+
+]
+]
+]
+
+---
+
+# Back to our experiment
+
+.pull-left[
+.pull-left[
+.center[
+
+**In the population**
+
+`\(\mu\)` = 100  
+
+`\(\sigma\)` = 15  
+
+&lt;img src="img/brain.png" width="20%"/&gt;
+]
+
+]
+
+.pull-right[
+
+.center[
+
+**Our sample**
+
+`\(n = 15\)`  
+
+`\(\overline{X}_{IQ} = 105.9\)`  
+
+`\(s_{IQ} = 15.10\)`
+
+&lt;img src="https://m.media-amazon.com/images/I/71wFJxZolUL._AC_SL1500_.jpg" width="10%"/&gt;
+
+]
+]
+]
+
+.right[
+.center[
+.Large[
+`$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$`
+
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+`\(\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}\)`
+]
+]
+]
+
+--
+
+.right[
+.center[
+.Large[
+`\(z_{\overline{x}} = \frac{105.9 - 100}{\frac{15}{\sqrt{15}}} = 1.53\)`
+]
+]
+]
+
+---
+
+# Hypothesis Testing
+
+.pull-left[
+**Null Hypothesis `\(H_{0}\)`** 
+
+`\(\mu_{NeuroIQ} = 100\)`
+
+**Alternative Hypothesis `\(H_{a}\)`** 
+
+`\(\mu_{NeuroIQ} \neq 100\)`
+
+]
+
+.pull-right[
+**Alpha**
+
+`\(\alpha = .05\)`
+
+**Test Statistic** 
+
+`\(z_{\overline{x}} = 1.53\)`
+
+]
+
+---
+
+# Determining significance: Software
+
+.pull-left[
+Your .secondary[test statistic] is a description of how extreme your sample mean is, which is why we can use it to get a .secondary[_p_-value] (from software, tables, etc.)
+
+If `\(p &gt; \alpha\)`, fail to reject the null hypothesis
+
+If `\(p &lt; \alpha\)`, reject the null hypothesis
+]
+
+--
+
+.pull-right[
+&lt;img src="img/z-test-jasp-output.png" /&gt;
+]
+
+---
+
+# Determining significance: z table
+
+
+.center[
+
+&lt;img src="img/z-table.png" width="55%"/&gt;
+
+]
+
+---
+
+class: center, middle, inverse
+
+# One-sample _t_-test 
+
+---
+
+# z-test vs. _t_-test
+
+
+In practice, the _z_-test is rarely used. Why?
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+**_z_-test statistic**
+
+.Large[
+
+`$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$`
+]
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Standard Error**
+.Large[
+`$$\sigma_{\overline{x}} = \frac{\sigma}{\sqrt{n}}$$`
+]
+]
+]
+]
+
+---
+
+# Motivation for the _t_-test
+
+In practice, the z-test is rarely used. Why?
+
+
+- Because you usually **don’t know the true standard deviation** in the population! We need a more general type of hypothesis test that will work for regular science
+
+--
+
+- Usually, we use _t_-tests instead, since they do not require knowledge of variability statistics in the population
+
+--
+
+- Versions of _t_-tests can also be used for other situations (e.g., comparing 2 groups), making it useful and versatile
+
+---
+
+# Estimating population variability
+
+We can use our sample’s variability to make a .secondary[best guess] about the population’s variability
+
+--
+
+.pull-left[
+.center[
+.content-box-blue[
+**Population Variance**
+$$
+\sigma^2 = \frac{\sum (X_{i} - \mu)^2}{N}
+$$
+]
+]
+]
+
+--
+
+.pull-right[
+
+.center[
+.content-box-blue[
+**Sample Variance**
+
+$$
+s^2 = \frac{\sum(X_{i} - \overline{x})^2}{n - 1}
+$$
+]
+]
+]
+
+--
+
+.center[
+.Large[
+$$
+s^2 \: \hat{=} \: \sigma^2
+$$
+]
+]
+
+--
+
+.footnote[
+`\(\hat{=}\)` means "is an unbiased estimator of"
+]
+
+---
+
+# _t_-distribution
+
+.pull-left[
+.content-box-gray[
+**t distribution**: the complete set of _t_ values computed for every possible random sample for a specific sample size, `\(n\)`. The _t_ distribution approximates the shape of a normal distribution, especially for large samples or samples from a normal population.
+]
+]
+
+.pull-right[
+&lt;img src="img/t-dist.png" /&gt;
+]
+
+--
+
+.footnote[
+Main point: the _t_-distribution resembles a normal distribution with sufficiently large samples
+]
+
+---
+
+# Estimating Standard Error
+
+.content-box-gray[
+**Estimated standard error**: `\(s_{\overline{x}}\)` is an estimate of the real standard error, `\(\sigma_{\overline{x}}\)`, when the value of `\(\sigma\)` is unknown. It provides an estimate of the standard distance between a sample mean, `\(\overline{x}\)`, and the population mean, `\(\mu\)`.
+]
+
+--
+
+.pull-left[
+.center[
+.content-box-blue[
+**Population**  
+
+_True standard error_  
+
+$$
+\sigma_{\overline{x}} = \frac{\sigma}{\sqrt{n}}
+$$
+
+]
+]
+]
+
+.pull-right[
+.center[
+.content-box-blue[
+**Sample**  
+
+_Estimated standard error_  
+
+$$
+s_{\overline{x}} = \frac{s}{\sqrt{n}}
+$$
+]
+]
+]
+
+---
+
+# One-sample _z_-test
+
+.pull-left[
+.content-box-blue[
+.center[
+**_z_-test statistic**
+
+.Large[
+
+`$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$`
+
+]
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+**Standard Error**
+.Large[
+`$$\sigma_{\overline{x}} = \frac{\sigma}{\sqrt{n}}$$`
+]
+]
+]
+]
+
+---
+
+# One-sample _t_-test statistic
+
+.content-box-gray[
+**_t_ statistic**: is used to test hypotheses about an unknown population mean,
+`\(\mu\)`, when the value of `\(\sigma\)` is unknown. The formula for the _t_ statistic has the same structure as the _z_-test statistic formula, except that the _t_ statistic uses the estimated standard error in the denominator.
+]
+
+--
+
+.pull-left[
+.content-box-blue[
+.center[
+
+**One-sample _t_-test statistic**  
+
+.Large[
+`$$t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}}$$`
+
+]
+]
+]
+]
+
+.pull-right[
+.content-box-blue[
+.center[
+
+**Estimated standard error**  
+
+.Large[
+$$
+s_{\overline{x}} = \frac{s}{\sqrt{n}}
+$$
+
+]
+]
+]
+]
+
+---
+
+# _t_-test statistic
+
+.content-box-blue[
+.center[
+
+_General form of t-test statistics_
+$$
+t = \frac{sample \: statistic \: - population \: parameter}{estimated \: standard \: error \: of statistic}
+$$
+]
+]
+
+--
+
+Three types we'll learn:
+
+- One sample _t_-test
+
+- Independent samples _t_-test
+
+- Dependent samples _t_-test
+
+---
+
+# One sample _t_-test
+
+.center[
+.content-box-blue[
+.center[
+
+_General form of t-test statistics_
+$$
+t = \frac{sample \: statistic \: - population \: parameter}{estimated \: standard \: error \: of statistic}
+$$
+]
+]
+]
+
+--
+
+.center[
+.content-box-blue[
+.center[
+
+_General form of the **one sample t-test statistic**_
+
+$$
+t = \frac{sample \: mean - population \: mean}{estimated \: standard \: error \: of \: the \: mean}
+$$
+]
+]
+]
+
+---
+
+background-image: url(https://images.unsplash.com/photo-1467293622093-9f15c96be70f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1950&amp;q=80)
+
+background-size: cover
+
+class: middle, right
+
+.Large[
+.black[
+Lie detection demo
+]
+]
+
+---
+
+## Mock crime video 1
+
+.center[
+
+&lt;video &lt;video controls width="720" height="500"&gt;
+&lt;source src="vid/mc-liar-02.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+
+]
+
+---
+
+## Mock crime video 2
+
+.center[
+
+&lt;video &lt;video controls width="720" height="500"&gt;
+&lt;source src="vid/mc-truthteller-02.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+
+]
+
+---
+
+## Mock crime video 3
+
+.center[
+
+&lt;video &lt;video controls width="720" height="500"&gt;
+&lt;source src="vid/mc-liar-01.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+
+]
+
+---
+
+## Mock crime video 4
+
+.center[
+
+&lt;video &lt;video controls width="720" height="500"&gt;
+&lt;source src="vid/mc-truthteller-01.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+
+]
+
+---
+
+# Results
+
+.pull-left[
+| Video           | Veracity        |
+| -----------     | -----------     |
+| Mock crime 1    | Liar            |
+| Mock crime 2    | Truth-teller    |
+| Mock crime 3    | Liar            |
+| Mock crime 4    | Truth-teller    |
+]
+
+---
+
+# Lie Detection Demo
+
+**Null hypothesis**
+
+`\(H_{0}: \mu = 0.50\)`
+
+Lie detection accuracy does not differ from chance.
+
+--
+
+**Alternative hypothesis**
+
+`\(H_{a}: \mu \neq 0.50\)`
+
+Lie detection accuracy is different from chance.
+
+--
+
+**Alpha**
+
+`\(\alpha = .05\)`
+
+---
+
+# Lie Detection Demo
+
+.pull-left[
+
+**Class Performance**
+
+`\(\overline{x} = 0.56\)`
+
+`\(s = 0.12\)`
+
+`\(n = 40\)`
+]
+
+.pull-right[
+
+.center[
+.content-box-blue[
+**One-sample _t_-test statistic**
+
+.Large[
+`\(t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}}\)`
+]
+]
+
+.content-box-blue[
+**Estimated standard error**
+.Large[
+`$$s_{\overline{x}} = \frac{s}{\sqrt{n}}$$`
+]
+]
+]
+]
+
+---
+
+# Lie Detection Demo
+
+.Large[
+`$$t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}}$$`
+]
+
+--
+
+.Large[
+`$$t_{\overline{x}} = \frac{0.56 - 0.50}{\frac{0.12}{\sqrt{40}}}$$`
+]
+
+--
+
+.Large[
+`$$t_{\overline{x}} = \frac{0.06}{.01897367} = 3.16$$`
+]
+
+---
+
+# Lie Detection Demo
+
+.pull-left[
+**Hypotheses**
+
+`\(H_{0}: \mu = 0.50\)`
+
+`\(H_{a}: \mu \neq 0.50\)`
+
+`\(\alpha = .05\)`
+]
+
+--
+
+.pull-right[
+
+**Class lie detection performance**
+
+`\(\overline{x} = 0.56 \qquad s = 0.12 \qquad n = 40\)`
+
+`\(t_{\overline{x}} = 3.16 \qquad p = 0.0030\)`  
+
+]
+
+--
+
+.pull-left[
+**Reject the null hypothesis**  
+Lie detection accuracy of the class (56%) was significantly different from chance (50%), `\(p &lt; .05\)`
+]
+
+---
+
+
+class: center, middle, inverse
+
+# Effect Size
+
+---
+
+# Effect size
+
+A measure of how different two groups are from one another
+(or a measure of the magnitude of treatment)
+Represented by **Cohen’s _d_**
+
+--
+
+- “Small” effect sizes range from 0 to .2 
+
+- “Medium” effect sizes range from .2 to .5 
+
+- “Large” effect sizes are values about .5
+
+
+.footnote[
+*Same ranges in the negative direction, too
+]
+
+---
+
+# Effect size
+
+.pull-left[
+.center[
+**Small effect size**
+
+&lt;img src="img/small-effect-size.png" width="97%"/&gt;
+]
+]
+
+--
+
+.pull-right[
+.center[
+**Large effect size**
+
+&lt;img src="img/large-effect-size.png" /&gt;
+]
+]
+
+---
+
+# Effect Size
+
+
+&lt;iframe src="https://rpsychologist.com/cohend/" width="100%" height="400px" data-external="1"&gt;&lt;/iframe&gt;
+
+.footnote[
+https://rpsychologist.com/cohend/
+]
+
+???
+
+---
+
+# Calculating Effect Sizes
+
+.pull-left[
+.center[
+.content-box-blue[
+**_z_-test effect size**
+
+.Large[
+`$$d_{z} = \frac{\overline{x} - \mu_{\overline{x}}}{\sigma}$$`
+]
+]
+]
+.center[
+
+*Population standard deviation  
+(not standard error)
+]
+]
+
+--
+
+.pull-right[
+.center[
+.content-box-blue[
+**_t_-test effect size**
+
+.Large[
+
+`$$d_{t} = \frac{\overline{x} - \mu_{\overline{x}}}{s}$$`
+]
+]
+]
+.center[
+*Sample standard deviation  
+(not estimated standard error)
+]
+]
+
+--
+
+.footnote[
+The difference is an effect size (vs. test statistic) does not take into account _sample size_
+]
+
+---
+
+class: center, middle, inverse
+
+# One-sample _t_-test in JASP
+
+---
+
+# JASP: One-sample _t_-test
+
+.center[
+&lt;img src="img/one-sample-t-test-jasp-1.png" width="55%"/&gt;  
+1
+]
+
+---
+
+# JASP: One-sample _t_-test
+
+.center[
+&lt;img src="img/one-sample-t-test-jasp-2.png" width="55%"/&gt;  
+2
+]
+
+
+---
+
+# JASP: One-sample _t_-test
+
+.center[
+&lt;img src="img/one-sample-t-test-jasp-3.png" width="55%"/&gt;  
+3
+]
+
+---
+
+# JASP: One-sample _t_-test
+
+.center[
+&lt;img src="img/one-sample-t-test-jasp-4.png" width="55%"/&gt;  
+4
+]
+
+---
+
+# JASP: One-sample _t_-test
+
+.center[
+&lt;img src="img/one-sample-t-test-jasp-5.png" width="55%"/&gt;  
+5
+]
+
+---
+
+# Next time
+
+.pull-left[
+
+**Lecture**
+- Differences between two groups I
+
+**Reading**
+
+- Ch.10
+
+**Quiz 3**
+
+- Due Wednesday 2/9/22 11:59pm MT (Ch.9, 10)
+
+
+]
+
+.pull-right[
+
+.center[
+
+&lt;img src="https://static.vecteezy.com/system/resources/previews/004/334/351/non_2x/calendar-icon-schedule-icon-symbol-trendy-flat-style-free-vector.jpg" width="50%" /&gt;
+
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
