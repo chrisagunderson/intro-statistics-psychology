@@ -1,0 +1,101 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-05-calculating-one-sample-z-test-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+library(kableExtra)
+library(tidyverse)
+```
+
+# Calculating One Sample Z-test
+
+Congratulations on making it to inferential statistics! Here, we won’t simply be using descriptive statistics to describe our dataset. Instead, we’ll be conducting a hypothesis test to investigate a research question and to learn more about how the world works. Inferential statistics is all about using sample data to make generalizations about populations. Our first hypothesis test in this course will be the one-sample z-test.
+
+One thing to keep in mind is that z-scores are fundamentally different than z-tests. Whereas z-tests are hypothesis tests that use sample data to make conclusions about a population, z-scores are simply transformations of data. Specifically, z-scores allow you to “standardize” data by turning a participant’s raw score into a z-score that can be interpreted easily. Z-scores are not hypothesis tests. In fact, when z-scoring a participant’s score, you treat everyone else’s score as the entire population. There are no generalizations from sample to population when z-scoring.
+
+Let’s take a look at the two formulas for z-tests (left) and z-scores (right) side-by-side:
+
+\begin{center}
+$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$
+\quad \quad \quad \quad
+$z_{i} = \frac {x_{i} - \mu}{\sigma}$
+\end{center}
+
+Although these formulas look similar, there are notable differences. For z-tests, you’re taking a sample mean, $\overline{x}$, and comparing it to a population mean, $\mu$. For a z-score, you’re taking an individual’s score, $x$, and transforming it into a z-score by comparing to the population mean, $\mu$. Also, the denominators are different. For the z-test, we have standard error, $\sigma_{\overline{x}}$, which you can calculate using the formula $\frac {\sigma}{\sqrt{n}}$. In contrast, the z-score simply uses sigma, $\sigma$,
+in the denominator. Sample size is not a factor for z-scores.
+
+Okay, that’s enough comparison for now.
+
+First, let’s take a look at the formula for a one-sample z-test:
+
+\begin{center}
+
+One-sample z-test
+$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$
+\end{center}
+
+Don’t forget that in the denominator is _standard error_, **not** standard deviation. Standard error has its own formula that requires you to take your standard deviation and complete one additional step–divide by the square root of your sample size. Let’s take a look:  
+
+\begin{center}
+Standard Error
+$$\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}$$
+\end{center}
+
+\newpage
+
+## Sample Problem
+
+Okay, so let’s keep this in mind as we work on a sample problem. For this sample problem, let’s say that we’re researchers who are interested in determining whether college students are more intelligent than your average person in the general population. So, our research question is this: Do people who attend college have different levels of intelligence than average? 
+
+Based on this research question, we can set up our statistical hypotheses. The null hypothesis, $H_{0}$, says “no, college students do not have different levels of intelligence than average,” whereas the alternative hypothesis, $H_{1}$, says “yes, college students do have different levels of intelligence than average.” Given that “average intelligence”–as measured by IQ scores–is an IQ of 100, we can set up our hypotheses as follows:  
+
+\quad $H_{0}$: $\mu = 100$ (that is, the average IQ of college students will equal 100, which is average)
+
+\quad $H_{1}$: $\mu \neq 100$ (that is, the average IQ of college students will be different than 100)  
+
+We should also take a moment to write down a few population parameters that we know, which we’ll need to complete the one-sample z-test. Specifically, we know that IQ scores in the population are normally distributed with a mean of 100 and a standard deviation of 15. (The IQ test is simply designed to be this way.) This means that:  
+
+$$\mu = 100$$
+$$\sigma = 15$$
+
+
+Now that we have all this information, we can “conduct our study” and collect sample data that evaluates our statistical hypotheses. Let’s begin on the next page.
+
+\newpage
+
+A simple way to assess whether college students are more intelligent than average would be to collect a sample of, say, 15 college students, measure their IQ by giving them an IQ test, and then compare their average IQ to 100 (the average in the population). If we do this, we might get sample data that looks something like this:
+
+
+```{r echo=FALSE}
+library(tidyverse)
+iq_scores <- c(104,110,98,106,110,115,119,121,103,100,101,121,128,106,115) %>% 
+  as_tibble() %>% 
+  rename("IQ_Score" = "value")
+
+
+knitr::kable(iq_scores, "pipe")
+```
+
+Looking back at our formula for the one-sample z-test ($z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$), you may notice that we already have many of the values that need to be plugged into this formula (e.g., $\mu$, $\sigma$). There are only two other values needed for this formula.
+
+The first is the mean of IQ scores of our sample, $\overline{x}$. Because this is simply the average, we just need to add up all the IQ scores and divide by our sample size, $15$. The mean IQ score for this sample is $110.47$.
+
+Before we plug into this formula, however, we have to remember that the denominator of the z-test statistic formula is _standard error_, not standard deviation. This means we have one extra step to do now: calculating standard error. Let’s start there. Since we know that $\sigma$ (the population standard deviation of IQ scores) $= 15$ and $n$ (our sample size for this study) $= 15$, we can plug into our formula to calculate standard error:
+
+$$\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}} = \frac{15}{\sqrt{15}} = 3.87$$
+
+\newpage
+
+Now that we have our standard error ($\sigma_{\overline{x}}$), we can plug everything we know ($\overline{x}$, $\mu_{\overline{x}}$, and $\sigma_{\overline{x}}$) into the formula for the z-test statistic:
+
+$$z_{\overline{x}} = \frac {\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}} = \frac{110.47 - 100}{3.87} = 2.71$$
+That’s it! Congratulations on successfully calculating the test statistic for the one-sample z-test!

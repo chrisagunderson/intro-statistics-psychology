@@ -1,0 +1,147 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-06-standardization-and-z-scores-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+library(kableExtra)
+library(tidyverse)
+library(bayestestR)
+```
+
+# Standardization and _z_-scores
+
+In this _Guide_, we will learn how to calculate _z_-scores. Let’s go ahead and generate some data for us to practice _z_-scoring with. These data are anxiety levels on a 1 (_“not anxious at all”_) to 14 (_“extremely anxious”_) scale of 15 office employees.
+
+```{r anxiety-data, echo=FALSE}
+anxiety_scores <- data.frame(
+  Name = c(
+    "Jim",
+    "Pam",
+    "Kelly",
+    "Ryan",
+    "Michael",
+    "Holly",
+    "Kevin",
+    "Dwight",
+    "Angela",
+    "Toby",
+    "Oscar",
+    "Andy",
+    "Stanley",
+    "Phyllis"
+  ),
+  Anxiety = c(1,
+              7,
+              12,
+              8,
+              9,
+              5,
+              4,
+              9,
+              7,
+              4,
+              6,
+              13,
+              2,
+              6)) %>% 
+  as_tibble()
+
+knitr::kable(anxiety_scores, "pipe")
+
+```
+
+\begin{center}
+
+z-score formula
+$$
+z_{i} = \frac{x_{i} - \mu}{\sigma}
+$$
+\end{center}
+
+Let’s say that we want to know how Dwight’s anxiety level compares to that of his colleagues. We can answer this question by converting his raw score ($9$) into a _z_-score using the formula above. Specifically, we’ll need to subtract Dwight’s raw score from the mean anxiety level of the entire group (the “population” mean, $\mu$, since this group is our entire population of interest) and then divide by the standard deviation of this group ($\sigma$).
+
+Calculating the mean is easy, as we just need to add up all of the anxiety values and divide by $N$. If you do this, you’ll end up with a mean anxiety level of $6.64$.
+
+Next, we’ll need to calculate the standard deviation of anxiety scores using the population formula for standard deviation that we’ve seen in this class previously. As a reminder, here it is:
+
+\begin{center}
+Population Standard Deviation
+$$
+\sigma = \sqrt \frac{\sum(X_{i} - \mu)^2}{N}
+$$
+\end{center}
+
+I’ll show my work for calculating the standard deviation of this population on the last page, if you’re interested. For now, let me just tell you that $\sigma = 153.22$.
+
+Now, this becomes an easy problem to solve. We can simply plug in Dwight’s anxiety score ($9$, which we represent by $x$), the average level of anxiety in the group ($6.64$, represented by $\mu$), and the standard deviation of anxiety in the group ($3.31$, represented by $\sigma$). Let’s do that now:  
+
+\begin{center}
+$$
+z_{i} = \frac{x_{i} - \mu}{\sigma} = \frac{9.00-6.64}{3.31} = 0.71
+$$
+\end{center}
+
+A _z_-score of $0.71$ can be interpreted as follows: Dwight is $0.71$ standard deviations above the mean of anxiety, meaning he is slightly more anxious than average.
+
+Note that, if you were to calculate _z_-scores for every single person in this group, you’ll have an entirely new column of data containing only _z_-scores. We call this _“standardizing”_ data, because the new, “standardized” scores will always have a mean of $0$ and a standard deviation of $1$. This is useful because then each person’s score is a _z_-score that shows how they compare to their peers. This makes it easy to quickly tell who is scoring very high compared to their peers (large, positive _z_-scores) and who is scoring very low compared to their peers (negative _z_-scores).
+
+```{r echo=FALSE, warning=FALSE, fig.width=4, fig.height=3}
+library(bayestestR)  # Load it
+# Generate a perfect sample
+x <- rnorm_perfect(n = 100, mean = 0, sd = 1)
+
+# Visualise it
+library(tidyverse)
+
+x %>% 
+  density() %>%  # Compute density function
+  as.data.frame() %>% 
+  ggplot(aes(x=x, y=y)) +
+  geom_line() +
+  geom_vline(xintercept = 0, ) +
+  geom_vline(xintercept = 0.71, linetype="dashed") +
+  labs(caption = "Dashed line is Dwight's z-score for anxiety",
+       x = "z-score",
+       y = '') +
+  theme_classic()
+```
+
+
+\newpage
+
+# Calculating Population Standard Deviation
+
+Let’s calculate population standard deviation of this group of office employees. As always, we’ll need to start by finding the mean, which we found was $6.64$. Then, we calculate the deviations of each score from that mean, and then squaring those deviations from the mean. Let’s do that now:
+
+```{r anxiety-scores-z-scored, echo=FALSE}
+
+anxiety_scores_z <- anxiety_scores %>% 
+  mutate(deviations = Anxiety - mean(Anxiety),
+         squares = deviations^2)
+
+knitr::kable(anxiety_scores_z, "pipe", digits = 3)
+
+```
+
+Now, we need to calculate our _Sum of Squares_ ($\sum(x_{i} - \overline{x})^2$) by adding up all of the values in the _“squares”_ column, which gives us a value of $153.22$.
+
+Finally, to calculate population standard deviation, we need to divide the Sum of Squares by $N$ and then square root that value. Let’s do that now:
+
+\begin{center}
+$$
+\sigma = \sqrt \frac{\sum(X_{i} - \mu)^2}{N} = \sqrt{\frac{153.22}{14}} = 3.31
+$$
+\end{center}
+
+So, our population standard deviation ($\sigma$) is $3.31$.
+
+

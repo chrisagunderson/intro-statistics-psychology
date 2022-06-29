@@ -1,0 +1,149 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-10-calculating-independent-samples-t-test-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Calculating an independent samples _t_-test 
+
+You now have two hypothesis tests under your belt: the one-sample _z_-test and the one-sample _t_-test. But what do you do when you have two different samples of people that you want to compare? For example, what if you want to know whether men and women differ in their average levels of anxiety? Or whether people with dogs are friendlier than people with cats? These questions cannot be answered using a one-sample _z_- or _t_-test. Instead, we’ll need to use a test that is designed to compare two different groups of people. The test we use is known as an independent-samples _t_-test. Let’s go through a practice problem to illustrate how the independent-samples _t_-test works.
+
+Let’s say that you are a researcher who is interested in investigating whether playing video games makes you less anxious. To test this, you design an experiment in which you recruit a sample of 30 participants. You randomly assign 15 of these participants to an experimental condition in which they are required to play 1 hour of a video game and the remaining 15 participants to a control condition in which they watch two episodes of a TV show instead. Afterwards, each participant is required to report their anxiety via a self-report scale in which 1 = “_not anxious at all_” and 14 = “_very anxious_.” Let’s take a look at some data below:
+
+
+```{r in-t-test-data, echo=FALSE, warning=FALSE, message=FALSE}
+
+library(tidyverse)
+
+indep_t_test_data <- data.frame(Games = c(6, 7, 8, 5, 4, 6, 7, 8, 9, 11, 13, 2, 4, 5, 8),
+                                TV = c(7, 8, 9, 8, 5, 4, 8, 7, 6, 7, 8, 14, 13, 9, 8))
+
+
+knitr::kable(indep_t_test_data, 
+             "pipe")
+
+```
+
+\newpage
+
+Now, let’s take a look at the formula for an independent-samples _t_-test to determine how to proceed:
+
+\begin{center}
+Independent samples t-test
+\end{center}
+
+$$t_{(\bar{x}_1 - \bar{x}_2)} = \frac{(\bar{x}_1 - \bar{x}_2)}{s_{(\bar{x}_1 - \bar{x}_2)}}$$
+
+where:
+
+\begin{center}
+Estimated standard error of the mean difference
+\end{center}
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2} \Bigg] \Bigg[ \frac{n_1 + n_2}{n_1 n_2} \Bigg]}$$
+
+Not the prettiest formula, but notice that you only need a few simple values to complete it:
+
+\begin{center}
+
+$\bar{x}_{1} \qquad \bar{x}_{2} \qquad n_{1} \qquad n_{2} \qquad s_{1}^2 \qquad s_{2}^2$
+
+\end{center}
+
+That’s right! The only values that go into this formula are sample means, sample sizes, and sample variances–all of which you already know how to calculate! To complete this type of problem, I recommend ignoring the formulas until the very end and instead focusing on finding the 6 values listed above.
+
+Let’s start by finding the sample means ($\bar{x}_{1}$ and $\bar{x}_{2}$). As usual, these should be pretty easy to calculate by adding up the values in each group and dividing by the number of values in that group. For these data, the sample mean for people in the video game condition is $\bar{x}_{1} = 6.87$ and the sample mean for people in the TV condition is $\bar{x}_{2} = 8.07$.
+
+Next, let’s take care of the sample sizes. In this case, we have $15$ participants in each condition, so $n_{1} = 15$ and $n_{2} = 15$.
+
+Finally, we need to calculate the sample variances of each group, $s_{1}^2$ and $s_{2}^2$. As usual, I’ll show my work for calculating these sample variances on the final page of this document, but for now I’ll tell you that $s_{1}^2 = 7.98$ and $s_{2}^2 = 6.78$.
+
+\newpage 
+
+Now we have the 6 values we need to plug into the formula for the independent-samples _t_-test:
+
+\begin{center}
+
+$\bar{x}_{1} = 6.87 \qquad \bar{x}_{2} = 8.07 \qquad n_{1} = 15 \qquad n_{2} = 15 \qquad s_{1}^2 = 7.98 \qquad s_{2}^2 = 6.78$
+
+\end{center}
+
+
+Now, let’s plug into our formulas, starting with the standard error (i.e., the denominator of the formula for the independent-samples _t_-test, which has its own formula; see above).
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2} \Bigg] \Bigg[ \frac{n_1 + n_2}{n_1 n_2} \Bigg]}$$
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(15 - 1)(7.98) + (15 - 1)(6.78)}{15 + 15 - 2} \Bigg] \Bigg[ \frac{15 + 15}{(15)(15)} \Bigg]}$$
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{111.72 + 94.92}{28} \Bigg] \Bigg[ \frac{15 + 15}{(15)(15)} \Bigg]}$$
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{111.72 + 94.92}{28} \Bigg] \Bigg[ \frac{30}{225} \Bigg]}$$
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{(7.38)(0.133)}$$
+
+$$s_{(\bar{x}_1 - \bar{x}_2)} = 0.99$$
+
+Okay, so now that we’ve determined that $s_{\bar{x}_1 - \bar{x}_2} = 0.99$, we can plug this value into the denominator of the overall independent-samples _t_-test formula:
+
+$$t_{(\bar{x}_1 - \bar{x}_2)} = \frac{(\bar{x}_1 - \bar{x}_2)}{s_{(\bar{x}_1 - \bar{x}_2)}}$$
+
+$$t_{(\bar{x}_1 - \bar{x}_2)} = \frac{6.87 - 8.07}{0.99}$$
+
+$$t_{(\bar{x}_1 - \bar{x}_2)} = -1.21$$
+And there we have it! $t_{(\bar{x}_1 - \bar{x}_2)} = - 1.21$. Normally, you’d use statistical software to determine your _p_-value from this _t_-test statistic. I’ll tell you that the _p_-value would come out to $p = 0.24$, which is not less than our alpha of $0.05$. As a result, we would not have sufficient evidence to say that playing video games affects anxiety more than watching TV.
+
+\newpage
+
+## Calculating sample variances
+
+To remind you, we’ll be using the following formula to calculate the sample variance of each group:
+
+$$
+s^2 = \frac{\sum(X_{i} - \bar{x})^2}{n - 1}
+$$
+
+Let’s start with the first group (i.e., the “_Games_” condition). As always, we’ll need to first calculate the Sum of Squares by finding the deviations of each value from the mean, squaring those deviations, and then adding up those squares:
+
+```{r games_data, echo=FALSE}
+
+games <- indep_t_test_data %>% 
+  select(Games) %>% 
+  mutate(mean_games = mean(Games),
+         deviations = Games - mean_games,
+         squared_deviations = deviations^2) %>% 
+  select(Games, deviations, squared_deviations)
+
+knitr::kable(games, "pipe", digits = 3)
+
+```
+
+
+Next, we need to add the values in the last column to calculate _SS_ (i.e., $\sum(X_{i} - \bar{x})^2$), which results in `r round(sum(games$squared_deviations),3)`.
+
+Finally, we need to divide the Sum of Squares by $n - 1$, which gives us $\frac{111.733}{14} = 7.98$. So, our variance for the _Games_ group is $s_{1}^2 = 7.98$.
+
+\newpage
+
+Next, let’s calculate the sample variance of the _TV_ group by following the same steps as above:
+
+```{r tv_data, echo=FALSE}
+
+TV <- indep_t_test_data %>% 
+  select(TV) %>% 
+  mutate(mean_TV = mean(TV),
+         deviations = TV - mean_TV,
+         squared_deviations = deviations^2) %>% 
+  select(TV, deviations, squared_deviations)
+
+knitr::kable(TV, "pipe", digits = 3)
+
+```
+
+By adding the values in the final column, we can determine that the Sum of Squares is `r round(sum(TV$squared_deviations),3)`. By dividing this value by $n - 1$, we find that our sample variance is $6.78$.
+
+

@@ -1,0 +1,54 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-13-effect-size-for-dependent-samples-t-test-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Effect Size for a Dependent Samples T-Test
+
+In the previous _Guide_, we calculated a dependent-samples _t_-test and found that having people watch an episode of “The Office” increased their average levels of happiness by a statistically significant amount. In this _Guide_, we’ll take a look at the size of this effect. (Remember, hypothesis tests tell you statistical significance, whereas effect sizes tell you practical significance.)
+
+Let’s start by taking a look at the Cohen’s d effect size formula for a dependent-samples t-test:
+
+\begin{center}
+Cohen's d for Dependent samples t-test
+\end{center}
+
+$$
+d_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{d}}
+$$
+
+You’ll notice that, again, everything in this formula pertains to the difference scores. Again, we won’t be needing the original (baseline and post-treatment) data to solve this problem. The numerator is simply the mean ($\bar{x}_{d}$) of the difference scores and the denominator is simply the standard deviation ($s_{d}$) of the difference scores.
+
+Here’s the original data, to remind you:
+
+```{r echo=FALSE}
+
+dep_test_es <- data.frame(Baseline = c(37,33,29,21,23,24,24,36,38,28),
+                         Post_Treatment = c(41,34,33,21,26,27,25,38,41,41),
+                         Differences = c(4,1,4,0,3,3,1,2,3,13))
+
+knitr::kable(dep_test_es, "pipe")
+
+```
+
+Thankfully, too, we already have everything we need for the effect size formula! This is very often the case: **Usually, calculating the actual hypothesis test will naturally give you the values you need for the effect size**.
+
+Recall that the mean of the difference scores is $\bar{x}_{d} = 3.40$. Also recall that we already have the _variance_ of the difference scores, which is $s^2_{d} = 13.16$. Importantly, the effect size formula calls for the _standard deviation_ of the difference scores, not the variance. 
+
+Luckily, finding standard deviation from variance is very simple: we just need to square root the variance. If we do this, we’ll end up with a sample standard deviation of $s_{d} = \sqrt{13.16} = 3.63$.
+
+\newpage
+
+Already, we have everything needed for the formula:
+
+$$
+d_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{d}} = \frac{3.40}{3.63} = 0.94
+$$
+
+There you have it! The Cohen’s _d_ effect size for this particular dependent-samples t-test comes out to $0.94$, which would be considered a (very) large effect. Don’t forget, it’s easy to interpret effect sizes! Cohen’s _d_ effect sizes between 0 and 0.2 are considered “small” effects, between 0.2 and 0.5 are considered “medium” effects, and above 0.5 are considered “large” effects. Easy, right?

@@ -1,0 +1,189 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "final-exam-formula-sheet-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Final Exam Formula Sheet
+
+## Measures of Central Tendency
+
+\begin{equation}
+\overline{x} = \frac{\Sigma X_{i}}{n}
+\end{equation}
+
+
+\begin{equation}
+\mu = \frac {\Sigma X_{i}}{N}
+\end{equation}
+
+
+
+## Measures of Variability
+
+\begin{equation}
+r = h - l
+\end{equation}
+
+\begin{equation}
+SS = \Sigma(X_{i} - \overline{x})^2 \qquad \: or \qquad SS = \Sigma(X_{i} - \mu)^2
+\end{equation}
+
+
+\begin{equation}
+s = \sqrt \frac {\Sigma(X_{i} - \overline{x})^2}{n - 1}
+\end{equation}
+
+\begin{equation}
+s^2 = \frac{\Sigma (X_{i} - \overline{x})^2}{n - 1}
+\end{equation}
+
+
+\begin{equation}
+\sigma = \sqrt \frac {\Sigma (X_{i} - \mu)^2}{N}
+\end{equation}
+
+\begin{equation}
+\sigma^2 = \frac{\Sigma (X_{i} - \mu)^2}{N}
+\end{equation}
+
+\begin{equation}
+\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}
+\end{equation}
+
+\begin{equation}
+s_{\bar{x}} = \frac{s}{\sqrt{n}}
+\end{equation}
+
+\begin{equation}
+s_{(\bar{x}_1 - \bar{x}_2)} = \sqrt{ \Bigg[ \frac{(n_1 - 1)s^2_1 + (n_2 - 1)s^2_2}{n_1 + n_2 - 2} \Bigg] \Bigg[ \frac{n_1 + n_2}{n_1 n_2} \Bigg]}
+\end{equation}
+
+\begin{equation}
+s_p = \sqrt{\frac{s^2_1 + s^2_2}{2}}
+\end{equation}
+
+\begin{equation}
+s_{\bar{x}_{d}} = \sqrt{\frac{s^2_{d}}{n}}
+\end{equation}
+
+## Relationships in the World
+
+\begin{equation}
+r_{xy} = \frac{n\Sigma XY - \Sigma X \Sigma Y}{\sqrt{[n\Sigma X^2 - (\Sigma X)^2][n\Sigma Y^2 - (\Sigma Y)^2]}}
+\end{equation}
+
+## Reliability
+
+\begin{equation}
+\alpha = (\frac {k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})
+\end{equation}
+
+
+
+## z
+
+\begin{equation}
+z_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}
+\end{equation}
+
+\begin{equation}
+z_{i} = \frac{X_{i} - \mu}{\sigma}
+\end{equation}
+
+\begin{equation}
+X_{i} = \mu + z_{i}\sigma
+\end{equation}
+
+
+
+## t
+
+\begin{equation}
+t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}}
+\end{equation}
+
+\begin{equation}
+t_{(\overline{x}_{1} - \overline{x}_{2})} = \frac{\overline{x}_{1} - \overline{x}_{2}}{s_{(\overline{x}_{1} - \overline{x}_{2})}}
+\end{equation}
+
+\begin{equation}
+t_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{\bar{x}_{d}}}
+\end{equation}
+
+\begin{equation}
+t_{r_{xy}} = \frac{r_{xy}\sqrt{n - 2}}{\sqrt{1 - r^2_{xy}}}
+\end{equation}
+
+
+
+## F
+
+\begin{equation}
+F = \frac{MS_{between}}{MS_{within}}
+\end{equation}
+
+\begin{equation}
+MS_{between} = \frac{SS_{between}}{df_{between}}
+\end{equation}
+
+\begin{equation}
+MS_{within} = \frac{SS_{within}}{df_{within}}
+\end{equation}
+
+\begin{equation}
+SS_{between} = \Sigma\frac{(\Sigma{x})^2}{n} - \frac{(\Sigma\Sigma{x})^2}{nT}
+\end{equation}
+
+\begin{equation}
+SS_{within} = \Sigma\Sigma(x^2) - \Sigma\frac{(\Sigma{x})^2}{n}
+\end{equation}
+
+\begin{equation}
+df_{between} = k - 1
+\end{equation}
+
+\begin{equation}
+df_{within} = nT - k
+\end{equation}
+
+## Regression
+
+\begin{equation}
+\hat{y} = bX + a
+\end{equation}
+
+\begin{equation}
+b = \frac{\Sigma{XY} - \frac{\Sigma{x}\Sigma{y}}{n}}{\Sigma{X}^2 - \frac{(\Sigma{X})^2}{n}}
+\end{equation}
+
+\begin{equation}
+a = \frac{\Sigma{Y} - b\Sigma{X}}{n}
+\end{equation}
+
+## Effect Sizes
+
+\begin{equation}
+d_{z} = \frac{\bar{x} - \mu_{\bar{x}}}{\sigma}
+\end{equation}
+
+\begin{equation}
+d_{t} = \frac{\bar{x} - \mu_{\bar{x}}}{s}
+\end{equation}
+
+\begin{equation}
+d_{(\bar{x}_{1} - \bar{x}_{2})} = \frac{\bar{x}_{1} - \bar{x}_{2}}{s_{p}}
+\end{equation}
+
+\begin{equation}
+d_{\bar{x}_{d}} = \frac{\bar{x}_{d}}{s_{d}}
+\end{equation}
+
+\begin{equation}
+\eta^2 = \frac{SS_{between}}{SS_{total}}
+\end{equation}

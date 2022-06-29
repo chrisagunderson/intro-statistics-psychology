@@ -1,0 +1,163 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-03-correlation-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+library(kableExtra)
+library(tidyverse)
+```
+
+# Calculating Correlations
+
+In this _Guide_, let’s go over how to calculate the correlation between two variables (variable 1, $x$, and variable 2, $y$). The correlation, known as a standard Pearson’s correlation, is represented by $r_{xy}$.
+
+Let’s take a look at the formula for $r_{xy}$:
+
+\begin{center}
+Pearon's Correlation
+\end{center}
+
+$$r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}$$  
+This formula is admittedly ugly and may look daunting, but in reality it is only made up of 6 values that are relatively easy to calculate with the right process. Here are the six values you’ll need to find:
+
+| parameter | definition |
+| --- | --- |
+| $n$ | sample size |
+| $\sum X$ | sum of $X$ |
+| $\sum Y$ | sum of $Y$ |
+| $\sum X^2$ | sum of$X^2$|
+| $\sum Y^2$ | sum of $Y^2$ |
+| $\sum XY$ | sum of $XY$ |
+
+Here’s some data for us to work with:  
+
+```{r correlation-data, echo=FALSE}
+corr_data <- data.frame(x = c(13, 9, 5, 5, 2, 9, 6, 7, 8, 3, 2, 1),
+                        y = c(6, 1, 15, 5, 14, 2, 15, 4, 2, 8, 7, 12))
+
+corr_data <- corr_data %>% 
+  as_tibble() %>% 
+  rename("$x$" = x,
+         "$y$" = y)
+
+knitr::kable(corr_data, "pipe")
+```
+
+\newpage
+
+## Step 1: Create a table
+
+Let’s start by creating a table that will, as is often the case, naturally lead us to the values we need. Since we already have $x$ and $y$ represented here, we’ll need to create columns for $x^2$, $y^2$, and $xy$.
+
+Here’s what this will look like:
+
+```{r correlation-table-1, echo=FALSE}
+
+corr_data2 <- corr_data %>% 
+   add_column("$x^2$" = NA,
+             "$y^2$" = NA,
+             "$xy$" = NA)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data2, "pipe")
+
+```
+
+## Step 2: Square each $x$ and $y$ value
+
+Great! Let’s begin to fill out these values. To fill out the $x^2$ column, simply square each value of $x$ and place each squared value in the table. To fill out the $y^2$ column, do the same for $y$ (that is, square each value of $y$ and place it in the new table). Like so:
+
+```{r correlation-table-2, echo=FALSE}
+
+corr_data3 <- corr_data2 %>% 
+  mutate("$x^2$" = `$x$`^2,
+         "$y^2$" = `$y$`^2)
+
+options(knitr.kable.NA = '')
+knitr::kable(corr_data3, "pipe")
+
+```
+\newpage
+
+## Step 3: Multiply $x$ and $y$ values
+
+We’re getting close! At this point, we only need to worry about the $xy$ column. These are also easy to get! You simply need to multiply across (i.e., multiple each participant’s–or row’s–$x$ value by its $y$ value).
+
+Once you do this, we’ll have our full table:
+
+```{r correlation-table-3, echo=FALSE}
+corr_data4 <- corr_data3 %>% 
+  mutate("$xy$" = `$x$` * `$y$`)
+
+knitr::kable(corr_data4, "pipe")
+```
+
+## Step 4: Take the sum of each column
+
+In order to get the values we need for the $r_{xy}$ formula (e.g., $\sum X$, $\sum Y^2$; see above), we’ll need to take the sum ($\sum$) of each column. Let’s do that now.
+
+```{r sum-table, echo=FALSE}
+
+corr_data_sum <- corr_data4 %>% 
+  summarise(across(where(is.numeric), sum)) %>% 
+  rename("$\\sum X$" = `$x$`,
+         "$\\sum Y$" = `$y$`,
+         "$\\sum  x^2$" = `$x^2$`,
+         "$\\sum y^2$" = `$y^2$`,
+         "$\\sum xy$" = `$xy$`)
+
+knitr::kable(corr_data_sum, "pipe")
+
+```
+
+\newpage
+
+## Step 5: Complete the equation
+
+We’re almost there! All we need to do now is to plug these values into the formula for $r_{xy}$, like so:  
+
+\begin{equation} \label{eq:1}
+r_{xy} = \frac {(12)(417) - (70)(91)} {\sqrt{[(12)(548) - (70)^2][(12)(989] - (91)^2]}}
+\end{equation}
+
+\begin{equation} \label{eq:2}
+= \frac {5004 - 6370} {\sqrt{[6576 - 4900][11868 - 8281]}}
+\end{equation}
+
+\begin{equation} \label{eq:3}
+= \frac {-1366}{\sqrt{[1676][3587]}}
+\end{equation}
+
+\begin{equation} \label{eq:4}
+= \frac {-1366}{2451.9}
+\end{equation}
+
+\begin{equation} \label{eq:5}
+= -0.56
+\end{equation}
+
+
+So, the correlation, $r_{xy}$, between these two variables is -0.56.  
+
+A visual insepction of the data is a good idea. Here is a scatterplot of the data, indicating a negative correlation:  
+
+\begin{center}
+```{r correlation-plot, echo=FALSE, fig.retina=3, fig.width=3, fig.height=2}
+
+ggplot(corr_data4, aes(x= `$x$`, y = `$y$`)) + 
+  geom_point() + 
+  labs(title= "Scatterplot of x and y",
+       x = "x",
+       y = "y") +
+  theme_classic() 
+```
+\end{center}

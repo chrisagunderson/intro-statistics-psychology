@@ -1,0 +1,51 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-15-effect-size-for-one-way-anova-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Effect Size For A One-Way ANOVA 
+
+In the last _Guide_, we learned how to calculate the _F_-test statistic for the one-way analysis of variance (ANOVA). It was quite a bit of work, but it allowed us to develop a powerful hypothesis test: Now, we have the ability to investigate whether differences exist along some dimension for as many groups of people as we want. We can look at differences between children, teens, young adults, middle-aged adults, and older adults. We can look at differences between people of different political orientations (e.g., Republican, Democrat, Modern Whig). We can look at differences between lots of different groups!
+
+Now that we have the hypothesis test under our belt, let’s learn how to calculate the effect size for the one-way ANOVA. Remember, effect sizes are useful in addition to the overall hypothesis tests because, whereas hypothesis tests tell you **statistical significance**, effect sizes tell you **practical significance**. Essentially, effect sizes allow us to ask and answer the question: Okay, the test is significant, but should I care? Let’s see how to do this now.
+
+For all of the _z_- and _t_-tests that we’ve learned in the course so far, we’ve used Cohen’s _d_ as a measure of effect size. In this case, however, Cohen’s _d_ isn’t appropriate because it’s designed specifically for those types of tests. Analyses of variance are quite different from _z_- and _t_-tests, so we’ll need to use something different. What we end up using is known as “_eta-squared_,” represented by $\eta^2$. Here's the formula for $\eta^2$:
+
+\begin{center}
+Eta-squared
+\end{center}
+
+$$
+\eta^2 = \frac{SS_{between}}{SS_{total}}
+$$
+
+where:
+
+$$
+SS_{total} = SS_{between} + SS_{within}
+$$
+
+Notice that, for the effect size, we’re basically already done! When calculating the _F_-test statistic, we needed to find the Sums of Squares anyway, which is all that is needed for this formula! $SS_{between}$ goes in the numerator, and in the denominator goes the sum of $SS_{between}$ and $SS_{within}$. **Once you’ve already found the _F_-test statistic for a one-way analysis of variance, finding the effect size should only take an extra minute**.
+
+Let’s do it now using the values we found in the last _Guide_:
+
+$$
+\eta^2 = \frac{SS_{between}}{SS_{total}} = \frac{952.87}{952.87 + 2598.5} = 0.27
+$$
+\newpage
+
+That’s all, folks! Our effect size is $\eta^2 = 0.27$. Now, I’ll note that the interpretation of this value is slightly different from Cohen’s _d_. Here's how to interpret $\eta^2$:
+
+- Small effect is about .01
+
+- Medium effect is about .06
+
+- Large effect is about .14 or greater
+
+So, in this case, we’re dealing with a large effect! What study strategy you use seems to play a large role in your final grade on an exam. Who knew? :)

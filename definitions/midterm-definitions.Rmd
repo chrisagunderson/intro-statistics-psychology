@@ -1,0 +1,118 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "midterm-definitions-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Midterm: Conceptual Definitions
+
+Below are the key concepts we have covered in class. This list is not exhaustive and is intended to complement, not replace, lecture material.
+
+\noindent\rule{\textwidth}{0.4pt}
+
+## Lecture 01: Introduction
+
+_Statistics_: A set of tools and techniques that are used for describing, organizing, and interpreting information or data
+
+_Descriptive Statistics_: Used to organize or describe the characteristics of a dataset
+
+_Inferential Statistics_: Used to make inferences (reach a conclusion) about the data
+
+## Lecture 02: Central Tendency and Variability
+
+_Sample_: A subset of a population
+
+_Mean_: The sum of a set of scores divided by the total number of scores in the set
+
+_Median_: The point at which half (50%) of the values are above and half (50%) of the values are below
+
+_Mode_: The value in a distribution of data that occurs most frequently
+
+_Scales of measurement_: Describes the nature of the information contained in a given set of data
+
+_Measures of variability_: Describe how scores in a given dataset differ from one another (e.g., the spread or clustering of points)
+
+_Range_: The difference between the lowest and highest values in a dataset
+
+ _Sum of squared deviations_: The squared differences of each observation from the overall mean of a dataset
+
+ _Standard Deviation_: The standard (or typical) amount that scores deviate from the mean
+
+_Variance_: The averaged squared deviation from the mean
+
+## Lecture 04: Correlation, Validity, Reliability
+
+_Correlational designs_: Examine the extent to which two variables are associated
+
+_Independent variable_: The variable that is hypothesized to have an effect on some outcome of interest
+
+_Dependent variable_: The outcome of interest that the independent variable might have an effect on
+
+_Reliability_: The overall consistency of a measure
+
+_Validity_: Refers to how accurately a method measures what it is intended to measure
+
+_True score_: The true value that we are trying to measure
+
+_Observed Score_: The value that we actually measure
+
+_Test-Retest Reliability_: Used to determine whether a test (or scale) is reliable over time 
+
+_Parallel Forms Reliability_: Used to examine the equivalence or similarity between two forms of the same test (or scale). Measured as the correlation $r_{xy}$ between scores for the same individuals on Form A and Form B
+
+_Internal consistency_: Used to determine whether the items on a test (or scale) are consistent with each other. Used to determine whether the items on a test (or scale) are consistent with each other, typically measured with Cronbach's $\alpha$
+
+_Test-Retest Reliability_: Measured as the correlation $r_{xy}$ between scores on a measure at Time 1 and the same measure at Time 2
+
+_Interrater Reliability_: The degree of agreement among independent observers who rate, code, or agree on their judgments of an outcome of interest
+
+_Content validity_: The extent to which the items on a test are fairly representative of the entire domain the test seeks to measure
+
+_Criterion validity_: Measures how well one measure predicts an outcome for another measure
+
+_Concurrent Criterion Validity_: The degree to which scores on the measure are associated with scores on another measure taken at the same time
+
+_Predictive Validity_: The degree to which test scores accurately predict scores on a criterion measure
+
+_Construct Validity_: The degree to which a test, scale, or assessment measures the construct it claims to measure
+
+## Lecture 05: Using Hypotheses to test questions
+
+_Hypothesis_: A specific, clear, and testable proposition or predictive statement about the possible outcome of a scientific research study
+
+_Hypothesis Test_: A statistical method that uses sample data to evaluate a hypothesis about a population
+
+_Null Hypothesis_: There is no change, no difference, or no relationship between variables, $H_{0}$
+
+_Research Hypothesis_: There is change, a difference, or a relationship between variables. the research hypothesis, $H_{1}$, is sometimes called the alternative hypothesis, $H_{a}$
+
+_Alpha_: The probability value that is used to define which sample outcomes are considered very unlikely if $H_{0}$ is true
+
+_Critical Region_: The region (of the sampling distribution) that contains the sample outcomes that are considered _very unlikely_ if $H_{0}$ is true
+
+_p-value_: The probability of getting the observed or more extreme data, _assuming_ the null hypothesis is true
+
+_Test statistic_: A numerical summary of the degree to which a sample is unlike the samples predicted by the null hypothesis, $H_{0}$
+
+## Lecture 06: Probability and the Normal Curve
+
+_Probability_: For a situation in which several different outcomes are possible, the probability for any specific outcome is defined as a _fraction_ or a _proportion_ of all the possible outcomes.
+
+_z-score_: Describes the position of a raw score in terms of its distance from the mean, when measured in _standard deviation units_. the _z_-score is positive if the value lies above the mean, and negative if it lies below the mean
+
+## Lecture 07: Introduction to Statistical Significance
+
+_Statistical Significance_: A result is said to be _significant_, or _statistically significant_, if it is very unlikely to occur when the null hypothesis is true. That is, the result is sufficient to reject the null hypothesis. Thus, a treatment has a significant effect if the decision from the hypothesis test is to reject $H_{0}$
+
+_Type I error_: Occurs when there is _no_ effect present but the researcher rejects the null hypothesis
+
+_Type II error_: Occurs when a real effect _is_ present, but the researcher fails to reject the null hypothesis
+
+_Specificity_: The probability of failing to reject $H_{0}$ when $H_{0}$ is true (also called the True Negative Rate)
+
+_Statistical power_: The probability that the test will correctly reject a false null hypothesis. That is, power is the probability that the test will identify an effect if one really exists

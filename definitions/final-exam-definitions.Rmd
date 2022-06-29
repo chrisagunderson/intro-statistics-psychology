@@ -1,0 +1,85 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "final-exam-definitions-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Final Exam: Conceptual Definitions
+
+## Lecture 09: Differences from the population
+
+_Effect size_: A measure of how different two groups are from one another (or a measure of the magnitude of treatment). Represented by Cohen’s _d_, Pearson's _r_, or Eta squared, $\eta^2$.
+
+_Estimated standard error_: $s_{\bar{x}}$ is an estimate of the real standard error, $\sigma_{\bar{x}}$, when the value of $\sigma$ is unknown. It provides an estimate of the standard distance between a sample mean, $\bar{x}$, and the population mean, $\sigma$.
+
+_Test statistic_: A numerical summary of the degree to which a sample is unlike the samples predicted by the null hypothesis, $H_{0}$
+
+_t Distribution_: The complete set of _t_ values computed for every possible random sample for a specific sample size, $n$. The _t_ distribution approximates the shape of a normal distribution, especially for large samples or samples from a normal population.
+
+_t Statistic_: Is used to test hypotheses about an unknown population mean, $\mu$, when the value of $\sigma$ is unknown. The formula for the _t_ statistic has the same structure as the _z_-test statistic formula, except that the _t_ statistic uses the estimated standard error in the denominator.
+
+## Lecture 10: Differences between two groups (part I)
+
+_Dependent variable_: The outcome of interest that the independent variable might have an effect on
+
+_Independent variable_: The variable that is hypothesized to have an effect on some outcome of interest
+
+_Inferential Statistics_: Used to make inferences (reach a conclusion) about the data
+
+_Statistical Significance_: A result is said to be significant, or statistically significant, if it is very unlikely to occur when the null hypothesis is true. That is, the result is sufficient to reject the null hypothesis. Thus, a treatment has a significant effect if the decision from the hypothesis test is to reject $H_{0}$
+
+## Lecture 11: Differences between two groups (part II)
+
+_Dependent-samples_: Also called _within-subjects_. Compare the same group of people to themselves.
+
+_Independent-samples_: Also called _between-subjects_. Compare two different or unrelated groups of people
+
+## Lecture 12: Differences between many groups
+
+_Alpha escalation_: Type I Error rate increases drastically as you run additional analyses
+
+_Eta squared_: The proportion of the total variability in the dependent variable that is accounted for by variation in the independent variable. It is the ratio of the between groups sum of squares to the total sum of squares
+
+_Experiment-wise alpha level_: The total probability of a Type I error that is accumulated from all of the individual tests in the experiment. Typically, the experiment-wise alpha level is substantially greater than the value of alpha used for any one of the individual tests
+
+_Factor_: Independent variable(s) in the study
+
+_Level(s)_: Groups within each independent variable
+
+_Response_: The dependent variable in the study
+
+## Lecture 13: Differences between many factors
+
+_Factorial designs_: Designs in which two or more factors are completely crossed (i.e., measurements are taken for every combination of factor levels)
+
+_Interaction_: Describes the degree to which the effect of one factor depends on the level of the other factor
+
+_Main effect_: When an analysis of the data reveals a difference between the levels of any factor
+
+## Lecture 14: Testing relationships with correlations
+
+_Coefficient of Determination_: Percentage of variances in one variable that is accounted for by the variance in the other variable
+
+_Correlational designs_: Examine the extent to which two variables are associated
+
+_Negative correlation_: As one variable changes, the other variable changes in the opposite direction
+
+_Positive correlation_: As one variable changes, the other variable changes in the same direction
+
+_Zero correlation_: There is no relationship between the two variables
+
+## Lecture 15: Making predictions using regression
+
+_Alpha_: $a$ is also referred to as the _intercept_, and is the value of $y$ when the value of $x$ is zero
+
+_Beta_: $b$ is also referred to as the _slope_, and determines how much the $y$ variable changes when $x$ is increased by 1 point (or unit of measurement)
+
+_Regression_: A statistical technique for finding the best-fitting line (i.e., the regression line) for a set of data
+
+_y-hat_: $\hat{y}$ is the predicted value from the regression equation
+

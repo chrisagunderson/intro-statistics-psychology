@@ -1,0 +1,102 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-01-standard-deviation-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+library(kableExtra)
+library(tidyverse)
+```
+
+# Calculating Sample Standard Deviation
+
+In this document, I provide a complete solution for calculating the standard deviation of a sample of data. To begin, let’s start with some data:  
+
+$$7, 9, 8, 4, 3, 3, 5, 6, 7, 8$$
+
+Recall the formula for sample standard deviation. Make sure to note the differences between the formulas for sample standard deviation, population standard deviation, sample variance, and population variance; these formulas are all similar and involve similar steps to compute, but they have slight differences in the final steps that will result in different answers!
+
+\begin{center}
+Sample Standard Deviation
+\end{center}
+
+
+$$s = \sqrt \frac{\sum(X_{i} - \overline{x})^2}{n - 1}$$
+  
+## Step 1: Find the mean
+
+You can do this by using, for example, $\overline{x} = \frac{\sum x}{n}$. Put simply, you just add up all the values and divide by the number of values you added up. For this dataset, the `mean = 6`. Now that you have your mean, you can begin building a table to help solve this problem.
+
+$$\overline{x} = \frac{\sum x}{n} = \frac{7+ 9+ 8+ 4+ 3+ 3+ 5+ 6+ 7+ 8}{10} = 6$$
+
+
+
+## Step 2: Calculate deviations from the mean
+
+You can do this by subtracting the mean you calculated above from each value. A way of representing what you’re doing mathematically is as follows: $x_{i} - \overline{x}$.
+
+```{r deviation-data, echo=FALSE}
+x <- c(7, 9, 8, 4, 3, 3, 5, 6, 7, 8)
+i <- seq(1:10)
+
+deviation_data <- data.frame(i, x) %>% 
+  as_tibble() %>% 
+  mutate(mean = 6, 
+         deviation = x - 6) %>% 
+  select(-i)
+
+knitr::kable(deviation_data,
+             col.names = c("$x$", "$\\overline{x}$", "$x_{i} - \\overline{x}$"),
+             escape = FALSE)
+
+```
+
+\newpage
+
+## Step 3: Square each deviation from the mean
+
+Square each of the deviations you just calculated.
+
+```{r deviation-squared, echo=FALSE}
+dev_data_squared <- deviation_data %>% 
+  mutate(squares = (deviation)^2)
+
+knitr::kable(dev_data_squared,
+             col.names = c("$x$", "$\\overline{x}$", "$x_{i} - \\overline{x}$",
+                           "($x_{i}-\\overline{x})^2$"),
+             escape = FALSE)
+
+```
+
+## Step 4: Calculate the sum of squares
+
+The sum of squares can seem like some cryptic, unintuitive thing. In reality, though, it’s a simple idea: **It’s the sum of the last column you just computed!** Its full name is the “sum of squared deviations from the mean,” which is, again, what you just computed! So, to calculate the sum of squares–which is needed for sample standard deviation, population standard deviation, sample variance, and population variance–you simply need to add the last column we just calculated.
+
+As a general note, this is why we learn to build tables in this class! Setting up tables like this offer up fool-proof ways to follow simple steps that naturally lead us toward the correct answer. It would be much less intuitive to try to go straight for the formula. Rather, start with a simple table that will inevitably lead to a complete formula. You’ll see. :)
+
+\begin{center}
+Sum of Squares
+\end{center}
+
+$$\sum(x_{i} - \overline{x})^2 = 42$$
+
+Notice the relationship between the sum of squares $\sum(x_{i} - \overline{x})^2$, which you just calculated, to the formula for sample standard deviation presented above. You essentially just finished calculating the numerator of that formula! This makes finishing the job very easy.
+
+\newpage
+
+## Step 5: Calculate the sample standard deviation
+
+Now that we have our sum of squares (i.e., $\sum(x_{i} - \overline{x})^2$), all we need to do to complete the formula for sample standard deviation, $s = \sqrt \frac{\sum(X_{i} - \overline{x})^2}{n - 1}$ is to divide by our sample size minus 1 and then square root.
+
+Since our sample size is 10, then we’ll need to divide by 9 (i.e., $n - 1$) and then square root that value.
+
+The final answer, then, is **2.16**.
+

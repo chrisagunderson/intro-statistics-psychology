@@ -1,0 +1,62 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-11-effect-size-for-independent-samples-t-test-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Effect Size For An Independent-Samples T-Test
+
+## Review of Guide 10
+
+In the last _Guide_, we calculated an independent-samples _t_-test to investigate whether playing video games makes you less anxious. To test this question, we collected a sample of 30 participants and randomly divided them into two groups–one in which participants played a video game and another in which they watched a TV show instead. After this manipulation, we collected anxiety scores for each participant. We calculated the independent-samples _t_-test and found that _t_ $= - 1.21$, which---after finding that the _p_-value was only $.24$---was not statistically significant.
+
+## Calculating The Effect Size
+
+As usual, however, we can also calculate the effect size associated with this test to get a sense for practical significance (in addition to statistical significance, which the hypothesis test described above gives us). Let’s take a look at the formulas for calculating the effect size associated with an independent-samples _t_-test:
+
+\begin{center}
+
+Cohen's d for an independent samples t-test
+
+\end{center}
+
+$$
+d_{(\bar{x}_1 - \bar{x}_2)} = \frac{\bar{x}_1 - \bar{x}_{2}}{s_{p}}
+$$
+
+where:
+
+\begin{center}
+
+Pooled standard deviation
+
+\end{center}
+
+$$
+s_{p} = \sqrt{\frac{s_{1}^2 + s_{2}^2}{2}}
+$$
+
+So, the first step in calculating the effect size associated with an independent-samples _t_-test is to tackle $s_{p}$, which we call the **pooled standard deviation**. This term ($s_{p}$) is essentially an “average” standard deviation that incorporates the variability of both groups of participants. To calculate it, we simply need the sample variances of each group, which we already calculated when doing the independent-samples _t_-test in the last _Guide_!
+
+
+As a reminder, we determined that the sample variances were $s_{1}^2 = 7.98$ and $s_{2}^2 = 6.78$. Let’s plug these values into the formula for $s_{p}$ as follows:
+
+$$
+s_{p} = \sqrt{\frac{s_{1}^2 + s_{2}^2}{2}} = \sqrt{\frac{7.98 + 6.78}{2}} = 2.72
+$$
+
+\newpage
+
+Since we already have the means for each group from the _t_-test ($\bar{x}_1 = 6.87$ and $\bar{x}_2 = 8.07$), let’s go ahead and plug these along with $s_{p}$, which equals $2.72$, into the formula for the effect size:
+
+$$
+d_{(\bar{x}_1 - \bar{x}_2)} = \frac{\bar{x}_1 - \bar{x}_{2}}{s_{p}} = \frac{6.87 - 8.07}{2.72} = -0.44
+$$
+
+And there you have it! Our effect size associated with this particular independent samples _t_-test is $d = -0.44$. You'll notice that even though the _t_-test did not end up being significant, the effect size tells us that the size of the effect is "medium." With more data, it's possible that this effect would become significant.
+

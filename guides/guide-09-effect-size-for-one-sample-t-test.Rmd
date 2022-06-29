@@ -1,0 +1,36 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-09-effect-size-for-one-sample-t-test-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Effect Size For A One-Sample T-Test
+
+In the last _Guide_, we calculated a one-sample _t_-test to determine whether students at the University of Denver are more extroverted than average and were just shy of finding a statistically significant result (_p_ = .07). Specifically, we collected a sample of DU students and found that they had a mean extroversion score of $\overline{x} = 6.17$, which we compared to a population mean of $\mu = 5$. We also calculated the sample standard deviation of students’ extroversion scores and found it to be $s = 2.04$. 
+
+Remember the following rule: For _hypothesis tests_, standard error goes in the denominator; for _effect sizes_, standard deviation goes in the denominator.
+
+Look at the formula for the Cohen’s _d_ effect size associated with a one-sample _t_-test below and notice that we already have everything we need in order to calculate the effect size:
+
+$$
+d_{t} = \frac{\overline{x} - \mu_{\overline{x}}}{s}
+$$
+
+This will be a recurring theme when it comes to calculating effect sizes: Once you’ve already calculated the hypothesis test, calculating the associated effect size is generally quick and easy because they involve similar values. Keep this in mind as we progress through the course!
+
+Okay, let’s go ahead and find the effect size!
+
+$$
+d_{t} = \frac{\overline{x} - \mu_{\overline{x}}}{s}
+ = \frac{6.17 - 5.00}{2.04} = 0.57
+$$
+
+So, our effect size is $d_{t} = 0.57$, which would be considered a _large_ effect. Remember that effects between 0 and 0.20 are “_small_,” between 0.20 and 0.50 are “_medium_,” and above 0.50 are “_large_.” Great work!
+
+
+

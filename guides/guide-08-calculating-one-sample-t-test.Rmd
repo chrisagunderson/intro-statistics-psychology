@@ -1,0 +1,95 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-08-calculating-one-sample-t-test-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Calculating the one-sample _t_-test
+
+
+The _z_-test is a powerful statistical analysis, if you can do it. The main problem with the one-sample _z_-test, and the reason it is rarely used in actual research, is that you need to know population standard deviation (sigma, $\sigma$). This is an issue because in most cases, you’re trying to investigate psychological variables in the world where this information is simply not known (e.g., anxiety, extroversion, narcissism). In cases such as these, you simply don’t have enough information to successfully complete the formula for the _z_-test statistic.
+
+The _t_-test gets around these issues by using sample standard deviation ($s$) in order to estimate---or make a guess about---the population standard deviation ($\sigma$). The structure of the test is the same as the one-sample _z_-test, and it’s still designed to test whether a sample mean differs significantly from some hypothesized population mean (under the null hypothesis). Again, the only difference lies in that, with the one-sample _t_-test, you don’t need to know anything about variability in the population.
+
+Let’s compare the two formulas for the one-sample _z_-test (left) and the one-sample _t_-test (right):
+
+\begin{center}
+
+$$z_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}$$
+\quad \quad \quad
+$$t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}}$$
+
+\end{center}
+
+Notice the similarities? The only difference between these two formulas lies in the standard error. For the one-sample _z_-test, we are calculating _true standard error_ of the population by using the formula $\frac{\sigma}{\sqrt{n}}$. For the one-sample _t_-test, in contrast, we are calculating _estimated standard error_ by using the formula $\frac{s}{\sqrt{n}}$.
+
+This is critical because in practice, you’ll need to decide when to pick each test. The rule is simple: If you know population standard deviation ($\sigma$), do a _z_-test; if you don’t, do a _t_-test.
+
+## Sample Problem
+
+Let’s say that you have a scale designed to measure extroversion (vs. introversion) on a 1 (“_very introverted_”) to 9 (“_very extroverted_”) scale. You want to use this scale to figure out whether students at the University of Denver are more extroverted than average.
+
+You might begin by collecting a sample of, say, $12$ University of Denver students and giving them this extroversion scale. Here’s the extroversion scores of this sample of University of Denver students:
+
+\newpage
+
+```{r extr-scores, echo=FALSE, message=FALSE}
+library(tidyverse)
+extraversion_scores <- data.frame(id = c(1,2,3,4,5,6,7,8,9,10,11,12),
+                                  extraversion = c(6,3,5,6,7,8,8,7,2,9,7,6)) %>%
+  as_tibble() %>% 
+  select(-id)
+
+knitr::kable(extraversion_scores, "pipe")
+```
+
+
+As a first step, we’ll need to calculate the mean ($\overline{x}$) extroversion score of this sample of University of Denver students. You should be able to do this with relative ease by adding up all of the extroversion scores and dividing by our sample size, $12$. If you do this, you should end up with $\overline{x} = 6.17$.
+
+Now, take a look back at the formula. We’ll also need to specify a population mean ($\sigma$) to compare our sample mean ($\overline{x}$) against. In this case, let’s say that the population mean of extroversion is $5$, which sits at the midpoint of our 1 to 9 scale. So, $\overline{x} = 6.17$ and $\mu = 5$.
+
+All that’s left is the denominator of the one-sample _t_-test formula, which is known as estimated standard error. To calculate estimated standard error, we first need to find the standard deviation of the sample ($s$) and then divide by the square root of our sample size ($n$). I’ll show my work for calculating sample standard deviation on the next page, but for now I’ll tell you that the sample standard deviation of extroversion scores in this sample is $s = 2.04$. Using this value, we can calculate estimated standard error as follows:
+
+$$s_{\overline{x}} = \frac{s}{\sqrt{n}} = \frac{2.04}{\sqrt{12}} = 0.59$$
+
+Now we have everything we need to calculate the value of the _t_-test statistic:
+
+$$t_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{s_{\overline{x}}} = \frac{6.17 - 5.00}{0.59} = 1.98$$
+
+That’s it! Congratulations! You’ve just successfully calculated the _t_-test statistic for a one-sample _t_-test. In most cases, you would use statistical software to turn that test statistic into a _p_-value so you can interpret whether you have sufficient evidence to conclude that University of Denver students differ from average in how extroverted they are. Here, I can tell you that the _p_-value would be $.07$, which is just shy of our typical alpha of $.05$. In this case, then, we would say that we do not have quite enough evidence to say that there is a significant difference.
+
+\newpage
+
+## Calculating Sample Standard Deviation
+
+I hope that at this point in the course, you’re pretty comfortable calculating sample standard deviation. If not, reach out to me! I’m always here to help! In any case, I’ll quickly show my work for calculating the standard deviation of extroversion scores in our sample of University of Denver students.
+
+```{r extr-scores-2, echo=FALSE}
+extraversion_scores_sd <- extraversion_scores %>% 
+  mutate(mean = mean(extraversion),
+         deviations = extraversion - mean,
+         squared_deviations = deviations^2) %>% 
+  select(-mean)
+
+knitr::kable(extraversion_scores_sd, "pipe", digits = 3)
+
+```
+
+
+Now, we add up the values in the last column to calculate the _sum of squares_ ($SS$), which comes out to $45.67$. Keep in mind the formula for sample standard deviation to see how to proceed:
+
+
+$$s = \sqrt{\frac{\sum(X_{i} - \overline{x})^2}{n - 1}}$$
+
+
+So, all we have to do now is take our _sum of squares_ (the numerator of this formula), divide by $n-1$, and then square root that value. Let’s do that now:
+
+
+$$s = \sqrt{\frac{\sum(X_{i} - \overline{x})^2}{n - 1}} = \sqrt{\frac{45.67}{12-1}} = \sqrt{4.15} = 2.04$$
+
+So, as shown above, the sample standard deviation of extroversion scores is $2.04$.

@@ -1,0 +1,88 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "midterm-forumula-sheet-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+# Midterm Formula Sheet
+
+## Measures of Central Tendency
+
+\begin{equation}
+\overline{x} = \frac{\sum X_{i}}{n}
+\end{equation}
+
+
+\begin{equation}
+\mu = \frac {\sum X_{i}}{N}
+\end{equation}
+
+## Measures of Variability
+
+\begin{equation}
+r = h - l
+\end{equation}
+
+\begin{equation}
+SS = \sum(X_{i} - \overline{x})^2 \qquad \: or \qquad SS = \sum(X_{i} - \mu)^2
+\end{equation}
+
+
+\begin{equation}
+s = \sqrt \frac {\sum(X_{i} - \overline{x})^2}{n - 1}
+\end{equation}
+
+\begin{equation}
+s^2 = \frac{\sum (X_{i} - \overline{x})^2}{n - 1}
+\end{equation}
+
+
+\begin{equation}
+\sigma = \sqrt \frac {\sum (X_{i} - \mu)^2}{N}
+\end{equation}
+
+\begin{equation}
+\sigma^2 = \frac{\sum (X_{i} - \mu)^2}{N}
+\end{equation}
+
+\begin{equation}
+\sigma_{\overline{x}} = \frac {\sigma}{\sqrt{n}}
+\end{equation}
+
+## Relationships in the World
+
+\begin{equation}
+r_{xy} = \frac{n\sum XY - \sum X \sum Y}{\sqrt{[n\sum X^2 - (\sum X)^2][n\sum Y^2 - (\sum Y)^2]}}
+\end{equation}
+
+## Reliability
+
+\begin{equation}
+\alpha = (\frac {k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})
+\end{equation}
+
+## z
+
+\begin{equation}
+z_{\overline{x}} = \frac{\overline{x} - \mu_{\overline{x}}}{\sigma_{\overline{x}}}
+\end{equation}
+
+\begin{equation}
+z_{i} = \frac{X_{i} - \mu}{\sigma}
+\end{equation}
+
+\begin{equation}
+X_{i} = \mu + z_{i}\sigma
+\end{equation}
+
+
+
+
+
+
+

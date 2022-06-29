@@ -1,0 +1,185 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-04-calculating-internal-consistency-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+library(kableExtra)
+library(tidyverse)
+```
+
+# Calculating Internal Consistency
+
+In this _Guide_, we’ll learn how to calculate Cronbach’s alpha ($\alpha$), which is a measure of internal consistency. Calculating Cronbach’s $\alpha$ is very computationally heavy, but, once you get the hang of it, it’s actually quite formulaic and will become automatic with practice. As always, I encourage you to keep in mind why you’re doing this. That is, what does internal consistency mean? Remember, internal consistency is a form a reliability that looks at whether the various items or questions in a scale are working together. Essentially, Cronbach’s $\alpha$ tells you if you have a good scale with items that are all measuring the same sort of thing.  
+
+Let’s start by taking a look at the formula for Cronbach’s $\alpha$:  
+
+\begin{center}
+Cronbach's Alpha
+
+$$\alpha = (\frac {k}{k - 1})(\frac{s_{y}^2 - \sum s_{i}^2}{s_{y}^2})$$
+\end{center}
+
+Notice that this formula has many $s^2$ values. Think back to our measures of variability and try to recall what $s^2$ is. $s^2$ is simply sample variance, which we already know how to calculate! This is what makes internal consistency problems quite a bit of work: You’ll need to calculate sample variance multiple times in order to calculate internal consistency. The good news, though, is that you’ll be in great shape once you’ve mastered calculating sample variance!  
+
+
+Okay, let’s give internal consistency a shot. Let’s start by generating some data. Here, we’ll calculate the internal consistency for a scale with 2 items that participants rate their agreement with. If this were an anxiety scale, for example, Item 1 might be _“I often have worrying thoughts”_ and Item 2 might be _“I tend to think about my problems over and over.”_ The question we’re assessing is whether these two items are working together and measuring the same thing. Here’s our data:  
+
+
+```{r cronbach-data, echo=FALSE}
+cronbach_data <- data.frame("Item 1" = c(7, 8, 7, 6, 5, 4, 8, 7, 8, 9, 4),
+                        "Item 2" = c(6, 7, 7, 5, 4, 3, 7, 9, 7, 8, 3)) %>% 
+  as_tibble()
+
+options(knitr.kable.NA = '')
+knitr::kable(cronbach_data, "pipe")
+
+```
+
+## Step 1: Make a note of $k$
+
+First, let’s take care of the left side of the formula ($\frac{k}{k-1}$), which is very easy. $k$ is simply the number of items in the scale. So, in this case, $k = 2$. Sometimes, we may have larger scales with 3 or 4 items. When doing this in the real world, you may have scales with 20, 30, 40, or even more items! Statistical software really comes in handy in cases like that!  
+
+In any case, the left side of the formula ends up being $(\frac{k}{k-1}) = (\frac{2}{1}) = 2$. Easy, right?
+
+## Step 2: Make a “Total” column
+
+We’ll now need to make a “Total” column by simply adding the values of each row. The first value of our “Total” column will be $7+6 = 13$, the second will be $8+7 = 15$, and so on. Let’s take a look:  
+
+```{r cronbach-data-2, echo=FALSE}
+cronbach_data2 <- cronbach_data %>% 
+  mutate(Total = Item.1 + Item.2)
+
+options(knitr.kable.NA = '')
+knitr::kable(cronbach_data2, "pipe")
+
+```
+
+## Step 3: Calculate the variances of each column of data
+
+Now’s where the real work of the problem comes in. We’ll need to calculate the sample variance ($s^2$) of _every_ column of data: for Item 1, Item 2, and the Total column. This means calculating sample variance 3 times. If we had 3 items in our scale, we’d need to calculate sample variance 4 times!  
+
+I’ll go ahead and just _tell_ you what the sample variances are for these 3 columns of data. If you want to see how I arrived at these numbers, I’ll show my work at the end of this document. For now, though, let me tell you that these are the sample variances for each column:
+
+```{r cronbach-data-3, echo=FALSE}
+cronbach_data3 <- cronbach_data2 %>% 
+  summarise(across(where(is.numeric), var))
+
+knitr::kable(cronbach_data3, "pipe", digits=2,
+             caption = "Variances for Item 1, Item 2, and Total")
+
+```
+
+## Step 4: Plug into the formula for Cronbach’s $\alpha$
+
+Once you have $k$ and the sample variances for each column in your table, you’re ready to plug values into the formula for Cronbach’s $\alpha$! The key here is knowing where to put the sample variances.  
+
+$s_{y}^2$ represents the sample variance of the Total column, so in this case $s_{y}^2 = 12.85$.  
+
+Okay, so what about $\sum s_{i}^2$ ? Well, in this case, $i$ represents each individual “item” and $\sum$ means “take the sum of.” So, this term translates to:
+
+> _“Take the sum of the sample variances for each individual item in the scale.”_ 
+
+In that case, we can calculate $\sum s_{i}^2$ by summing $2.85$ and $4$, which comes out to $6.85$.  
+
+We now have everything we need:  
+
+\begin{gather*} 
+k = 2 \\ 
+s_{y}^2 = 12.85 \\
+\sum s_{i}^2 = 6.85
+\end{gather*}
+
+Let’s plug into our formula for Cronbach’s $\alpha$ to finish the problem:  
+
+$$\alpha = (\frac{2}{2-1}) (\frac{12.85 - 6.85}{12.85}) = (2)(0.46) = 0.93$$
+
+This would be considered an excellent value for Cronbach’s alpha, as it’s large, positive, and close to 1. This means these two items in the scale are working well together (i.e., people are responding to these two items in similar ways), which likely means that these items are measuring the same thing (e.g., anxiety). 
+
+Starting on the next page of this document, I’ll show my work for calculating the sample variances of these 3 columns of data. If you’re already comfortable calculating sample variance, then you should feel free to move on.  
+
+\newpage
+
+## Calculating sample variances for each column
+
+**Sample variance for Item 1 ($s_{1}^2$)**  
+
+```{r item-1-var, echo=FALSE}
+item1_var <- cronbach_data2 %>% 
+  mutate(item1_mean = mean(Item.1),
+         deviations = Item.1 - item1_mean,
+         squares = deviations^2) %>% 
+  select(Item.1, deviations, squares)
+
+knitr::kable(item1_var, "pipe", digits = 2)
+
+```
+
+Calculate the sum of squares, $SS = \sum (x_{i} - \overline{x})^2$, by adding up the values in the last column.  
+
+For Item 1, $\sum (x_{i} - \overline{x})^2 =$ `r round(sum(item1_var$squares),2)`
+
+Calculate the variance for Item 1, $s_{1}^2$, by dividing the sum of squares by $n - 1$, which equals $11 - 1 = 10$. So, $s_{1}^2 = \frac{28.5}{10} = 2.85$
+
+\newpage
+
+**Sample variance for Item 2 ($s_{2}^2$)**  
+
+```{r item-2-var, echo=FALSE}
+item2_var <- cronbach_data2 %>% 
+  mutate(item2_mean = mean(Item.2),
+         deviations = Item.2 - item2_mean,
+         squares = deviations^2) %>% 
+  select(Item.2, deviations, squares)
+
+knitr::kable(item2_var, "pipe", digits = 2)
+
+```
+
+Calculate the sum of squares, $SS = \sum (x_{i} - \overline{x})^2$, by adding up the values in the last column. 
+
+For Item 2, $\sum (x_{i} - \overline{x})^2 = 40$. 
+
+Divide by the sum of squares by $n - 1$ to get the sample variance for Item 2: $s_{2}^2 = \frac{40}{10} = 4$.  
+
+\newpage
+
+**Sample variance for the Total column ($s_{y}^2$):**
+
+```{r total-var, echo=FALSE}
+total_var <- cronbach_data2 %>% 
+  mutate(total_mean = mean(Total),
+         deviations = Total - total_mean,
+         squares = deviations^2) %>% 
+  select(Total, deviations, squares)
+
+knitr::kable(total_var, "pipe", digits = 2)
+
+```
+
+Calculate the sum of squares, $SS = \sum (x_{i} - \overline{x})^2$, by adding up the values in the last column.  
+
+For the Total column, $\sum (x_{i} - \overline{x})^2 = 128.55$.
+
+Divide the sum of squares by $n - 1$ to get the sample variance for the Total column: 
+$s_{y}^2 = \frac{128.5}{10} = 12.85$
+
+
+
+
+
+
+
+
+
+
+
+

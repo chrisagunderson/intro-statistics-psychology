@@ -1,0 +1,51 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-07-effect-size-for-one-sample-z-test-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+library(kableExtra)
+library(tidyverse)
+library(bayestestR)
+```
+
+# Effect Size For A One-Sample Z-Test
+
+Now that we’ve calculated the _z_-test statistic, it becomes relatively easy to also determine the effect size that corresponds to this analysis. It’s useful to report both test statistics and effect sizes because, together, they give you a sense of both _statistical significance_ (via the hypothesis test) as well as _practical significance_ (via the effect size). The former tells you whether we have evidence to believe that an effect exists, and the latter tells you whether the effect is big enough for us to care.
+
+Let’s take a look at the formula for the effect size of the one-sample _z_-test, as measured by Cohen’s _d_:
+
+$$
+d_{z} = \frac{\overline{x} - \mu_{\overline{x}}}{\sigma}
+$$
+
+Notice that this formula is nearly identical to the formula for the z-test statistic, except that we have sigma ($\sigma$) in the denominator, rather than standard error ($\sigma_{\overline{x}}$, which is calculated using the formula $\frac{\sigma}{\sqrt{n}}$). This means that sample size ($n$) is not a factor for effect sizes, even though it is for hypothesis tests.
+
+In the last _Guide_, we asked the question: Do people who attend college have different levels of intelligence than average? For this study, we collected a sample of college students and found that they had an average IQ of $110.47$, which was significantly different than the population mean of $100$. We also knew that the population standard deviation was $15$. Already, then, we have everything we need to calculate the effect size:
+
+\begin{center}
+$\overline{x} = 110.47$
+\quad \quad \quad \quad
+$\mu = 100$
+\quad \quad \quad \quad
+$\sigma = 15$
+
+\end{center}
+
+Let’s plug these values into the formula for the effect size:
+
+$$
+d_{z} = \frac{\overline{x} - \mu_{\overline{x}}}{\sigma} = \frac{110.47 - 100}{15} = 0.70
+$$
+
+And you’re done! Now we can interpret this effect size. We know that effect sizes between 0 and 0.2 are considered “_small_” effects, between 0.2 and 0.5 are considered “_medium_” effects, and above 0.5 are considered “_large_” effects. Therefore, this is a large effect.
+
+

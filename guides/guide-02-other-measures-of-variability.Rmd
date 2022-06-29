@@ -1,0 +1,63 @@
+---
+output:
+  pdf_document:
+    includes:
+      in_header: "guide-02-other-measures-of-variability-preamble.tex"
+fontfamily: cochineal
+fontsize: 12pt
+header-includes:
+   - \linespread{1.05}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tufte)
+library(kableExtra)
+library(tidyverse)
+```
+
+# Calculating Other Measures of Variability
+
+In the last _Guide_, we used sample data to calculate a key measure of variability–sample standard deviation. As we’ve already learned, however, there are other measures of variability that we’ll need to use in certain situations. These include sample variance, population standard deviation, and population variance. Let’s look at the formulas for these different measures of variability. I encourage you to take a close look when comparing them!
+
+**Sample standard deviation** (what we’ve already calculated):
+
+$$s = \sqrt \frac{\sum(X_{i} - \overline{x})^2}{n - 1}$$
+
+**Sample variance** (the square of sample standard deviation):
+
+$$s^2 = \frac{\sum(X_{i} - \overline{x})^2}{n - 1}$$
+**Population standard deviation** (divide by $N$ and not $n-1$):
+
+$$\sigma = \sqrt \frac{\sum(X_{i} - \mu)^2}{N}$$
+**Population variance** (the square of population standard deviation):
+
+$$\sigma^2 = \frac{\sum(X_{i} - \mu)^2}{N}$$
+
+Notice that, in all of these formulas, the numerator is essentially the same (except that you’ll be using either a sample mean, $\overline{x}$, or a population mean, $\mu$). That is, _no matter which measure of variability you’re trying to calculate, you’ll always start by calculating the sum of squares_: $\sum(X_{i} - \overline{x})^2$ **or** $\sum(X_{i} - \mu)^2$.
+
+This means that you’ll always start by creating our table with $x$, the deviations from the mean, and the squares of those deviations from the mean.
+
+Keeping this in mind, let’s go back to our previous data:  
+
+
+$7, 9, 8, 4, 3, 3, 5, 6, 7, 8$  
+
+
+To remind you, the sum of squares ($SS$) for this dataset is $42$ (we calculated this before). Let’s use this value to calculate the other measures of variability.
+
+\newpage
+
+## Calculating sample variance
+
+Looking at the formula above, we simply need to take the sum of squares and divide by $n-1$. Since $n = 10$, we need to divide by $9$. 
+
+So, $s^2 = \frac{42}{9} = 4.67$. You can also get this value by simply squaring the value for the sample standard deviation.
+
+## Calculating population standard deviation
+
+Look again at the formula for population standard deviation above. The formula is almost identical to that of sample standard deviation, except that we need to divide by $N$ (the size of the population) instead of $n - 1$ (the size of the sample minus 1). So, to calculate population standard deviation, we need to divide by N and then square root. That is, $\sigma = \sqrt \frac{42}{10} = 2.05$.
+
+## Calculating population variance
+
+Noticing a pattern? For population variance, you can either square the value for population standard deviation or you can simply divide the sum of squares by $N$. So, the value for population standard deviation, $\sigma^2$, equals $\frac {42}{10}$ or 4.20.
