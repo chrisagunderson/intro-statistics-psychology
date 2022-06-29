@@ -1,6 +1,6 @@
 # Introduction to Statistics
 
-Course I taught as instructor of record in the Department of Psychology while a PhD candidate. 
+Course I taught as adjunct faculty in the Department of Psychology while I was a PhD candidate. 
 
 The course was created in RStudio, using `RMarkdown`, `xaringan`, and `xaringanthemer`. For mathematical formulas, LaTeX was used (e.g., see [Review Packets](https://github.com/chrisagunderson/intro-statistics-psychology/tree/master/review-packets)).
 
@@ -39,4 +39,10 @@ For an overview of the course content, please see the [syllabus](https://github.
 15: Making Predictions Using Regression [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-15-making-predictions-using-regression.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-15-making-predictions-using-regression.pdf)
 
 16: Final Exam Review [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-16-final-exam-review.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-16-final-exam-review.pdf)
+
+# Formula Sheets
+
+Midterm Formula Sheet [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/formula-sheets/midterm-formula-sheet.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/formula-sheets/midterm-exam-formula-sheet.pdf)
+
+Final Exam Formula Sheet [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/formula-sheets/final-exam-formula-sheet.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/formula-sheets/final-exam-formula-sheet.pdf)
 
