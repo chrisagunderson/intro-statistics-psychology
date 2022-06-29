@@ -1,0 +1,234 @@
+---
+output: 
+  stevetemplates::syllabus:
+    latex_engine: xelatex
+    dev: cairo_pdf
+geometry: margin=1in
+
+title: "PSYC-2300-2: Introduction to Statistics"
+author: Christoper A. Gunderson
+date: "Winter 2022"
+
+email: "chris.gunderson@du.edu"
+web: "canvas.du.edu/login/ldap"
+officehours: "Fridays 10:00am MT"
+office: "Nagel Hall 078"
+classroom: "Sturm Hall 187"
+classhours: "Monday/Wednesday 08:00-09:50am MT"
+
+fontfamily: cochineal
+fontsize: 11pt
+header-includes:
+   - \linespread{1.05}
+---
+
+```{r load-libraries, include=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(knitr)
+```
+
+
+# Course Description
+
+Welcome to Introduction to Statistics! Statistics is the foundation of psychological science. Without statistics, science as we know it could not exist. We would not be able to evaluate scientific claims or provide evidence for or against them.  
+
+Although statistics—and mathematics more generally—can feel daunting for many people, I encourage you to enter this class with an open mind. We will not just be learning abstract mathematics for its own sake, but rather we will be gaining applicable skills that will be useful to you even after this course ends (whether or not you choose to pursue graduate school). For example, you will learn how to understand and evaluate the statistics used to support claims presented to you (e.g., on the news, on Facebook). You will also learn how to use software (e.g., Excel, JASP) for statistical and other purposes such as budgeting. Even if you feel like you are “not a math person,” I will ensure that you have the tools and resources you need to succeed in this course. I am so excited to have the opportunity to work with you this coming quarter! 
+
+Below, I outline everything you need to know about what to expect out of this course as well as what I expect from you. In this syllabus, you can find information about required materials, learning activities that you will engage in throughout the quarter, what to expect regarding exams, how grades will be calculated, and much more. Please read it carefully! 
+
+# Learning Outcomes
+
+Upon successful completion of this course, you will be able to:  
+
+- Understand the importance of statistics for psychology (and science more generally) as well as the application of statistics to everyday life (i.e., in what ways is having knowledge of statistics useful, apart from conducting research?)
+
+- Recognize how statistics can be used to answer questions about relationships in the real world (e.g., correlations between variables, differences between groups)
+
+- Describe foundational statistical concepts and terminology, assumptions for hypothesis testing, and errors that can be made when making inferences
+
+- Assess and apply the appropriate statistical analyses given a research question and perform basic analyses on a real-world dataset using software (e.g., Excel, JASP)  
+
+\newpage
+
+# Required Materials
+
+1. **Textbook**: [Salkind, N. J., & Frey, B. B. (2020). _Statistics for people who (think they) hate statistics_ (Seventh edition). Sage.](https://www.bkstr.com/denverstore/product/statistics-for-people-who--think-they--hate-statistics-402789-1). This textbook is reasonably priced, relatively short, and more entertaining than traditional statistics texts. I hope the snarky humor and simple prose encourages you to read and enjoy reading the text. If you plan to purchase this textbook from a 3rd party (e.g., Amazon), you can search for it using either of the ISBN-13: 978-1544381855 or ISBN-10: 1544381859 number.
+
+2. **JASP Statistical Software**. A large part of conducting research in psychology involves using statistical software (e.g., JASP, SPSS, Stata, R) to analyze data. In this course, you will learn how to analyze real-world datasets using JASP, which I have chosen due to its ease of use and ability to dynamically explore data on the fly. JASP is an open-source software that is easy to [download](https://jasp-stats.org) and that will be free forever, even when you leave the University of Denver. Instructions for installing JASP can be found on Canvas.  
+
+3. **Calculator**. A simple calculator (i.e., the kind you can buy for $5 or $10) will be needed for quizzes and exams. You cannot use your phone as a calculator during exams. 
+
+4. **Canvas**. [Canvas](https://canvas.du.edu/) will be the central hub for this course. Here I will post the syllabus, instructions for projects, lecture slides, sample questions for each exam, announcements, grades, additional resources and tutorials, and more. This is also where you will submit your projects and complete quizzes throughout the quarter. We will grade your work and provide feedback directly via Canvas. Check as soon as possible to make sure you have access to this course’s Canvas site.
+
+# Grading Overview
+
+```{r grading-overview, echo=FALSE, message=FALSE, warning=FALSE}
+grading_overview <- read_csv('grading_overview.csv')
+options(knitr.kable.NA = '')
+knitr::kable(grading_overview, booktabs = TRUE) %>% 
+  kable_styling(latex_options = "scale_down") %>% 
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+
+```{r letter-grades, echo=FALSE, message=FALSE, warning=FALSE}
+letter_grades <- read_csv('letter-grades.csv')
+
+knitr::kable(letter_grades, booktabs = TRUE) %>% 
+  kable_styling(font_size = 9) %>% 
+  kable_styling(latex_options = "HOLD_position")
+
+```
+
+\newpage
+
+# Details for Each Course Component
+
+## Attendance and Participation
+
+Class meetings are mandatory. I want everyone to do well in this course. Because this is a fast-paced class with numerous assignments and projects, the only way to succeed is to show up. To encourage everyone to consistently attend and participate in class, I will grant participation credit on seven randomly chosen days throughout the quarter. I will provide a variety of opportunities to earn participation credit on these seven days (e.g., in-class activities, mini-discussions, or pop quizzes). Participating in these activities will grant you the full 2 points of participation credit for that day (i.e., regardless of how well you perform on the activity). Additionally, I drop your lowest participation score at the end of the quarter. That is, your participation grade is structured such that you should be able to miss a couple of days (e.g., due to illness) without negatively impacting your grade. _Consequently, no make-up participation credit will be given for missed class days_.
+
+## Canvas Quizzes
+
+Quizzes will be your primary means of practicing the material we learn in class and prepare you for the midterm and final exams. These quizzes are designed to be formative assessments, not summative ones. That is, they are designed to help you practice and solidify the material, rather than to judge how well you understand the material already. Some quiz questions may ask you theoretical questions, others may ask that you compute a statistic by hand, others may ask you to evaluate whether a researcher chose the correct analysis given a research question, and others may ask you to read output from JASP. There will be 6 quizzes online on Canvas, each worth 4 points. Quizzes open 5 days before their due date, and close at 11:59 PM on their due date (see course calendar for due dates). You are allowed 2 attempts on each quiz and only your highest score will be counted. There will be no time limits for these quizzes, so you can take as much time as you need on each attempt. Your lowest quiz score will be dropped at the end of the quarter. Because (1) you have 5 days to complete the quizzes online and (2) I drop your lowest quiz score, _no make-up quizzes will be offered for any reason_.
+
+## Mini-Report
+
+In this two-page, double-spaced mini-report, you will be required to find a psychology-related article from a non-scientific source (e.g., Psychology Today, Time, People) and then (1) summarize the article and the statistics the author reports, (2) describe how well the author reports these statistics and the methods used to generate them, and (3) evaluate whether a reader who is not scientifically trained would be able to walk away with a clear understanding of the information being presented. More detailed instructions will be posted on Canvas. You will submit your assignment on Canvas.
+
+## Application Project
+
+The Application Project is a final project that will provide you with the opportunity to analyze a real-world dataset using JASP statistical software (much like a graduate student would). Detailed instructions and step-by-step guides for how to perform the required basic analyses and export your work for submission will be posted on Canvas. You will submit your assignment on Canvas.
+
+## Midterm and Final Exam
+
+The midterm exam will be held in class (i.e., during a regular class period), and the final exam will be held in class during finals week (see course calendar for dates). Exams will contain a mix of question formats. You can expect multiple-choice questions, short answer questions, and questions that require you to solve problems by hand. I will provide you with a formula sheet for each exam, and you will only need to bring a pencil and a simple calculator. The midterm exam covers the material from the first half of the course (i.e., weeks 1 through 5). Because statistics builds on itself and analyzing data in the real world is open-ended, the final exam will be cumulative. Although it is comprehensive, the final exam will emphasize material from the latter half of the course. Make-up exams will be offered to students who provide documentation for a valid excuse (e.g., illness, university-related travel) without penalty. You should contact me with requests for make-up exams as far in advance as possible. Make-up exams will be offered to those who do not have a valid reason for missing the exam (e.g., travel unrelated to university activity, oversleeping, illness without documentation, losing track of time while binge-watching Netflix), but will carry a penalty to your exam score that can be severe (assessed on a case-by-case basis).
+
+## Extra Credit
+
+You will receive 3 points of extra credit toward your final grade for completing 6 chits of research and then answering three reflection questions via an assignment in Canvas. To register for the SONA subject pool, go to https://du.sona-systems.com/ and click on “Request Account.” It is through the SONA system linked here that you will sign up for research studies. After registering, be sure to select PSYC 2300-2 to receive credit for this course. The importance of participating in research studies cannot be overstated. The vast majority of what you will read about in psychology textbooks and hear about in psychology classes involves findings from data that were collected from undergraduate students such as yourselves. You already play a vital role in the field of psychology, and I encourage all of you to keep this in mind as you participate! Further, participating in studies gives you a first-hand look at some of the cutting-edge research occurring here at the University of Denver. To get the most out of the experience, you should read the debriefing information provided at the end of each study and think about how the study relates to what you are learning in your classes.
+
+# How to Succeed
+
+I understand that people take courses for many different reasons and that your interest in psychology does not necessarily mean that you find statistics to be interesting. My hope, however, is that this course will still instill an appreciation for psychology as a science and will provide you with useful knowledge and skills that you will be able to apply to your life moving forward. Here are a few suggestions to help you succeed and get the most out of this course:
+
+1. Come to class. Ask questions. Meet with me. I'm here to help and advise; don’t miss the opportunity to use me as a resource!
+
+2. Try as much as possible to appreciate the potential applications of the material you learn in class. Relate the material as much as possible to things you care about, issues you face, and so on. The more interested you are in what you are learning, the better you will do in the course. After all, the research on teaching and learning shows Interest --> Engagement --> Achievement.
+
+3. Psychology is a science. Pay attention to what research methods we use and the many factors that psychologists have to pay attention to in the service of furthering our understanding of the mind and human behavior. Not only will this practice enhance your critical thinking abilities, it will help you perform better on exam questions that try to tap into these sorts of issues.
+
+\newpage
+
+# University Policies
+
+## Masking Requirements
+
+For the most up-to-date information, following [this link](https://www.du.edu/coronavirus/health-wellness).  
+
+Per campus policy, when the campus alert level is green, vaccinated individuals may remove their mask for speaking so long as 6 feet of social distancing between the speaker and the audience is maintained. When the campus alert level is blue, that distance increases to 12 feet. If campus alert levels allow, I may not be wearing a mask if and only if I can lecture at a distance. Regardless of campus alert levels, if you would like to speak with me in close quarters (before/after class or in my office), I will wear a mask and would prefer it if you would, too.
+
+It is the expectation that you attend class in-person as required unless you have made alternative arrangements with me prior to the start of class due to illness, medical reasons, or the need to isolate or quarantine due to COVID-19. As in any in-person course, attendance and participation are crucial for a complete understanding of course material. In choosing to attend the University of Denver, you’ve chosen to join a larger Community of Care, which means you’ve chosen specific responsibilities—including in this class. By enrolling in the University of Denver and in this course, you have agreed: 
+
+- Not to attend class when you’re sick.
+- Not to attend class when you’ve been exposed to people who have or may have COVID-19.
+- To follow the university’s masking policy.
+
+According to university policy: 
+
+> “When the University places DU students or personnel in isolation or quarantine, the individual will receive documentation within their MyHealth record to provide to instructors regarding the duration of their quarantine or isolation and when and under what conditions they may return to in-person activities. The student is responsible for providing this documentation to instructors. The DU COVID Team can provide verification of a student’s need to be isolated/quarantined should there be any question regarding compliance with University attendance and related COVID-19 policies. If a student must miss an in-person session due to illness (prior to having results from a COVID-19 test or when experiencing other symptoms of a communicable illness), the usual sickness policies should apply to the missed session. For example, if the instructor would normally require a doctor’s note, that policy should apply. If a student receives a positive COVID-19 test off-campus or is notified by a public health authority about the need to quarantine, they must provide this notification at reportCOVID@du.edu or by calling 303-871-COVD. The University will then place the student in isolation and quarantine pursuant to University protocols, and this policy will apply.”  
+
+## Students with Disabilities or Medical Issues
+
+Any student who feels they may need an accommodation based on the impact of a disability or medical issue may request accommodations from the _Disability Services Program_ (DSP) by calling 303- 871-3241 or by visiting them at 1999 E. Evans Ave. (on the 4th floor of Ruffatto Hall). Information is also available online at [their website](http://www.du.edu/dsp). Please make your requests known to me as early as possible in the quarter so that we can work together to meet your needs in a timely fashion.  
+
+## Student Athletes
+
+If you are a student-athlete, you should inform me of any class days to be missed due to DU sponsored varsity athletic events in which you are participating. Please provide me with an absence policy form by the end of the first week of class. You will need to make up any missed lectures, assignments, and/or exams.  
+
+## Religious Accommodations
+
+University policy grants students excused absences from class or other organized activities or observance of religious holy days, unless the accommodation would create an undue hardship. Please notify me one week in advance of any conflicts that may require an absence. It is your responsibility to make arrangements with me in advance to make up any missed work or in-class material.
+
+## Honor Code and Academic Integrity 
+
+All work submitted in this course must be your own and produced exclusively for this course. The use of sources (ideas, quotations, paraphrases) must be properly acknowledged and documented. For the consequences of violating the Academic Misconduct policy, refer to the University of Denver [website](http://www.du.edu/honorcode) on the Honor Code. See also [general information about conduct expectations](http://www.du.edu/studentconduct) from the Office of Student Conduct.  
+
+Violations of the honor code and academic misconduct will be taken seriously and are grounds for automatic failure of the course. _When the Instructor has concerns about potential academic misconduct, a report will be filed with the Office of Student Conduct for their review and records_. If you are in doubt regarding any aspect of these issues as they pertain to this course, please consult with the Instructor before you complete any relevant requirements of the course.  
+
+Students agree that by taking this course all required papers may be subject to submission for textual similarity review to [TurnItIn](http://Turnitin.com) for the detection of plagiarism. All submitted papers will be included as source documents in the Turnitin.com reference database solely for the purpose of detecting plagiarism of such papers.
+
+## Inclusive Learning Environments 
+
+In this class, we will work together to develop a learning community that is inclusive and respectful. Our diversity may be reflected by differences in race, culture, age, religion, sexual orientation, socioeconomic background, and myriad other social identities and life experiences. The goal of inclusiveness, in a diverse community, encourages and appreciates expressions of different ideas, opinions, and beliefs, so that conversations and interactions that could potentially be divisive turn instead into opportunities for intellectual and personal enrichment. A dedication to inclusiveness requires respecting what others say, their right to say it, and the thoughtful consideration of others’ communication. Both speaking up and listening are valuable tools for furthering thoughtful, enlightening dialogue. Respecting one another’s individual differences is critical in transforming a collection of diverse individuals into an inclusive, collaborative and excellent learning community. Our core commitment shapes our core expectation for behavior inside and outside of the classroom.  
+
+## Mental Health and Wellness 
+
+Although college is an exciting time, it is for many a very challenging time. Stress, anxiety, and depression are particularly common, and the University of Denver has many resources available to help you or a friend facing these issues. If you or someone you know is struggling with these sorts of issues, please do not hesitate to contact me, the Health & Counseling Center (HCC), or Student Outreach & Support (SOS) for help. If you are concerned about one of your peers, you can also submit a report through the Pioneer Care System. To learn more about the Health & Counseling Center, you can visit [their website](https://www.du.edu/health-and-counseling-center/). To find more information about Student Outreach & Support and the Pioneer Care System, you can visit [their website](https://www.du.edu/studentlife/studentsupport/).  
+
+## Discrimination, Harassment, and Gender-based Violence (Title IX)
+
+Discrimination, harassment, and gender-based violence can happen to anyone regardless of race, class, age, appearance, gender identity, or sexual orientation. The University of Denver is committed to providing an environment free of discrimination on the basis of sex (gender), including sexual misconduct, sexual assault, relationship violence, and stalking, and other protected classes, such as race, color, national origin, age, and disability.
+ 
+The _Office of Equal Opportunity & Title IX_ (EOIX) is responsible for responding to and investigating reports and complaints of discrimination, harassment, and gender-based violence. In addition, all non-confidential University employees are considered “responsible employees” and required to report such incidents to EOIX. For more information, please visit the Office of Equal Opportunity & Title IX website at [this link](https://www.du.edu/equalopportunity/).
+
+## Center for Advocacy, Prevention, and Empowerment (CAPE)
+
+The _Center for Advocacy, Prevention, and Empowerment_ (CAPE) provides advocacy and support services to all student, staff, and faculty survivors of sexual assault, relationship violence, stalking, and sexual harassment. They also offer consultation and resources to people who are supporting a survivor. All services are confidential and free of charge. For assistance during business hours, call 303-871-3853. You can also email cape@du.edu. For assistance after hours to speak to a mental health counselor on-call, please call 303-871-2205.
+
+## Restriction of Audio or Visual Recordings
+
+At the University of Denver, we protect the intellectual property of all our faculty, and safeguard the privacy of all our students in online learning environments. To this end, students may not record, reproduce, screenshot, photograph, or distribute any video, audio, or visual content from their online courses. This restriction includes but is not limited to:
+
+- Pre-recorded and live lectures
+- Live discussions
+- Discussion boards
+- Simulations
+- Posted course materials
+- Faculty feedback forms
+- Visual materials that accompany lectures/discussions, such as slides
+- Virtual whiteboard notes/equations, etc.  
+
+As we engage in online learning as an academic community, it is imperative to be respectful of all. Keep in mind that if any student is identifiable in an online class recording, this may constitute a violation of the educational record protections provided under FERPA.
+
+Students with disabilities who need to record classroom lectures or discussions must contact the Disability Services Program to register, request, and be approved for an accommodation. All students are advised that students may tape classroom activities for this purpose. Such recordings are to be used solely for individual or group study with other students enrolled in the class that quarter/semester. They may not be reproduced, shared in any way (including electronically or posting in any web environment) with those not in the class in that quarter.
+
+Students who violate this policy will be reported to The Office of Student Rights & Responsibilities and may be subject to both legal sanctions for violations of copyright law and disciplinary action under Student Rights & Responsibilities Policies.
+
+## Online and Web-supported Classes
+
+It is your responsibility to procure reliable, readily-accessible internet service in order to fulfill course expectations. I am under no obligation to accept late assignments or waive required tasks (e.g., discussion participation) due to lack of online access or malfunctioning computer hardware. Please consider identifying an alternative internet source in case of technical problems. Look [here](https://www.du.edu/it/services/computers-equipment) for a list of computer labs on the DU campus. Computer support is available from the [Information Technology (IT) Help Center](https://www.du.edu/it/contact).
+
+## Research Center Services
+
+The University Libraries Research Center answers research questions seven days a week by phone, email, in-person, chat/IM or text.  One-on-one research consultations in the Anderson Academic Commons are also available on a drop-in basis or by appointment. Consultations help students at any stage of the research process, from refining a topic, to finding books and articles, to creating a bibliography.  The Research Center can also assist students with finding images, audio recordings, and videos for course projects. Telephone and Zoom video consultations are also available by request for distance students. Ask a question or make an appointment by calling 303-871-2905 or visiting [this link](http://libraryhelp.du.edu). Over 99% of the students who have visited the Research Center report they would recommend the Research Center to a friend or classmate.
+
+## Writing Center Services
+
+_For Face-to-Face Courses_  
+The Writing Center provides writing support for undergraduate and graduate students at all levels, on all kinds of projects, and at any stage of the process: from generating ideas to learning new editing strategies. Consultants take a collaborative approach, working with you to help you develop your writing in light of your specific goals and assignments. To make an appointment for a free, 45-minute consultation, call 303-871-7456 or go to MyWeb > Student > Writing Center. Visit [their website](http://www.du.edu/writing/writingcenter/) for hours and additional information.
+
+_For Online Courses_  
+The Writing Center provides online writing support for graduate and undergraduate students enrolled in online courses at all levels, on all kinds of projects, and at any stage of the process: from generating ideas to learning new editing strategies. In our Zoom video conferences, consultants take a collaborative approach, working with you to help you develop your writing in light of your specific goals and assignments. To make an appointment for a free, 45-minute Zoom consultation, call 303-871-7456 or go to MyWeb > Student > Writing Center. Visit [their website](https://www.du.edu/writing/writingcenter/) for hours and additional information.  
+
+\newpage
+
+# Course Calendar
+
+Below, please find the course calendar (subject to change). Please consult this calendar very often, as there are many dates (e.g., due dates for assignments) that you will need to be aware of. You should always feel free to contact me if you have any questions or if anything requires clarification.
+
+```{r course-schedule, echo=FALSE, message=FALSE, warning=FALSE}
+
+new_schedule <- read_csv('course-schedule.csv') %>% 
+  select(Date, Week, Class, Topic, Reading, `What's due`)
+
+options(knitr.kable.NA = '')
+
+knitr::kable(new_schedule, format = "latex", escape = TRUE) %>%  
+  kable_styling(latex_options = "striped") %>% 
+  kable_styling(latex_options = "HOLD_position")
+```
+
+The Final Exam is currently scheduled Thursday March 17, 2022 08:00-09:50am Sturm Hall 187. Look for announcements about the final exam as it approaches toward the end of the quarter.

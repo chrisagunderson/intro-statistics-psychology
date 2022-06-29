@@ -1,0 +1,22 @@
+,Date,Month,Week,Weekday,Class,Topic,Reading,What's due
+1,1/3/22,Jan,1,Mon,1,Introduction. Why study statistics in Psychology?,"Syllabus, Ch.1",
+2,1/5/22,Jan,,Wed,2,Measures of central tendency and variability,"Ch.2, Ch.3",
+3,1/10/22,Jan,2,Mon,3,Visualizing data using graphs,Ch.4,
+4,1/12/22,Jan,,Wed,4,"Correlations, Reliability, and Validity","Ch.5, Ch.6",
+5,1/17/22,Jan,3,Mon,5,NO CLASS; MLK JR DAY,,
+6,1/19/22,Jan,,Wed,6,Using hypotheses to test questions,Ch.7,Quiz 1 (ch.1-5)
+7,1/24/22,Jan,4,Mon,7,Probability and normal curve,Ch.8,
+8,1/26/22,Jan,,Wed,8,Introduction to statistical significance,Ch.9,Quiz 2 (ch.6-8)
+9,1/31/22,Jan,5,Mon,9,Midterm review,,
+10,2/2/22,Feb,,Wed,10,Midterm Exam,,Mini-report
+11,2/7/22,Feb,6,Mon,11,Differences from the population,Ch.10,
+12,2/9/22,Feb,,Wed,12,Differences between two groups I,Ch.11,Quiz 3 (ch.9-10)
+13,2/14/22,Feb,7,Mon,13,Difference between two groups II,Ch.12,
+14,2/16/22,Feb,,Wed,14,Difference between many groups,Ch.13,Quiz 4 (ch.11-12)
+15,2/21/22,Feb,8,Mon,15,Difference between many factors,Ch.14,
+16,2/23/22,Feb,,Wed,16,Testing relationships using correlations,Ch.15,Quiz 5 (ch.13-14)
+17,2/28/22,Feb,9,Mon,17,Making predictions using regression,Ch.16,
+18,3/2/22,Mar,,Wed,18,Analyzing data using JASP I,,Quiz 6 (ch.15-16)
+19,3/7/22,Mar,10,Mon,19,Analyzing data using JASP II,,
+20,3/9/22,Mar,,Wed,20,Final Review,,Application Project
+21,3/17/22,Mar,11,Thurs,21,Final Exam,,
