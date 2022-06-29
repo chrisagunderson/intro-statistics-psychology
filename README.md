@@ -40,6 +40,44 @@ For an overview of the course content, please see the [syllabus](https://github.
 
 16: Final Exam Review [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-16-final-exam-review.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/lectures/lecture-16-final-exam-review.pdf)
 
+# Guides
+
+_Guides_ assisted students with hand calculations of the material taught during lecture. Each _Guide_ is meant to provide step-by-step instruction to understand why the test statisic is used, how to calculate it, and how to interpret it.
+
+01: Standard Deviation [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-01-standard-deviation.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-01-standard-deviation.pdf)
+
+02: Other Measures of Variability [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-02-other-measures-of-variability.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-02-other-measures-of-variability.pdf)
+
+03: Correlation [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-03-correlation.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-03-correlation.pdf)
+
+04: Calculating Internal Consistency [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-04-calculating-internal-consistency.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-04-calculating-internal-consistency.pdf)
+
+05: Calculating One-sample z-test [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-05-calculating-one-sample-z-test.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-05-calculating-one-sample-z-test.pdf)
+
+06: Standardization and z-Scores [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-06-standardization-and-z-scores.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-06-standardization-and-z-scores.pdf)
+
+07: Effect Size for One-sample z-test [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-07-effect-size-for-one-sample-z-test.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-07-effect-size-for-one-sample-z-test.pdf)
+
+08: Calculating One-sample t-test [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-08-calculating-one-sample-t-test.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-08-calculating-one-sample-t-test.pdf)
+
+09: Effect Size for One-sample t-test [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-09-effect-size-for-one-sample-t-test.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-09-effect-size-for-one-sample-t-test.pdf)
+
+10: Calculating an Independent samples t-test [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-10-calculating-independent-samples-t-test.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-10-calculating-independent-samples-t-test.pdf)
+
+11: Effect Size for an Independent samples t-test [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-11-effect-size-for-independent-samples-t-test.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-11-effect-size-for-independent-samples-t-test.pdf)
+
+12: Calculating a Dependent samples t-test [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-12-calculating-dependent-samples-t-test.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-12-calculating-dependent-samples-t-test.pdf)
+
+13: Effect Size for a Dependent samples t-test [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-13-effect-size-for-dependent-samples-t-test.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-13-effect-size-for-dependent-samples-t-test.pdf)
+
+14: Calculating a One-way ANOVA [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-14-calculating-one-way-anova.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-14-calculating-one-way-anova.pdf)
+
+15: Effect Size for a One-way ANOVA [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-15-effect-size-for-one-way-anova.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-15-effect-size-for-one-way-anova.pdf)
+
+16: Calculating a t-test for a Correlation [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-16-correlation-t-test.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-16-correlation-t-test.pdf)
+
+17: Calculating a simple Linear Regression [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-17-calculating-a-simple-linear-regression.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/guides/guide-17-calculating-a-simple-linear-regression.pdf)
+
 # Formula Sheets
 
 Midterm Formula Sheet [code](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/formula-sheets/midterm-formula-sheet.Rmd) | [pdf](https://github.com/chrisagunderson/intro-statistics-psychology/blob/master/formula-sheets/midterm-exam-formula-sheet.pdf)
